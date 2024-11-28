@@ -54,10 +54,7 @@ export default class UserController {
 
     static async createUser(req, res) {
         try {
-            req.body.user.user_password = await bcrypt.hash(
-                req.body.user.user_password,
-                10
-            );
+            req.body.user.user_password = await bcrypt.hash(req.body.user.user_password, 10);
 
             const user = await models.User.create(req.body.user);
 
@@ -78,10 +75,7 @@ export default class UserController {
     static async updateUser(req, res) {
         try {
             if (req.body.user.user_password) {
-                req.body.user.user_password = await bcrypt.hash(
-                    req.body.user.user_password,
-                    10
-                );
+                req.body.user.user_password = await bcrypt.hash(req.body.user.user_password, 10);
             }
 
             const user = await models.User.update(req.body.user, {
@@ -98,6 +92,60 @@ export default class UserController {
                 success: false,
                 message: "Error al actualizar el usuario",
                 error: error.message,
+            });
+        }
+    }
+
+    static async authUser(req, res) {
+        try {
+            const user = await models.User.findOne({
+                where: { user_email: req.body.user_email },
+            });
+
+            if (!user) {
+                throw new Error("Usuario no encontrado");
+                return;
+            }
+
+            if (!bcrypt.compareSync(req.body.user_password, user.user_password)) {
+                throw new Error("Contraseña inválida");
+                return;
+            }
+
+            req.session.user_id = user.user_id;
+
+            res.status(200).json({
+                success: true,
+                message: "usuario autenticado correctamente",
+                data: user,
+            });
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: "Error al actualizar el usuario",
+                error: error.message,
+            });
+        }
+    }
+
+    static async verifyUserSession(req, res) {
+        try {
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: error.message,
+                data: null,
+            });
+        }
+    }
+
+    static async logoutUser(req, res) {
+        try {
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: error.message,
+                data: null,
             });
         }
     }
