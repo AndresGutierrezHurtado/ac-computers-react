@@ -102,15 +102,22 @@ export const Recovery = sequelize.define(
     }
 );
 
-export const Role = sequelize.define("roles", {
-    role_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
+export const Role = sequelize.define(
+    "roles",
+    {
+        role_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        role_name: {
+            type: DataTypes.STRING(20),
+            allowNull: false,
+        },
     },
-    role_name: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-    },
-});
+    {
+        tableName: "roles",
+        timestamps: false,
+    }
+);
