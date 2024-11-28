@@ -47,7 +47,7 @@ CREATE TABLE `users` (
     `user_email` VARCHAR(80) NOT NULL,
     `user_phone` DECIMAL(10, 0) NOT NULL,
     `role_id` INT NOT NULL DEFAULT 1,
-    `password` TEXT
+    `user_password` TEXT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ---------------------------------------------------------------
