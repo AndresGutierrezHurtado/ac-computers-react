@@ -1,4 +1,4 @@
-import { sequelize } from "../config/database";
+import { sequelize } from "../config/database.js";
 import { DataTypes } from "sequelize";
 
 export const Product = sequelize.define(
