@@ -73,6 +73,7 @@ CREATE TABLE `products` (
     `product_id` VARCHAR(60) NOT NULL PRIMARY KEY,
     `product_name` VARCHAR(100) NOT NULL,
     `product_description` VARCHAR(100) NOT NULL,
+    `product_image_url` VARCHAR(255) NOT NULL DEFAULT "/images/products/default.jpg",
     `product_price` DECIMAL(10, 0) NOT NULL,
     `category_id` INT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -22,6 +22,11 @@ export const Product = sequelize.define(
             type: DataTypes.DECIMAL(10, 2),
             allowNull: false,
         },
+        product_image_url: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+            defaultValue: "/images/products/default.jpg",
+        },
         category_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -86,7 +91,7 @@ export const Spec = sequelize.define(
             primaryKey: true,
             allowNull: false,
         },
-        spec_name: {
+        spec_key: {
             type: DataTypes.STRING(100),
             allowNull: false,
         },
@@ -104,4 +109,3 @@ export const Spec = sequelize.define(
         timestamps: false,
     }
 );
-
