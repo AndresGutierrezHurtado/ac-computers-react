@@ -50,6 +50,10 @@ CREATE TABLE `users` (
     `user_password` TEXT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `users` (`user_id`, `user_name`, `user_lastname`, `user_email`, `user_phone`, `role_id`, `user_password`) VALUES
+('7dd55767-9222-47c9-a079-4a179cf3c3a0', 'Amalia', 'Castro Ardila', 'amaliacastro78@gmail.com', 3118835868, 1, '$2b$10$0IpB6LdgICHLL1n9bRNpT.J9jYfWcpBIHYN.NnN4VhMn9.hLYohwS'),
+('e479bc7a-10c8-471c-8193-59454b75d0e0', 'Andrés', 'Gutiérrez Hurtado', 'andres52885241@gmail.com', 3209202177, 1, '$2b$10$RUBCVdhvvFXb6khHZO2AMu8UAM6hsvgW3wqGT3A8un7vlAkAOrT1a');
+
 -- ---------------------------------------------------------------
 --
 -- Tabla de Detalles de categorias
