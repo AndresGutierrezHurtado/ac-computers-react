@@ -54,7 +54,10 @@ export default class UserController {
 
     static async createUser(req, res) {
         try {
-            req.body.user.user_password = await bcrypt.hash(req.body.user.user_password, 10);
+            req.body.user.user_password = await bcrypt.hash(
+                req.body.user.user_password,
+                10
+            );
 
             const user = await models.User.create(req.body.user);
 
@@ -75,7 +78,10 @@ export default class UserController {
     static async updateUser(req, res) {
         try {
             if (req.body.user.user_password) {
-                req.body.user.user_password = await bcrypt.hash(req.body.user.user_password, 10);
+                req.body.user.user_password = await bcrypt.hash(
+                    req.body.user.user_password,
+                    10
+                );
             }
 
             const user = await models.User.update(req.body.user, {
@@ -107,7 +113,9 @@ export default class UserController {
                 return;
             }
 
-            if (!bcrypt.compareSync(req.body.user_password, user.user_password)) {
+            if (
+                !bcrypt.compareSync(req.body.user_password, user.user_password)
+            ) {
                 throw new Error("Contraseña inválida");
                 return;
             }
@@ -130,6 +138,19 @@ export default class UserController {
 
     static async verifyUserSession(req, res) {
         try {
+            if (req.session.user_id) {
+                res.status(200).json({
+                    success: true,
+                    message: "Usuario autenticado correctamente",
+                    data: req.session.user,
+                });
+            }
+
+            res.status(401).json({
+                success: false,
+                message: "Usuario no autenticado",
+                data: null,
+            });
         } catch (error) {
             res.status(500).json({
                 success: false,
@@ -141,6 +162,7 @@ export default class UserController {
 
     static async logoutUser(req, res) {
         try {
+            req.session.destroy();
         } catch (error) {
             res.status(500).json({
                 success: false,

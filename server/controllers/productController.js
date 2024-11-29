@@ -2,12 +2,17 @@ import * as models from "../models/relations.js";
 
 export default class ProductController {
     static async getProducts(req, res) {
+        let whereClause = {};
+        if (req.query.category_id)
+            whereClause.category_id = req.query.category_id;
+
         try {
             const products = await models.Product.findAll({
                 include: [
                     { model: models.Category, as: "category" },
                     { model: models.Spec, as: "specs" },
                 ],
+                where: whereClause,
             });
 
             res.status(200).json({
@@ -19,7 +24,7 @@ export default class ProductController {
             res.status(500).json({
                 success: false,
                 message: "Error al obtener los productos",
-                error: error.message,
+                data: error,
             });
         }
     }
