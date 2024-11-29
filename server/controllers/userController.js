@@ -146,7 +146,7 @@ export default class UserController {
                 });
             }
 
-            res.status(401).json({
+            res.status(200).json({
                 success: false,
                 message: "Usuario no autenticado",
                 data: null,

@@ -9,7 +9,7 @@ userRoutes.post("/users", userController.createUser);
 userRoutes.put("/users/:id", userController.updateUser);
 
 // auth routes
-userRoutes.get("/user/auth/verify", userController.verifyUserSession);
+userRoutes.get("/user/session", userController.verifyUserSession);
 userRoutes.post("/user/login", userController.authUser);
 userRoutes.post("/user/logout", userController.logoutUser);
 

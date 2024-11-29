@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router";
 import Swal from "sweetalert2";
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -20,6 +21,7 @@ export const useGetData = (endpoint) => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [trigger, setTrigger] = useState(0);
+    const location = useLocation();
 
     useEffect(() => {
         const getData = async () => {
@@ -28,18 +30,11 @@ export const useGetData = (endpoint) => {
 
             if (response.success) {
                 setData(response.data);
-            } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Hubo un error en la petición",
-                    text: response.message,
-                    timer: 8000,
-                });
             }
         };
 
         getData();
-    }, [endpoint, trigger]);
+    }, [endpoint, trigger, location]);
 
     const reload = () => setTrigger((prev) => prev + 1);
 
