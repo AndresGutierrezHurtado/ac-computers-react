@@ -1,18 +1,40 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { useAuthContext } from "../contexts/authContext";
 
 export default function Header() {
     const { userSession } = useAuthContext();
-    console.log(userSession);
+    const location = useLocation();
+
+    const scrollFunction = () => {
+        if (
+            document.body.scrollTop > 10 ||
+            document.documentElement.scrollTop > 10
+        ) {
+            document.getElementById("header").style.backgroundColor =
+                "rgba(0, 0, 0, 0.2)";
+            document.getElementById("header").style.paddingInline = "35px";
+        } else {
+            document.getElementById("header").style.backgroundColor =
+                "rgba(0, 0, 0, 0)";
+            document.getElementById("header").style.paddingInline = "0px";
+        }
+    };
+
+    window.onscroll = function () {
+        scrollFunction();
+    };
 
     return (
-        <div className="drawer">
+        <div className="drawer sticky top-0 z-50">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col">
                 {/* Navbar */}
-                <div className="w-full">
-                    <div className="navbar max-w-[1200px] mx-auto w-full">
+                <div className="w-full px-3 py-2">
+                    <div
+                        id="header"
+                        className="navbar max-w-[1200px] mx-auto w-full rounded-full duration-300 py-0 backdrop-blur-sm"
+                    >
                         {/* Responsive button */}
                         <div className="flex-none lg:hidden">
                             <label
@@ -38,21 +60,50 @@ export default function Header() {
 
                         <Link
                             to="/"
-                            className="navbar-start font-extrabold text-blue-600 tracking-tight text-xl"
+                            className="navbar-start tooltip tooltip-bottom tooltip-accent"
+                            data-tip="Ir al inicio"
                         >
-                            AC COMPUTERS
+                            <h2 className="text-2xl text-start md:text-[27px] text-[#4e99d3] uppercase font-extrabold">
+                                AC COMPUTERS
+                            </h2>
                         </Link>
                         <div className="hidden flex-none lg:block navbar-center">
-                            <ul className="menu menu-horizontal gap-1 font-medium">
+                            <ul className="menu menu-horizontal text-lg [&>li>a:hover]:text-[#4e99d3] [&>li>a:hover]:scale-105 [&>li>a:hover]:duration-300 [&>li>a:hover]:bg-transparent [&>li>a:focus]:bg-transparent [&>li>a:focus]:text-[#4e99d3]">
                                 {/* Navbar menu content here */}
                                 <li>
-                                    <Link to="/computers">Computadores</Link>
+                                    <Link
+                                        to="/computers"
+                                        className={`${
+                                            location.pathname ===
+                                                "/computers" &&
+                                            "text-[#4e99d3] font-semibold"
+                                        }`}
+                                    >
+                                        Computadores
+                                    </Link>
                                 </li>
                                 <li>
-                                    <Link to="/components">Componentes</Link>
+                                    <Link
+                                        to="/components"
+                                        className={`${
+                                            location.pathname ===
+                                                "/components" &&
+                                            "text-[#4e99d3] font-semibold"
+                                        }`}
+                                    >
+                                        Componentes
+                                    </Link>
                                 </li>
                                 <li>
-                                    <Link to="/contact">Contactanos</Link>
+                                    <Link
+                                        to="/contact"
+                                        className={`${
+                                            location.pathname === "/contact" &&
+                                            "text-[#4e99d3] font-semibold"
+                                        }`}
+                                    >
+                                        Contáctanos
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
@@ -72,7 +123,10 @@ export default function Header() {
                                     {userSession ? (
                                         <>
                                             <li>
-                                                <Link to="/profile" className="justify-between">
+                                                <Link
+                                                    to="/profile"
+                                                    className="justify-between"
+                                                >
                                                     Profile
                                                 </Link>
                                             </li>
