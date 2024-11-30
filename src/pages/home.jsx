@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y } from "swiper/modules";
+import VanillaTilt from "vanilla-tilt";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -19,8 +20,26 @@ export default function Home() {
     const { data: discounts, loading: loadingDiscounts } = useGetData(
         "/products?sort=product_discount&order=DESC&limit=4"
     );
+    const { data: recents, loading: loadingRecents } = useGetData(
+        "/products?sort=product_date&order=DESC&limit=5"
+    );
 
-    if (loadingComputers || loadingComponents || loadingDiscounts) {
+    useEffect(() => {
+        VanillaTilt.init(document.querySelectorAll(".tilt"), {
+            max: 5,
+            speed: 10,
+            glare: true,
+            transition: true,
+            "max-glare": 0.3,
+        });
+    }, [loadingDiscounts, discounts]);
+
+    if (
+        loadingComputers ||
+        loadingComponents ||
+        loadingDiscounts ||
+        loadingRecents
+    ) {
         return <div>Loading...</div>;
     }
     return (
@@ -191,61 +210,54 @@ export default function Home() {
                         </h2>
                         <div className="grid grid-cols-[repeat(auto-fit,_minmax(500px,_1fr))] gap-12">
                             {discounts.map((discount) => (
-                                <article key={discount.product_id}>
-                                    <div className="card w-full bg-black/20 backdrop-blur-sm shadow-xl border border-gray-800/60">
-                                        <div className="card-body flex-row">
-                                            <div className="grow space-y-2">
-                                                <h2 className="text-2xl font-extrabold">
-                                                    {discount.product_name}
-                                                </h2>
-                                                <div className="text-primary text-[17px] font-semibold leading-[1.2]">
-                                                    <p className="line-through">
-                                                        COP{" "}
-                                                        {parseInt(
-                                                            discount.product_price
-                                                        ).toLocaleString(
-                                                            "es-CO"
-                                                        )}
-                                                    </p>
-                                                    <p>
-                                                        COP{" "}
-                                                        {parseInt(
-                                                            discount.product_price -
-                                                                discount.product_price *
-                                                                    (discount.product_discount /
-                                                                        100)
-                                                        ).toLocaleString(
-                                                            "es-CO"
-                                                        )}{" "}
-                                                        -{" "}
-                                                        {
-                                                            discount.product_discount
-                                                        }
-                                                        %
-                                                    </p>
-                                                </div>
-                                                <Link
-                                                    to={`/${
-                                                        discount.category_id ==
-                                                        1
-                                                            ? "computers"
-                                                            : "components"
-                                                    }/${discount.product_id}`}
-                                                    className="btn btn-primary btn-outline btn-sm"
-                                                >
-                                                    Ver
-                                                </Link>
+                                <article
+                                    key={discount.product_id}
+                                    className="card w-full bg-black/20 backdrop-blur-sm shadow-xl border border-gray-800/60 tilt"
+                                >
+                                    <div className="card-body flex-row">
+                                        <div className="grow space-y-2">
+                                            <h2 className="text-2xl font-extrabold">
+                                                {discount.product_name}
+                                            </h2>
+                                            <div className="text-primary text-[17px] font-semibold leading-[1.2]">
+                                                <p className="line-through">
+                                                    COP{" "}
+                                                    {parseInt(
+                                                        discount.product_price
+                                                    ).toLocaleString("es-CO")}
+                                                </p>
+                                                <p>
+                                                    COP{" "}
+                                                    {parseInt(
+                                                        discount.product_price -
+                                                            discount.product_price *
+                                                                (discount.product_discount /
+                                                                    100)
+                                                    ).toLocaleString(
+                                                        "es-CO"
+                                                    )}{" "}
+                                                    -{" "}
+                                                    {discount.product_discount}%
+                                                </p>
                                             </div>
-                                            <figure className="w-1/2 rounded overflow-hidden">
-                                                <img
-                                                    src={
-                                                        discount.product_image_url
-                                                    }
-                                                    alt={`Imagen del producto ${discount.product_name}`}
-                                                    className="object-contain w-full h-full"
-                                                />
-                                            </figure>
+                                            <Link
+                                                to={`/${
+                                                    discount.category_id == 1
+                                                        ? "computers"
+                                                        : "components"
+                                                }/${discount.product_id}`}
+                                                className="btn btn-primary btn-outline btn-sm"
+                                            >
+                                                Ver
+                                            </Link>
                                         </div>
+                                        <figure className="w-1/2 rounded overflow-hidden">
+                                            <img
+                                                src={discount.product_image_url}
+                                                alt={`Imagen del producto ${discount.product_name}`}
+                                                className="object-contain w-full h-full"
+                                            />
+                                        </figure>
                                     </div>
                                 </article>
                             ))}
@@ -260,6 +272,11 @@ export default function Home() {
                         <h2 className="text-5xl font-extrabold tracking-tight text-center">
                             Productos nuevos:
                         </h2>
+                        <Swiper>
+                            {recents.map((rec) => (
+                                <SwiperSlide key={rec.product_id}></SwiperSlide>
+                            ))}
+                        </Swiper>
                     </div>
                 </div>
             </section>
