@@ -13,12 +13,14 @@ export default function Home() {
     const { data: computers, loading: loadingComputers } = useGetData(
         "/products?category_id=1"
     );
-
     const { data: components, loading: loadingComponents } = useGetData(
         "/products?category_id=2"
     );
+    const { data: discounts, loading: loadingDiscounts } = useGetData(
+        "/products?sort=product_discount&order=DESC&limit=4"
+    );
 
-    if (loadingComputers || loadingComponents) {
+    if (loadingComputers || loadingComponents || loadingDiscounts) {
         return <div>Loading...</div>;
     }
     return (
@@ -46,11 +48,30 @@ export default function Home() {
                                                 <h2 className="text-5xl font-extrabold">
                                                     {computer.product_name}
                                                 </h2>
-                                                <p className="text-primary text-3xl font-bold">
+                                                <p className="text-primary text-3xl font-bold flex flex-col">
+                                                    {computer.product_discount >
+                                                        0 && (
+                                                        <span className="line-through">
+                                                            COP{" "}
+                                                            {parseInt(
+                                                                computer.product_price
+                                                            ).toLocaleString(
+                                                                "es-CO"
+                                                            )}
+                                                        </span>
+                                                    )}
                                                     COP{" "}
                                                     {parseInt(
-                                                        computer.product_price
-                                                    ).toLocaleString("es-CO")}
+                                                        computer.product_price *
+                                                            (1 -
+                                                                computer.product_discount /
+                                                                    100)
+                                                    ).toLocaleString(
+                                                        "es-CO"
+                                                    )}{" "}
+                                                    {computer.product_discount >
+                                                        0 &&
+                                                        `- ${computer.product_discount}%`}
                                                 </p>
                                             </div>
                                             <Link
@@ -60,12 +81,15 @@ export default function Home() {
                                                 Información
                                             </Link>
                                         </div>
-                                        <figure className="w-full max-w-1/2 rounded overflow-hidden p-5">
+                                        <Link
+                                            to={`/computers/${computer.product_id}`}
+                                            className="w-full max-w-1/2 rounded overflow-hidden p-5"
+                                        >
                                             <img
                                                 src={computer.product_image_url}
                                                 alt={`Imagen del producto ${computer.product_name}`}
                                             />
-                                        </figure>
+                                        </Link>
                                     </div>
                                 </SwiperSlide>
                             ))}
@@ -102,11 +126,30 @@ export default function Home() {
                                                 <h2 className="text-5xl font-extrabold">
                                                     {component.product_name}
                                                 </h2>
-                                                <p className="text-primary text-3xl font-bold">
+                                                <p className="text-primary text-3xl font-bold flex flex-col">
+                                                    {component.product_discount >
+                                                        0 && (
+                                                        <span className="line-through">
+                                                            COP{" "}
+                                                            {parseInt(
+                                                                component.product_price
+                                                            ).toLocaleString(
+                                                                "es-CO"
+                                                            )}
+                                                        </span>
+                                                    )}
                                                     COP{" "}
                                                     {parseInt(
-                                                        component.product_price
-                                                    ).toLocaleString("es-CO")}
+                                                        component.product_price *
+                                                            (1 -
+                                                                component.product_discount /
+                                                                    100)
+                                                    ).toLocaleString(
+                                                        "es-CO"
+                                                    )}{" "}
+                                                    {component.product_discount >
+                                                        0 &&
+                                                        `- ${component.product_discount}%`}
                                                 </p>
                                             </div>
                                             <Link
@@ -116,14 +159,17 @@ export default function Home() {
                                                 Información
                                             </Link>
                                         </div>
-                                        <figure className="w-full max-w-1/2 rounded overflow-hidden p-5">
+                                        <Link
+                                            to={`/components/${component.product_id}`}
+                                            className="w-full max-w-1/2 rounded overflow-hidden p-5"
+                                        >
                                             <img
                                                 src={
                                                     component.product_image_url
                                                 }
                                                 alt={`Imagen del producto ${component.product_name}`}
                                             />
-                                        </figure>
+                                        </Link>
                                     </div>
                                 </SwiperSlide>
                             ))}
@@ -134,6 +180,87 @@ export default function Home() {
                             </Link>
                         </div>
                     </article>
+                </div>
+            </section>
+            <hr className="w-full max-w-[1200px] mx-auto border-gray-600" />
+            <section className="w-full px-3">
+                <div className="w-full max-w-[1200px] mx-auto py-10">
+                    <div className="space-y-5">
+                        <h2 className="text-5xl font-extrabold tracking-tight text-center">
+                            Descuentos:
+                        </h2>
+                        <div className="grid grid-cols-[repeat(auto-fit,_minmax(500px,_1fr))] gap-12">
+                            {discounts.map((discount) => (
+                                <article key={discount.product_id}>
+                                    <div className="card w-full bg-black/20 backdrop-blur-sm shadow-xl border border-gray-800/60">
+                                        <div className="card-body flex-row">
+                                            <div className="grow space-y-2">
+                                                <h2 className="text-2xl font-extrabold">
+                                                    {discount.product_name}
+                                                </h2>
+                                                <div className="text-primary text-[17px] font-semibold leading-[1.2]">
+                                                    <p className="line-through">
+                                                        COP{" "}
+                                                        {parseInt(
+                                                            discount.product_price
+                                                        ).toLocaleString(
+                                                            "es-CO"
+                                                        )}
+                                                    </p>
+                                                    <p>
+                                                        COP{" "}
+                                                        {parseInt(
+                                                            discount.product_price -
+                                                                discount.product_price *
+                                                                    (discount.product_discount /
+                                                                        100)
+                                                        ).toLocaleString(
+                                                            "es-CO"
+                                                        )}{" "}
+                                                        -{" "}
+                                                        {
+                                                            discount.product_discount
+                                                        }
+                                                        %
+                                                    </p>
+                                                </div>
+                                                <Link
+                                                    to={`/${
+                                                        discount.category_id ==
+                                                        1
+                                                            ? "computers"
+                                                            : "components"
+                                                    }/${discount.product_id}`}
+                                                    className="btn btn-primary btn-outline btn-sm"
+                                                >
+                                                    Ver
+                                                </Link>
+                                            </div>
+                                            <figure className="w-1/2 rounded overflow-hidden">
+                                                <img
+                                                    src={
+                                                        discount.product_image_url
+                                                    }
+                                                    alt={`Imagen del producto ${discount.product_name}`}
+                                                    className="object-contain w-full h-full"
+                                                />
+                                            </figure>
+                                        </div>
+                                    </div>
+                                </article>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <hr className="w-full max-w-[1200px] mx-auto border-gray-600" />
+            <section className="w-full px-3">
+                <div className="w-full max-w-[1200px] mx-auto py-10">
+                    <div className="space-y-5">
+                        <h2 className="text-5xl font-extrabold tracking-tight text-center">
+                            Productos nuevos:
+                        </h2>
+                    </div>
                 </div>
             </section>
         </>
