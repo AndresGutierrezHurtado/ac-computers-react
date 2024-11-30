@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import * as models from "../models/relations.js";
 
 export default class ProductController {
@@ -5,6 +6,8 @@ export default class ProductController {
         let whereClause = {};
         if (req.query.category_id)
             whereClause.category_id = req.query.category_id;
+        if (req.query.sort && req.query.sort === "product_discount")
+            whereClause.product_discount = { [Op.gt]: 0 };
 
         try {
             const products = await models.Product.findAll({
@@ -13,6 +16,13 @@ export default class ProductController {
                     { model: models.Spec, as: "specs" },
                 ],
                 where: whereClause,
+                order: [
+                    [
+                        req.query.sort || "product_name",
+                        req.query.order || "ASC",
+                    ],
+                ],
+                limit: req.query.limit ? parseInt(req.query.limit) : 10,
             });
 
             res.status(200).json({

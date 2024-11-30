@@ -22,6 +22,11 @@ export const Product = sequelize.define(
             type: DataTypes.DECIMAL(10, 2),
             allowNull: false,
         },
+        product_discount: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0,
+        },
         product_image_url: {
             type: DataTypes.STRING(255),
             allowNull: false,
