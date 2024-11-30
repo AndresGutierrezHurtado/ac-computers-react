@@ -32,6 +32,11 @@ export const Product = sequelize.define(
             allowNull: false,
             defaultValue: "/images/products/default.jpg",
         },
+        product_date: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
         category_id: {
             type: DataTypes.INTEGER,
             allowNull: false,

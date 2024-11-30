@@ -76,34 +76,34 @@ CREATE TABLE `products` (
     `product_image_url` VARCHAR(255) NOT NULL DEFAULT "/images/products/default.jpg",
     `product_price` DECIMAL(10, 0) NOT NULL,
     `product_discount` INT NOT NULL DEFAULT 0,
+    `product_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `category_id` INT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
-INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `product_image_url`, `product_price`, `product_discount`, `category_id`) VALUES
+INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `product_image_url`, `product_price`, `product_discount`, `product_date`, `category_id`) VALUES
 -- Computers
-('0928d6da-7443-43e5-bc66-ce7ddb7cbe43', 'PC Streamer Edition', 'PC diseñada para streaming y multitarea', '/images/products/default.jpg', 4800000, 10, 1),
-('10cb4e1b-03bb-4e73-b86f-d5422be1f5ee', 'PC Warzone', 'PC para desarrollo y videojuegos', '/images/products/default.jpg', 5500000, 0, 1),
-('32769f78-b0bc-49eb-b507-8c081437eef1', 'PC Creator Pro', 'PC optimizada para edición de video y diseño gráfico', '/images/products/default.jpg', 6200000, 12, 1),
-('3f66861c-27f6-49b8-89ff-a923a6377229', 'Workstation Creator Pro', 'Estación de trabajo para edición de video y diseño 3D.', '/images/products/default.jpg', 7500000, 5, 1),
-('456887fd-9955-45ff-9399-121e81600842', 'PC Oficina Smart', 'PC eficiente para tareas de oficina y productividad.', '/images/products/default.jpg', 2000000, 0, 1),
-('fdb62e9e-eb77-457d-ac80-e79871c6b6c6', 'PC Gamer Alpha', 'PC gamer con enfriamiento líquido y rendimiento extremo.', '/images/products/default.jpg', 5500000, 7, 1),
-('63f5737c-4d00-4689-a054-f1b4265eaadf', 'PC Diseño Gráfico Visionary', 'Computador especializado para diseñadores y editores.', '/images/products/default.jpg', 6200000, 0, 1),
-('a6709bce-e0fe-4326-b83a-5ab75a1698fe', 'PC Gamer NitroX', 'PC gamer de alto rendimiento con componentes de última generación.', '/images/products/default.jpg', 4500000, 0, 1),
-('dee80ac7-201d-4645-bd9f-c1ba43d3d143', 'Servidor NAS Pro', 'Servidor de almacenamiento para entornos empresariales.', '/images/products/default.jpg', 6800000, 10, 1),
-('fc7adfe3-d907-4bd6-a8fd-c711261cf4e8', 'PC Budget Gaming', 'PC económica para juegos en 1080p', '/images/products/default.jpg', 3200000, 0, 1),
+('0928d6da-7443-43e5-bc66-ce7ddb7cbe43', 'PC Streamer Edition', 'PC diseñada para streaming y multitarea', '/images/products/default.jpg', 4800000, 10, '2024-06-15 00:00:00', 1),
+('10cb4e1b-03bb-4e73-b86f-d5422be1f5ee', 'PC Warzone', 'PC para desarrollo y videojuegos', '/images/products/default.jpg', 5500000, 0, '2024-07-20 00:00:00', 1),
+('32769f78-b0bc-49eb-b507-8c081437eef1', 'PC Creator Pro', 'PC optimizada para edición de video y diseño gráfico', '/images/products/default.jpg', 6200000, 12, '2024-08-05 00:00:00', 1),
+('3f66861c-27f6-49b8-89ff-a923a6377229', 'Workstation Creator Pro', 'Estación de trabajo para edición de video y diseño 3D.', '/images/products/default.jpg', 7500000, 5, '2024-09-12 00:00:00', 1),
+('456887fd-9955-45ff-9399-121e81600842', 'PC Oficina Smart', 'PC eficiente para tareas de oficina y productividad.', '/images/products/default.jpg', 2000000, 0, '2024-06-30 00:00:00', 1),
+('63f5737c-4d00-4689-a054-f1b4265eaadf', 'PC Diseño Gráfico Visionary', 'Computador especializado para diseñadores y editores.', '/images/products/default.jpg', 6200000, 0, '2024-11-02 00:00:00', 1),
+('a6709bce-e0fe-4326-b83a-5ab75a1698fe', 'PC Gamer NitroX', 'PC gamer de alto rendimiento con componentes de última generación.', '/images/products/default.jpg', 4500000, 0, '2024-12-10 00:00:00', 1),
+('dee80ac7-201d-4645-bd9f-c1ba43d3d143', 'Servidor NAS Pro', 'Servidor de almacenamiento para entornos empresariales.', '/images/products/default.jpg', 6800000, 10, '2024-08-25 00:00:00', 1),
+('fc7adfe3-d907-4bd6-a8fd-c711261cf4e8', 'PC Budget Gaming', 'PC económica para juegos en 1080p', '/images/products/default.jpg', 3200000, 0, '2024-09-09 00:00:00', 1),
+('fdb62e9e-eb77-457d-ac80-e79871c6b6c6', 'PC Gamer Alpha', 'PC gamer con enfriamiento líquido y rendimiento extremo.', '/images/products/default.jpg', 5500000, 7, '2024-10-18 00:00:00', 1),
 
 -- Components
-('14e89a1f-7158-4715-b4b9-5e5171f98da9', 'Caja ATX NZXT H510', 'Chasis compacto y minimalista para PC.', '/images/products/default.jpg', 500000, 0, 2),
-('2295b1cb-fa65-4086-a00e-49358c0d5013', 'Disco Duro SSD Samsung 970 EVO Plus 1TB', 'Disco SSD NVMe para almacenamiento rápido.', '/images/products/default.jpg', 750000, 0, 2),
-('50890f7f-ed2b-4ba2-b77c-83f0b4d40f02', 'Memoria RAM Corsair Vengeance 16GB', 'Memoria RAM DDR4 de 16GB para alto rendimiento.', '/images/products/default.jpg', 400000, 0, 2),
-('8930d24c-1c6a-4c6f-8b37-cbd5a9513e7a', 'Tarjeta gráfica NVIDIA RTX 3060', 'Tarjeta gráfica con 12GB GDDR6, ideal para gaming y diseño.', '/images/products/default.jpg', 2100000, 0, 2),
-('8c67d0b6-48ce-4e37-8b1d-fbc01f58d944', 'Procesador Intel Core i7 12700K', 'Procesador de 12 núcleos, ideal para alto rendimiento.', '/images/products/default.jpg', 1800000, 0, 2),
-('9ee4191b-62c1-486a-901a-9fe5318ede73', 'Tarjeta de sonido Creative Sound BlasterX', 'Tarjeta de sonido para audio de alta fidelidad.', '/images/products/default.jpg', 350000, 0, 2),
-('a754dd9d-b11d-40c6-bded-a22b9fece258', 'Monitor Gaming LG Ultragear 27\'\'', 'Monitor IPS con resolución QHD y 144Hz.', '/images/products/default.jpg', 1300000, 0, 2),
-('a942bb25-3c28-4961-88dd-4bab9540aa7f', 'Placa Madre ASUS ROG STRIX Z690', 'Placa madre compatible con Intel de 12ª generación.', '/images/products/default.jpg', 1500000, 0, 2),
-('beb98e2c-0357-410c-b9e5-f67948851ded', 'Refrigeración Líquida Corsair H100i', 'Sistema de enfriamiento líquido para CPU.', '/images/products/default.jpg', 800000, 0, 2),
-('cc1a44d9-3e9e-4ea7-a2f8-bdfa84c0433f', 'Fuente de poder Corsair 750W', 'Fuente de poder modular de 750W, certificación 80 Plus Gold.', '/images/products/default.jpg', 600000, 0, 2);
+('14e89a1f-7158-4715-b4b9-5e5171f98da9', 'Caja ATX NZXT H510', 'Chasis compacto y minimalista para PC.', '/images/products/default.jpg', 500000, 0, '2024-07-03 00:00:00', 2),
+('2295b1cb-fa65-4086-a00e-49358c0d5013', 'Disco Duro SSD Samsung 970 EVO Plus 1TB', 'Disco SSD NVMe para almacenamiento rápido.', '/images/products/default.jpg', 750000, 0, '2024-07-17 00:00:00', 2),
+('50890f7f-ed2b-4ba2-b77c-83f0b4d40f02', 'Memoria RAM Corsair Vengeance 16GB', 'Memoria RAM DDR4 de 16GB para alto rendimiento.', '/images/products/default.jpg', 400000, 0, '2024-10-05 00:00:00', 2),
+('8930d24c-1c6a-4c6f-8b37-cbd5a9513e7a', 'Tarjeta gráfica NVIDIA RTX 3060', 'Tarjeta gráfica con 12GB GDDR6, ideal para gaming y diseño.', '/images/products/default.jpg', 2100000, 0, '2024-11-22 00:00:00', 2),
+('8c67d0b6-48ce-4e37-8b1d-fbc01f58d944', 'Procesador Intel Core i7 12700K', 'Procesador de 12 núcleos, ideal para alto rendimiento.', '/images/products/default.jpg', 1800000, 0, '2024-12-01 00:00:00', 2),
+('9ee4191b-62c1-486a-901a-9fe5318ede73', 'Tarjeta de sonido Creative Sound BlasterX', 'Tarjeta de sonido para audio de alta fidelidad.', '/images/products/default.jpg', 350000, 0, '2024-08-11 00:00:00', 2),
+('a754dd9d-b11d-40c6-bded-a22b9fece258', 'Monitor Gaming LG Ultragear 27\'\'', 'Monitor IPS con resolución QHD y 144Hz.', '/images/products/default.jpg', 1300000, 0, '2024-09-27 00:00:00', 2),
+('a942bb25-3c28-4961-88dd-4bab9540aa7f', 'Placa Madre ASUS ROG STRIX Z690', 'Placa madre compatible con Intel de 12ª generación.', '/images/products/default.jpg', 1500000, 0, '2024-10-13 00:00:00', 2),
+('beb98e2c-0357-410c-b9e5-f67948851ded', 'Refrigeración Líquida Corsair H100i', 'Sistema de enfriamiento líquido para CPU.', '/images/products/default.jpg', 800000, 0, '2024-06-21 00:00:00', 2),
+('cc1a44d9-3e9e-4ea7-a2f8-bdfa84c0433f', 'Fuente de poder Corsair 750W', 'Fuente de poder modular de 750W, certificación 80 Plus Gold.', '/images/products/default.jpg', 600000, 0, '2024-12-15 00:00:00', 2);
 
 -- ---------------------------------------------------------------
 --
