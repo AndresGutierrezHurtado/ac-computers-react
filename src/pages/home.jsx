@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, A11y } from "swiper/modules";
+import { Navigation, Pagination, A11y, EffectCoverflow } from "swiper/modules";
 import VanillaTilt from "vanilla-tilt";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "swiper/css/effect-coverflow";
 
 // Hooks
 import { useGetData } from "../hooks/useFetchApi.js";
-import { Link } from "react-router";
+
+// Components
 import { StarIcon } from "../components/icons.jsx";
 
 export default function Home() {
@@ -31,7 +34,7 @@ export default function Home() {
             speed: 10,
             glare: true,
             transition: true,
-            "max-glare": 0.3,
+            "max-glare": 0.4,
         });
     }, [loadingDiscounts, discounts]);
 
@@ -48,11 +51,12 @@ export default function Home() {
             <section className="w-full px-3">
                 <div className="w-full max-w-[1200px] mx-auto py-10">
                     <article className="space-y-5">
-                        <h2 className="text-5xl font-extrabold tracking-tight text-center">
+                        <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-center">
                             Computadoras:
                         </h2>
                         <Swiper
                             slidesPerView={1}
+                            rewind={true}
                             modules={[Navigation, Pagination, A11y]}
                             navigation={{ clickable: true }}
                             pagination={{ clickable: true }}
@@ -60,15 +64,15 @@ export default function Home() {
                             {computers.slice(0, 5).map((computer) => (
                                 <SwiperSlide
                                     key={computer.product_id}
-                                    className="px-16 pb-10 w-full h-[550px]"
+                                    className="px-10 md:px-16 pb-10 w-full h-[550px]"
                                 >
-                                    <div className="flex w-full items-center">
-                                        <div className="w-full max-w-1/2 space-y-4">
-                                            <div>
-                                                <h2 className="text-5xl font-extrabold">
+                                    <div className="flex flex-col-reverse md:flex-row w-full items-center">
+                                        <div className="w-full md:max-w-1/2 space-y-4">
+                                            <div className="text-center md:text-start">
+                                                <h2 className="text-3xl md:text-5xl font-extrabold">
                                                     {computer.product_name}
                                                 </h2>
-                                                <p className="text-primary text-3xl font-bold flex flex-col">
+                                                <p className="text-primary text-xl font-bold flex flex-col">
                                                     {computer.product_discount >
                                                         0 && (
                                                         <span className="line-through">
@@ -94,16 +98,18 @@ export default function Home() {
                                                         `- ${computer.product_discount}%`}
                                                 </p>
                                             </div>
-                                            <Link
-                                                to={`/computers/${computer.product_id}`}
-                                                className="btn btn-outline btn-primary"
-                                            >
-                                                Información
-                                            </Link>
+                                            <div className="mx-auto w-fit md:mx-0">
+                                                <Link
+                                                    to={`/computers/${computer.product_id}`}
+                                                    className="btn btn-outline btn-primary"
+                                                >
+                                                    Información
+                                                </Link>
+                                            </div>
                                         </div>
                                         <Link
                                             to={`/computers/${computer.product_id}`}
-                                            className="w-full max-w-1/2 rounded overflow-hidden p-5"
+                                            className="w-full md:max-w-1/2 rounded overflow-hidden p-5"
                                         >
                                             <img
                                                 src={computer.product_image_url}
@@ -122,15 +128,18 @@ export default function Home() {
                     </article>
                 </div>
             </section>
+
             <hr className="w-full max-w-[1200px] mx-auto border-gray-600" />
+
             <section className="w-full px-3">
                 <div className="w-full max-w-[1200px] mx-auto py-10">
                     <article className="space-y-5">
-                        <h2 className="text-5xl font-extrabold tracking-tight text-center">
+                        <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-center">
                             Componentes:
                         </h2>
                         <Swiper
                             slidesPerView={1}
+                            rewind={true}
                             modules={[Navigation, Pagination, A11y]}
                             navigation={{ clickable: true }}
                             pagination={{ clickable: true }}
@@ -138,15 +147,15 @@ export default function Home() {
                             {components.slice(0, 5).map((component) => (
                                 <SwiperSlide
                                     key={component.product_id}
-                                    className="px-16 pb-10 w-full h-[550px]"
+                                    className="px-10 md:px-16 pb-10 w-full h-[550px]"
                                 >
-                                    <div className="flex w-full items-center">
-                                        <div className="w-full max-w-1/2 space-y-4">
-                                            <div>
-                                                <h2 className="text-5xl font-extrabold">
+                                    <div className="flex flex-col-reverse md:flex-row w-full items-center">
+                                        <div className="w-full md:max-w-1/2 space-y-4">
+                                            <div className="text-center md:text-start">
+                                                <h2 className="text-3xl md:text-5xl font-extrabold">
                                                     {component.product_name}
                                                 </h2>
-                                                <p className="text-primary text-3xl font-bold flex flex-col">
+                                                <p className="text-primary text-xl font-bold flex flex-col">
                                                     {component.product_discount >
                                                         0 && (
                                                         <span className="line-through">
@@ -172,12 +181,14 @@ export default function Home() {
                                                         `- ${component.product_discount}%`}
                                                 </p>
                                             </div>
-                                            <Link
-                                                to={`/components/${component.product_id}`}
-                                                className="btn btn-outline btn-primary"
-                                            >
-                                                Información
-                                            </Link>
+                                            <div className="mx-auto w-fit md:mx-0">
+                                                <Link
+                                                    to={`/components/${component.product_id}`}
+                                                    className="btn btn-outline btn-primary"
+                                                >
+                                                    Información
+                                                </Link>
+                                            </div>
                                         </div>
                                         <Link
                                             to={`/components/${component.product_id}`}
@@ -209,7 +220,7 @@ export default function Home() {
                         <h2 className="text-5xl font-extrabold tracking-tight text-center">
                             Descuentos:
                         </h2>
-                        <div className="grid grid-cols-[repeat(auto-fit,_minmax(500px,_1fr))] gap-12">
+                        <div className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] md:grid-cols-[repeat(auto-fit,_minmax(500px,_1fr))] gap-12">
                             {discounts.map((discount) => (
                                 <article
                                     key={discount.product_id}
@@ -274,15 +285,37 @@ export default function Home() {
                             Productos nuevos:
                         </h2>
                         <Swiper
-                            slidesPerView={3}
-                            spaceBetween={10}
-                            modules={[Navigation, Pagination, A11y]}
+                            slidesPerView={1}
+                            spaceBetween={50}
+                            rewind={true}
+                            effect="coverflow"
+                            breakpoints={{
+                                640: { slidesPerView: 1 },
+                                768: { slidesPerView: 2 },
+                                1024: { slidesPerView: 3 },
+                            }}
+                            modules={[
+                                Navigation,
+                                Pagination,
+                                A11y,
+                                EffectCoverflow,
+                            ]}
                             navigation={{ clickable: true }}
                             pagination={{ clickable: true }}
+                            coverflowEffect={{
+                                rotate: 50,
+                                stretch: 0,
+                                depth: 100,
+                                modifier: 1,
+                                slideShadows: false,
+                            }}
                         >
                             <main className="px-10">
-                                {recents.map((rec) => (
-                                    <SwiperSlide key={rec.product_id} className="h-[initial_!important] pb-10">
+                                {recents.map((rec, index) => (
+                                    <SwiperSlide
+                                        key={rec.product_id}
+                                        className="h-[initial_!important] pb-10"
+                                    >
                                         <article
                                             key={rec.product_id}
                                             className="card w-full h-full bg-black/20 backdrop-blur-sm shadow-xl border border-gray-800/60 tilt"
