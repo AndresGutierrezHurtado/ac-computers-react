@@ -9,6 +9,7 @@ const SequelizeStore = new sequelizeStore(session.Store);
 // routes
 import userRoutes from "./routes/user.routes.js";
 import productRoutes from "./routes/product.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 
 const app = express();
 const store = new SequelizeStore({ db: sequelize, tableName: "sessions" });
@@ -43,12 +44,14 @@ app.use(async (req, res, next) => {
             include: [{ model: models.Role, as: "role" }],
         });
     }
+    console.log(req.session.user);
 
     next();
 });
 
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", productRoutes);
+app.use("/api/v1", authRoutes);
 
 app.listen(process.env.VITE_API_PORT, () =>
     console.log(`Server running on port ${process.env.VITE_API_PORT}`)

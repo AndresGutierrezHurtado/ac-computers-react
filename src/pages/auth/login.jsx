@@ -1,14 +1,31 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 // Components
-import { FacebookIcon, GoogleIcon, UploadIcon, EyeIcon, EyeSlashIcon } from "../../components/icons";
+import {
+    FacebookIcon,
+    GoogleIcon,
+    UploadIcon,
+    EyeIcon,
+    EyeSlashIcon,
+} from "../../components/icons";
+
+// Hooks
+import { usePostData } from "../../hooks/useFetchApi";
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const data = Object.fromEntries(new FormData(e.target));
+        const response = await usePostData("/user/login", data);
+
+        if (response.success) {
+            navigate("/");
+        }
     };
 
     return (
@@ -103,7 +120,7 @@ export default function Login() {
                             <Link
                                 to={
                                     import.meta.env.VITE_API_URL +
-                                    "/auth/google"
+                                    "/user/auth/google"
                                 }
                                 className="btn bg-gray-300 text-gray-600 hover:bg-gray-200 hover:text-gray-700 font-semibold"
                             >
@@ -113,7 +130,7 @@ export default function Login() {
                             <Link
                                 to={
                                     import.meta.env.VITE_API_URL +
-                                    "/auth/facebook"
+                                    "/user/auth/facebook"
                                 }
                                 className="btn bg-blue-700 text-blue-400 hover:bg-blue-800 hover:text-blue-300 font-semibold"
                             >

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router";
 import { useAuthContext } from "../contexts/authContext";
 
 export default function Header() {
-    const { userSession } = useAuthContext();
+    const { userSession, handleLogout } = useAuthContext();
     const location = useLocation();
 
     const scrollFunction = () => {
@@ -131,7 +131,7 @@ export default function Header() {
                                                 </Link>
                                             </li>
                                             <li>
-                                                <a>Logout</a>
+                                                <a onClick={handleLogout}>Logout</a>
                                             </li>
                                         </>
                                     ) : (
