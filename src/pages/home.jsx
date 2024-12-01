@@ -30,11 +30,12 @@ export default function Home() {
 
     useEffect(() => {
         VanillaTilt.init(document.querySelectorAll(".tilt"), {
-            max: 5,
-            speed: 10,
-            glare: true,
+            max: 15,
+            scale: 1.04,
+            speed: 400,
             transition: true,
-            "max-glare": 0.4,
+            glare: true,
+            "max-glare": 0.3,
         });
     }, [loadingDiscounts, discounts]);
 
