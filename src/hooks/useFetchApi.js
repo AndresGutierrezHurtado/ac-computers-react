@@ -27,10 +27,7 @@ export const useGetData = (endpoint) => {
         const getData = async () => {
             const response = await useFetchData(endpoint);
             setLoading(false);
-
-            if (response.success) {
-                setData(response.data);
-            }
+            setData(response.data);
         };
 
         getData();
@@ -41,41 +38,76 @@ export const useGetData = (endpoint) => {
     return { data, loading, reload };
 };
 
-export const usePostData = (endpoint, body) => {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [trigger, setTrigger] = useState(0);
+export const usePostData = async (endpoint, body = {}) => {
+    const response = await useFetchData(endpoint, {
+        method: "POST",
+        body: JSON.stringify(body),
+    });
 
-    useEffect(() => {
-        const getData = async () => {
-            const response = await useFetchData(endpoint, {
-                method: "POST",
-                body: JSON.stringify(body),
-            });
-            setLoading(false);
+    if (response.success) {
+        Swal.fire({
+            icon: "success",
+            title: "Acción realizada correctamente",
+            text: response.message,
+            timer: 8000,
+        });
+    } else {
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.message,
+            timer: 8000,
+        });
+    }
 
-            if (response.success) {
-                setData(response.data);
-                Swal.fire({
-                    icon: "success",
-                    title: "Acción realizada correctamente",
-                    text: response.message,
-                    timer: 8000,
-                });
-            } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Hubo un error en la petición",
-                    text: response.message,
-                    timer: 8000,
-                });
-            }
-        };
+    return response;
+};
 
-        getData();
-    }, [endpoint, trigger]);
+export const usePutData = async (endpoint, body = {}) => {
+    const response = await useFetchData(endpoint, {
+        method: "PUT",
+        body: JSON.stringify(body),
+    });
 
-    const reload = () => setTrigger((prev) => prev + 1);
+    if (response.success) {
+        Swal.fire({
+            icon: "success",
+            title: "Acción realizada correctamente",
+            text: response.message,
+            timer: 8000,
+        });
+    } else {
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.message,
+            timer: 8000,
+        });
+    }
 
-    return { data, loading, reload };
+    return response;
+};
+
+export const useDeleteData = async (endpoint) => {
+    const response = await useFetchData(endpoint, {
+        method: "DELETE",
+    });
+
+    if (response.success) {
+        Swal.fire({
+            icon: "success",
+            title: "Acción realizada correctamente",
+            text: response.message,
+            timer: 8000,
+        });
+    } else {
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.message,
+            timer: 8000,
+        });
+    }
+
+    return response;
 };

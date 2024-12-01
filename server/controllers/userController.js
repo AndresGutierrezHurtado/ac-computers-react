@@ -137,32 +137,40 @@ export default class UserController {
     }
 
     static async verifyUserSession(req, res) {
-        try {
-            if (req.session.user_id) {
-                res.status(200).json({
-                    success: true,
-                    message: "Usuario autenticado correctamente",
-                    data: req.session.user,
-                });
-            }
-
-            res.status(200).json({
+        if (!req.session.user_id) {
+            return res.status(200).json({
                 success: false,
                 message: "Usuario no autenticado",
                 data: null,
             });
-        } catch (error) {
-            res.status(500).json({
-                success: false,
-                message: error.message,
-                data: null,
-            });
         }
+
+        res.status(200).json({
+            success: true,
+            message: "Usuario autenticado correctamente",
+            data: req.session.user,
+        });
     }
 
-    static async logoutUser(req, res) {
+    static logoutUser(req, res) {
         try {
-            req.session.destroy();
+            req.session.user_id = null;
+            req.session.destroy((err) => {
+                if (err) {
+                    res.status(500).json({
+                        success: false,
+                        message: err.message,
+                        data: null,
+                    });
+                    return;
+                }
+            });
+
+            res.status(200).json({
+                success: true,
+                message: "Sesión cerrada correctamente",
+                data: null,
+            });
         } catch (error) {
             res.status(500).json({
                 success: false,

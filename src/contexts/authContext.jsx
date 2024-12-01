@@ -1,5 +1,5 @@
 import { useContext, createContext } from "react";
-import { useGetData } from "../hooks/useFetchApi.js";
+import { useGetData, usePostData } from "../hooks/useFetchApi.js";
 
 const AuthContext = createContext();
 
@@ -11,10 +11,19 @@ export const AuthContextProvider = ({ children }) => {
         loading: loadingUserSession,
         reload: reloadUserSession,
     } = useGetData("/user/session");
-    
+
+    const handleLogout = async () => {
+        const response = await usePostData("/user/logout");
+        if (response.success) {
+            reloadUserSession();
+        }
+    };
+
     if (loadingUserSession) return <h1> Cargando sesión del usuario </h1>;
     return (
-        <AuthContext.Provider value={{ userSession, reloadUserSession }}>
+        <AuthContext.Provider
+            value={{ userSession, reloadUserSession, handleLogout }}
+        >
             {children}
         </AuthContext.Provider>
     );

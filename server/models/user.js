@@ -24,7 +24,6 @@ export const User = sequelize.define(
         },
         user_phone: {
             type: DataTypes.DECIMAL(10, 0),
-            allowNull: false,
         },
         role_id: {
             type: DataTypes.INTEGER,
