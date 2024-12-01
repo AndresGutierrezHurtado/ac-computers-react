@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 
 // Hooks
 import { useGetData } from "../hooks/useFetchApi.js";
@@ -9,6 +9,9 @@ export default function Computer() {
     const { data: computer, loading: loadingComputer } = useGetData(
         `/products/${useParams().id}`
     );
+
+    const location = useLocation();
+    console.log(location.state);
 
     const images = [
         {
@@ -50,7 +53,7 @@ export default function Computer() {
                 <div className="w-full max-w-[1200px] mx-auto py-10">
                     <div className="flex gap-10">
                         <div className="w-fit">
-                            <SwiperThumbnails images={images} size={450} />
+                            <SwiperThumbnails images={images} size={450} product_id={computer.product_id} />
                         </div>
                         <div className="grow flex flex-col gap-2">
                             <h1 className="text-5xl font-extrabold tracking-tight">

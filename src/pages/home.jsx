@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router";
+import { flushSync } from "react-dom";
+import { Link, useNavigate } from "react-router";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y, EffectCoverflow } from "swiper/modules";
 import VanillaTilt from "vanilla-tilt";
@@ -15,6 +16,8 @@ import { useGetData } from "../hooks/useFetchApi.js";
 import { StarIcon } from "../components/icons.jsx";
 
 export default function Home() {
+    const navigate = useNavigate();
+
     const { data: computers, loading: loadingComputers } = useGetData(
         "/products?category_id=1"
     );
@@ -39,6 +42,19 @@ export default function Home() {
             reverse: true,
         });
     }, [loadingDiscounts, discounts]);
+
+    const handleNavigation = (path) => {
+        if (!document.startViewTransition) {
+            console.log("No view transition");
+            return navigate(path);
+        }
+
+        document.startViewTransition(() => {
+            flushSync(() => {
+                navigate(path, { state: { product: "fetchedData" } });
+            });
+        });
+    };
 
     if (
         loadingComputers ||
@@ -74,39 +90,48 @@ export default function Home() {
                                                 <h2 className="text-3xl md:text-5xl font-extrabold">
                                                     {computer.product_name}
                                                 </h2>
-                                                <p className="text-primary text-xl font-bold flex flex-col">
+                                                <div className="text-3xl font-bold text-primary">
                                                     {computer.product_discount >
                                                         0 && (
-                                                        <span className="line-through">
+                                                        <p className="line-through text-2xl">
                                                             COP{" "}
                                                             {parseInt(
                                                                 computer.product_price
                                                             ).toLocaleString(
                                                                 "es-CO"
                                                             )}
-                                                        </span>
+                                                        </p>
                                                     )}
-                                                    COP{" "}
-                                                    {parseInt(
-                                                        computer.product_price *
-                                                            (1 -
-                                                                computer.product_discount /
-                                                                    100)
-                                                    ).toLocaleString(
-                                                        "es-CO"
-                                                    )}{" "}
-                                                    {computer.product_discount >
-                                                        0 &&
-                                                        `- ${computer.product_discount}%`}
-                                                </p>
+                                                    <p>
+                                                        COP{" "}
+                                                        {parseInt(
+                                                            computer.product_price *
+                                                                (1 -
+                                                                    computer.product_discount /
+                                                                        100)
+                                                        ).toLocaleString(
+                                                            "es-CO"
+                                                        )}
+                                                        {computer.product_discount >
+                                                            0 &&
+                                                            ` - ${computer.product_discount}%`}
+                                                    </p>
+                                                </div>
                                             </div>
                                             <div className="mx-auto w-fit md:mx-0">
-                                                <Link
-                                                    to={`/computers/${computer.product_id}`}
+                                                <a
+                                                    onClick={() =>
+                                                        handleNavigation(
+                                                            `/computers/${computer.product_id}`
+                                                        )
+                                                    }
+                                                    style={{
+                                                        viewTransitionName: `product-${computer.product_id}`,
+                                                    }}
                                                     className="btn btn-outline btn-primary"
                                                 >
                                                     Información
-                                                </Link>
+                                                </a>
                                             </div>
                                         </div>
                                         <Link
@@ -157,31 +182,33 @@ export default function Home() {
                                                 <h2 className="text-3xl md:text-5xl font-extrabold">
                                                     {component.product_name}
                                                 </h2>
-                                                <p className="text-primary text-xl font-bold flex flex-col">
+                                                <div className="text-3xl font-bold text-primary">
                                                     {component.product_discount >
                                                         0 && (
-                                                        <span className="line-through">
+                                                        <p className="line-through text-2xl">
                                                             COP{" "}
                                                             {parseInt(
                                                                 component.product_price
                                                             ).toLocaleString(
                                                                 "es-CO"
                                                             )}
-                                                        </span>
+                                                        </p>
                                                     )}
-                                                    COP{" "}
-                                                    {parseInt(
-                                                        component.product_price *
-                                                            (1 -
-                                                                component.product_discount /
-                                                                    100)
-                                                    ).toLocaleString(
-                                                        "es-CO"
-                                                    )}{" "}
-                                                    {component.product_discount >
-                                                        0 &&
-                                                        `- ${component.product_discount}%`}
-                                                </p>
+                                                    <p>
+                                                        COP{" "}
+                                                        {parseInt(
+                                                            component.product_price *
+                                                                (1 -
+                                                                    component.product_discount /
+                                                                        100)
+                                                        ).toLocaleString(
+                                                            "es-CO"
+                                                        )}
+                                                        {component.product_discount >
+                                                            0 &&
+                                                            ` - ${component.product_discount}%`}
+                                                    </p>
+                                                </div>
                                             </div>
                                             <div className="mx-auto w-fit md:mx-0">
                                                 <Link

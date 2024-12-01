@@ -8,12 +8,19 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 
-export default function SwiperThumbnails({ images = [], size = 300 }) {
+export default function SwiperThumbnails({
+    images = [],
+    size = 300,
+    product_id,
+}) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [current, setCurrent] = useState(0);
 
     return (
-        <figure className="flex gap-5 w-full" style={{ width: `${size}px`, height: `${size - 120}px` }}>
+        <figure
+            className="flex gap-5 w-full"
+            style={{ width: `${size}px`, height: `${size - 120}px` }}
+        >
             <div className="w-fit relative">
                 <div className="badge badge-sm absolute top-2 right-2 z-10">
                     {current + 1 || 1} / {images.length}
@@ -32,9 +39,18 @@ export default function SwiperThumbnails({ images = [], size = 300 }) {
                     onSlideChange={(swiper) => setCurrent(swiper.activeIndex)}
                     className="mySwiper2"
                 >
-                    {images.map((image) => (
+                    {images.map((image, index) => (
                         <SwiperSlide key={image.id}>
-                            <img src={image.url} alt={image.alt} />
+                            <img
+                                src={image.url}
+                                alt={image.alt}
+                                style={{
+                                    viewTransitionName:
+                                        index == 0
+                                            ? `product-${product_id}`
+                                            : null,
+                                }}
+                            />
                         </SwiperSlide>
                     ))}
                 </Swiper>
