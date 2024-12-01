@@ -19,3 +19,13 @@ input:-webkit-autofill:active {
     overflow: visible !important;
     clip-path: inset(-40px 0 0 0);
 }
+
+.mySwiper .swiper-slide {
+    width: 25%;
+    height: 100%;
+    opacity: 0.4;
+}
+
+.mySwiper .swiper-slide-thumb-active {
+    opacity: 1;
+}
