@@ -30,12 +30,13 @@ export default function Home() {
 
     useEffect(() => {
         VanillaTilt.init(document.querySelectorAll(".tilt"), {
-            max: 15,
+            max: 10,
             scale: 1.04,
             speed: 400,
             transition: true,
             glare: true,
             "max-glare": 0.3,
+            reverse: true,
         });
     }, [loadingDiscounts, discounts]);
 
@@ -315,7 +316,7 @@ export default function Home() {
                                 {recents.map((rec, index) => (
                                     <SwiperSlide
                                         key={rec.product_id}
-                                        className="h-[initial_!important] pb-10"
+                                        className="h-[initial_!important] pb-10 pt-2"
                                     >
                                         <article
                                             key={rec.product_id}
