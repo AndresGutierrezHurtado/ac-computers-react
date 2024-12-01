@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 // Hooks
 import { useGetData } from "../hooks/useFetchApi.js";
 import { Link } from "react-router";
+import { StarIcon } from "../components/icons.jsx";
 
 export default function Home() {
     const { data: computers, loading: loadingComputers } = useGetData(
@@ -272,10 +273,93 @@ export default function Home() {
                         <h2 className="text-5xl font-extrabold tracking-tight text-center">
                             Productos nuevos:
                         </h2>
-                        <Swiper>
-                            {recents.map((rec) => (
-                                <SwiperSlide key={rec.product_id}></SwiperSlide>
-                            ))}
+                        <Swiper
+                            slidesPerView={3}
+                            spaceBetween={10}
+                            modules={[Navigation, Pagination, A11y]}
+                            navigation={{ clickable: true }}
+                            pagination={{ clickable: true }}
+                        >
+                            <main className="px-10">
+                                {recents.map((rec) => (
+                                    <SwiperSlide key={rec.product_id} className="h-[initial_!important] pb-10">
+                                        <article
+                                            key={rec.product_id}
+                                            className="card w-full h-full bg-black/20 backdrop-blur-sm shadow-xl border border-gray-800/60 tilt"
+                                        >
+                                            <div className="card-body text-center">
+                                                <figure className="w-3/4 aspect-square mx-auto rounded overflow-hidden">
+                                                    <img
+                                                        src={
+                                                            rec.product_image_url
+                                                        }
+                                                        alt={`Imagen del producto ${rec.product_name}`}
+                                                        className="object-contain w-full h-full"
+                                                    />
+                                                </figure>
+                                                <div className="grow space-y-2 flex flex-col items-center">
+                                                    <div className="leading-1 ">
+                                                        <h2 className="text-2xl font-extrabold leading-[1]">
+                                                            {rec.product_name}
+                                                        </h2>
+                                                        <p>
+                                                            {new Date(
+                                                                rec.product_date
+                                                            ).toLocaleDateString(
+                                                                "es-CO"
+                                                            )}
+                                                        </p>
+                                                        <p className="flex items-center gap-2 justify-center">
+                                                            {" "}
+                                                            <StarIcon />{" "}
+                                                            <span>
+                                                                Calidad Premium
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                    <div className="grow text-primary text-[17px] font-semibold leading-[1.2]">
+                                                        {rec.product_discount >
+                                                            0 && (
+                                                            <p className="line-through">
+                                                                COP{" "}
+                                                                {parseInt(
+                                                                    rec.product_price
+                                                                ).toLocaleString(
+                                                                    "es-CO"
+                                                                )}
+                                                            </p>
+                                                        )}
+                                                        <p>
+                                                            COP{" "}
+                                                            {parseInt(
+                                                                rec.product_price -
+                                                                    rec.product_price *
+                                                                        (rec.product_discount /
+                                                                            100)
+                                                            ).toLocaleString(
+                                                                "es-CO"
+                                                            )}{" "}
+                                                            {rec.product_discount >
+                                                                0 &&
+                                                                `- ${rec.product_discount}%`}
+                                                        </p>
+                                                    </div>
+                                                    <Link
+                                                        to={`/${
+                                                            rec.category_id == 1
+                                                                ? "computers"
+                                                                : "components"
+                                                        }/${rec.product_id}`}
+                                                        className="btn btn-primary btn-outline w-full"
+                                                    >
+                                                        Ver
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </SwiperSlide>
+                                ))}
+                            </main>
                         </Swiper>
                     </div>
                 </div>
