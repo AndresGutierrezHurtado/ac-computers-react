@@ -5,9 +5,9 @@ import Footer from "./footer";
 
 export default function AppLayout() {
     return (
-        <div className="w-full min-h-screen flex flex-col gap=0">
+        <div className="w-full min-h-screen flex flex-col gap-0">
             <Header />
-            <main className="grow">
+            <main className="grow w-full overflow-x-hidden">
                 <Outlet />
             </main>
             <Footer />
