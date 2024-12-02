@@ -71,8 +71,8 @@ export default class UserController {
         } catch (error) {
             res.status(500).json({
                 success: false,
-                message: "Error al crear el usuario",
-                error: error.message,
+                message: error.errors[0].message,
+                data: error,
             });
         }
     }

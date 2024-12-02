@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 // Components
 import {
@@ -10,11 +10,22 @@ import {
     UploadIcon,
 } from "../../components/icons";
 
+// Hooks
+import { usePostData } from "../../hooks/useFetchApi";
+
 export default function Register() {
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        const data = Object.fromEntries(new FormData(e.target));
+
+        const response = await usePostData("/users", { user: data });
+
+        if (response.success) {
+            navigate("/login");
+        }
     };
 
     return (
@@ -65,9 +76,21 @@ export default function Register() {
                                 </span>
                             </label>
                             <input
-                                placeholder="Ingresa tu nombre y apellido"
+                                placeholder="Ingresa tu nombre"
                                 className="input input-bordered focus:outline-0 focus:input-primary"
                                 name="user_name"
+                            />
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text font-semibold after:content-['*'] after:ml-0.5 after:text-red-500">
+                                    Apellidos:
+                                </span>
+                            </label>
+                            <input
+                                placeholder="Ingresa tus apellidos"
+                                className="input input-bordered focus:outline-0 focus:input-primary"
+                                name="user_lastname"
                             />
                         </div>
                         <div className="form-control">

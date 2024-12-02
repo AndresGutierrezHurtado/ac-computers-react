@@ -26,7 +26,7 @@ passport.use(
                 user = await models.User.create({
                     user_email: profile._json.email,
                     user_name: profile._json.given_name,
-                    user_last_name: profile._json.family_name,
+                    user_lastname: profile._json.family_name,
                     user_password: profile._json.sub,
                 });
             }
@@ -66,7 +66,7 @@ passport.use(
                 user = await models.User.create({
                     user_email: profile._json.email,
                     user_name: profile._json.first_name,
-                    user_last_name: profile._json.last_name,
+                    user_lastname: profile._json.last_name,
                     user_password: profile._json.id,
                 });
             }
