@@ -1,5 +1,6 @@
 import { useContext, createContext } from "react";
 import { useGetData, usePostData } from "../hooks/useFetchApi.js";
+import LoadingContent from "../components/loadingContent.jsx";
 
 const AuthContext = createContext();
 
@@ -19,7 +20,7 @@ export const AuthContextProvider = ({ children }) => {
         }
     };
 
-    if (loadingUserSession) return <h1> Cargando sesión del usuario </h1>;
+    if (loadingUserSession) return <LoadingContent />;
     return (
         <AuthContext.Provider
             value={{ userSession, reloadUserSession, handleLogout }}

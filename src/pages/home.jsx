@@ -14,6 +14,7 @@ import { useGetData } from "../hooks/useFetchApi.js";
 
 // Components
 import { StarIcon } from "../components/icons.jsx";
+import LoadingContent from "../components/loadingContent.jsx";
 
 export default function Home() {
     const navigate = useNavigate();
@@ -62,7 +63,7 @@ export default function Home() {
         loadingDiscounts ||
         loadingRecents
     ) {
-        return <div>Loading...</div>;
+        return <LoadingContent />;
     }
     return (
         <>

@@ -3,7 +3,10 @@ import { useLocation, useParams } from "react-router";
 
 // Hooks
 import { useGetData } from "../hooks/useFetchApi.js";
+
+// Components
 import SwiperThumbnails from "../components/swiperThumbnails.jsx";
+import LoadingContent from "../components/loadingContent.jsx";
 
 export default function Computer() {
     const location = useLocation();
@@ -14,7 +17,7 @@ export default function Computer() {
 
     const computer = location.state?.product || product;
 
-    if (loadingProduct && !location.state) return <h1> Cargando producto </h1>;
+    if (loadingProduct && !location.state) return <LoadingContent />;
 
     const images = [
         {
@@ -100,7 +103,10 @@ export default function Computer() {
                         </h2>
                         <ol>
                             {computer.specs.map((spec) => (
-                                <div key={spec.spec_id} className="flex items-end gap-2">
+                                <div
+                                    key={spec.spec_id}
+                                    className="flex items-end gap-2"
+                                >
                                     <h3 className="text-lg font-bold">
                                         {spec.spec_key}:
                                     </h3>

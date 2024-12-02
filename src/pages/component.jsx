@@ -3,7 +3,10 @@ import { useLocation, useParams } from "react-router";
 
 // Hooks
 import { useGetData } from "../hooks/useFetchApi.js";
+
+// Components
 import SwiperThumbnails from "../components/swiperThumbnails.jsx";
+import LoadingContent from "../components/loadingContent.jsx";
 
 export default function Component() {
     const location = useLocation();
@@ -14,7 +17,7 @@ export default function Component() {
 
     const component = location.state?.product || product;
 
-    if (loadingProduct && !location.state) return <h1> Cargando producto </h1>;
+    if (loadingProduct && !location.state) return <LoadingContent />;
 
     const images = [
         {
