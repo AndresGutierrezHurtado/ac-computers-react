@@ -16,14 +16,13 @@ export default function Computer() {
 
     if (loadingProduct && !location.state) return <h1> Cargando producto </h1>;
 
-    console.log(computer);
     const images = [
         {
-            id: computer?.product_id,
-            url: computer?.product_image_url,
-            alt: computer?.product_name,
+            id: computer.product_id,
+            url: computer.product_image_url,
+            alt: computer.product_name,
         },
-        ...computer?.multimedias?.map((multimedia) => ({
+        ...computer.multimedias.map((multimedia) => ({
             id: multimedia.media_id,
             url: multimedia.media_url,
             alt: multimedia.media_name,
@@ -101,7 +100,7 @@ export default function Computer() {
                         </h2>
                         <ol>
                             {computer.specs.map((spec) => (
-                                <div key={spec.spec_id} className="flex gap-2">
+                                <div key={spec.spec_id} className="flex items-end gap-2">
                                     <h3 className="text-lg font-bold">
                                         {spec.spec_key}:
                                     </h3>
