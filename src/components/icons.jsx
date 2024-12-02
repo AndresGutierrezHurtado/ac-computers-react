@@ -1,5 +1,7 @@
 import { FaStar, FaGoogle, FaFacebook, FaEye, FaEyeSlash } from "react-icons/fa";
-import { MdFileUpload } from "react-icons/md";
+import { MdFileUpload, MdFileDownload } from "react-icons/md";
+import { IoSearch } from "react-icons/io5";
+
 
 export {
     FaStar as StarIcon,
@@ -7,5 +9,7 @@ export {
     FaGoogle as GoogleIcon,
     FaFacebook as FacebookIcon,
     FaEye as EyeIcon,
-    FaEyeSlash as EyeSlashIcon
+    FaEyeSlash as EyeSlashIcon,
+    IoSearch as SearchIcon,
+    MdFileDownload as DownloadIcon
 };
