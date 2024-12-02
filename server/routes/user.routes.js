@@ -13,4 +13,7 @@ userRoutes.get("/user/session", userController.verifyUserSession);
 userRoutes.post("/user/login", userController.authUser);
 userRoutes.post("/user/logout", userController.logoutUser);
 
+// user Feedback routes
+userRoutes.post("/user/feedback", userController.sendFeedback);
+
 export default userRoutes;

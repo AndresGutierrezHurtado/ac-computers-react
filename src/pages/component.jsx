@@ -45,6 +45,9 @@ export default function Component() {
                             />
                         </div>
                         <div className="grow flex flex-col gap-2">
+                            <p className="leading-none text-primary font-bold">
+                                AC Computers
+                            </p>
                             <h1 className="text-5xl font-extrabold tracking-tight">
                                 {component.product_name}
                             </h1>
@@ -60,7 +63,7 @@ export default function Component() {
                                         ).toLocaleString("es-CO")}
                                     </p>
                                 )}
-                                <p>
+                                <p className="flex items-center gap-2">
                                     COP{" "}
                                     {parseInt(
                                         component.product_price *
@@ -68,8 +71,11 @@ export default function Component() {
                                                 component.product_discount /
                                                     100)
                                     ).toLocaleString("es-CO")}
-                                    {component.product_discount > 0 &&
-                                        ` - ${component.product_discount}%`}
+                                    {component.product_discount > 0 && (
+                                        <span className="badge badge-primary badge-lg h-auto py-1.5 px-2 rounded-lg tracking-tight text-sm">
+                                            {component.product_discount}%
+                                        </span>
+                                    )}
                                 </p>
                             </div>
                             <button className="btn btn-primary">Volver</button>
@@ -104,7 +110,10 @@ export default function Component() {
                         </h2>
                         <ol>
                             {component.specs.map((spec) => (
-                                <div key={spec.spec_id} className="flex items-end gap-2">
+                                <div
+                                    key={spec.spec_id}
+                                    className="flex items-end gap-2"
+                                >
                                     <h3 className="text-lg font-bold">
                                         {spec.spec_key}:
                                     </h3>

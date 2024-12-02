@@ -1,5 +1,7 @@
 import * as models from "../models/relations.js";
 import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
+import { feedbackTemplate } from "../templates/email.templates.js";
 
 export default class UserController {
     static async getUsers(req, res) {
@@ -169,6 +171,50 @@ export default class UserController {
             res.status(200).json({
                 success: true,
                 message: "Sesión cerrada correctamente",
+                data: null,
+            });
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: error.message,
+                data: null,
+            });
+        }
+    }
+
+    static async sendFeedback(req, res) {
+        try {
+            const transporter = nodemailer.createTransport({
+                host: process.env.EMAIL_HOST,
+                service: process.env.EMAIL_SERVICE,
+                port: process.env.EMAIL_PORT,
+                auth: {
+                    user: process.env.EMAIL_USER,
+                    pass: process.env.EMAIL_PASSWORD,
+                },
+            });
+
+            transporter.sendMail(
+                {
+                    from: '"AC Computers" <andres52885241@gmail.com>',
+                    to: "andres52885241@gmail.com",
+                    subject: "Formulario contacto AC Computers",
+                    html: feedbackTemplate(
+                        req.body.email,
+                        req.body.subject,
+                        req.body.message
+                    ),
+                },
+                (error, info) => {
+                    if (error) {
+                        throw new Error(error.message);
+                    }
+                }
+            );
+
+            res.status(200).json({
+                success: true,
+                message: "Mensaje enviado correctamente",
                 data: null,
             });
         } catch (error) {

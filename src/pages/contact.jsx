@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 
+// Components
 import {
     AtIcon,
     FacebookIcon,
@@ -10,6 +11,9 @@ import {
     WhatsappIcon,
 } from "../components/icons";
 import { StoreMap } from "../components/map";
+
+// Hooks
+import { usePostData } from "../hooks/useFetchApi";
 
 export default function Contact() {
     const socialMedias = [
@@ -39,6 +43,17 @@ export default function Contact() {
             text: "Ubicación: Calle 12 # 12-12, Bogotá, Colombia",
         },
     ];
+
+    const handleContactFormSubmit = async (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(e.target));
+        const response = await usePostData("/user/feedback", data);
+
+        if (response.success) {
+            e.target.reset();
+        }
+    };
+
     return (
         <>
             <section className="w-full px-3">
@@ -82,7 +97,10 @@ export default function Contact() {
                         </div>
                         <div className="card bg-[#20202b] w-full md:w-1/2">
                             <div className="card-body [&_p]:grow-0">
-                                <form className="space-y-2">
+                                <form
+                                    onSubmit={handleContactFormSubmit}
+                                    className="space-y-2"
+                                >
                                     <div>
                                         <h2 className="text-3xl font-extrabold">
                                             ¡Queremos escucharte!
@@ -102,6 +120,7 @@ export default function Contact() {
                                         <input
                                             placeholder="ejemplo@gmail.com"
                                             className="input input-bordered focus:input-primary focus:outline-0"
+                                            name="email"
                                         />
                                     </div>
                                     <div className="form-control">
@@ -113,6 +132,7 @@ export default function Contact() {
                                         <input
                                             placeholder="¿De que se trata el mensaje?"
                                             className="input input-bordered focus:input-primary focus:outline-0"
+                                            name="subject"
                                         />
                                     </div>
                                     <div className="form-control">
@@ -124,6 +144,7 @@ export default function Contact() {
                                         <textarea
                                             className="textarea textarea-bordered resize-none h-32 focus:textarea-primary focus:outline-0"
                                             placeholder="Ingresa tu mensaje"
+                                            name="message"
                                         ></textarea>
                                     </div>
 

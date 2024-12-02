@@ -45,6 +45,9 @@ export default function Computer() {
                             />
                         </div>
                         <div className="grow flex flex-col gap-2">
+                            <p className="leading-none text-primary font-bold">
+                                AC Computers
+                            </p>
                             <h1 className="text-5xl font-extrabold tracking-tight">
                                 {computer.product_name}
                             </h1>
@@ -60,15 +63,18 @@ export default function Computer() {
                                         ).toLocaleString("es-CO")}
                                     </p>
                                 )}
-                                <p>
+                                <p className="flex items-center gap-2">
                                     COP{" "}
                                     {parseInt(
                                         computer.product_price *
                                             (1 -
                                                 computer.product_discount / 100)
                                     ).toLocaleString("es-CO")}
-                                    {computer.product_discount > 0 &&
-                                        ` - ${computer.product_discount}%`}
+                                    {computer.product_discount > 0 && (
+                                        <span className="badge badge-primary badge-lg h-auto py-1.5 px-2 rounded-lg tracking-tight text-sm">
+                                            {computer.product_discount}%
+                                        </span>
+                                    )}
                                 </p>
                             </div>
                             <button className="btn btn-primary">Volver</button>
