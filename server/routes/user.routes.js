@@ -7,6 +7,7 @@ userRoutes.get("/users", userController.getUsers);
 userRoutes.get("/users/:id", userController.getUser);
 userRoutes.post("/users", userController.createUser);
 userRoutes.put("/users/:id", userController.updateUser);
+userRoutes.delete("/users/:id", userController.deleteUser)
 
 // auth routes
 userRoutes.get("/user/session", userController.verifyUserSession);

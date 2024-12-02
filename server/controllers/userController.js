@@ -2,23 +2,49 @@ import * as models from "../models/relations.js";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
 import { feedbackTemplate } from "../templates/email.templates.js";
+import { Op } from "sequelize";
 
 export default class UserController {
     static async getUsers(req, res) {
+        let whereClause = {};
+
+        if (req.query.search) {
+            whereClause = {
+                [Op.or]: {
+                    user_id: { [Op.like]: `%${req.query.search}%` },
+                    user_name: { [Op.like]: `%${req.query.search}%` },
+                    user_email: { [Op.like]: `%${req.query.search}%` },
+                },
+            };
+        }
+
         try {
-            const users = await models.User.findAll({
+            const users = await models.User.findAndCountAll({
                 include: [
                     {
                         model: models.Role,
                         as: "role",
                     },
                 ],
+                where: whereClause,
+                order: [
+                    [
+                        req.query.sort.split(":")[0] || "user_id",
+                        req.query.sort.split(":")[1] || "ASC",
+                    ],
+                ],
+                limit: 10,
+                offset: (parseInt(req.query.page || 1) - 1) * 10,
             });
 
             res.status(200).json({
                 success: true,
                 message: "Usuarios obtenidos con éxito",
-                data: users,
+                data: {
+                    ...users,
+                    page: parseInt(req.query.page),
+                    limit: 10,
+                },
             });
         } catch (error) {
             res.status(500).json({
@@ -56,10 +82,7 @@ export default class UserController {
 
     static async createUser(req, res) {
         try {
-            req.body.user.user_password = await bcrypt.hash(
-                req.body.user.user_password,
-                10
-            );
+            req.body.user.user_password = await bcrypt.hash(req.body.user.user_password, 10);
 
             const user = await models.User.create(req.body.user);
 
@@ -80,10 +103,7 @@ export default class UserController {
     static async updateUser(req, res) {
         try {
             if (req.body.user.user_password) {
-                req.body.user.user_password = await bcrypt.hash(
-                    req.body.user.user_password,
-                    10
-                );
+                req.body.user.user_password = await bcrypt.hash(req.body.user.user_password, 10);
             }
 
             const user = await models.User.update(req.body.user, {
@@ -115,9 +135,7 @@ export default class UserController {
                 return;
             }
 
-            if (
-                !bcrypt.compareSync(req.body.user_password, user.user_password)
-            ) {
+            if (!bcrypt.compareSync(req.body.user_password, user.user_password)) {
                 throw new Error("Contraseña inválida");
                 return;
             }
@@ -199,11 +217,7 @@ export default class UserController {
                     from: '"AC Computers" <andres52885241@gmail.com>',
                     to: "andres52885241@gmail.com",
                     subject: "Formulario contacto AC Computers",
-                    html: feedbackTemplate(
-                        req.body.email,
-                        req.body.subject,
-                        req.body.message
-                    ),
+                    html: feedbackTemplate(req.body.email, req.body.subject, req.body.message),
                 },
                 (error, info) => {
                     if (error) {
@@ -222,6 +236,26 @@ export default class UserController {
                 success: false,
                 message: error.message,
                 data: null,
+            });
+        }
+    }
+
+    static async deleteUser(req, res) {
+        try {
+            const response = await models.User.destroy({
+                where: { user_id: req.params.id },
+            });
+
+            res.status(200).json({
+                success: true,
+                message: "Usuario eliminado correctamente.",
+                data: response,
+            });
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: error.message,
+                data: error,
             });
         }
     }
