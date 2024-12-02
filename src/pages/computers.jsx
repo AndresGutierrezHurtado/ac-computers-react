@@ -33,11 +33,11 @@ export default function Computers() {
                         <h2 className="text-4xl font-extrabold tracking-tight">
                             Lista computadores:
                         </h2>
-                        <label class="input input-sm input-bordered focus-within:outline-0 focus-within:input-primary flex items-center gap-2 max-w-sm">
+                        <label className="input input-sm input-bordered focus-within:outline-0 focus-within:input-primary flex items-center gap-2 w-full max-w-sm">
                             <input
                                 type="text"
-                                class="grow group"
-                                placeholder="Buscar productos"
+                                className="grow group"
+                                placeholder="Buscar computadores"
                                 value={filter}
                                 onChange={(e) => setFilter(e.target.value)}
                             />
@@ -45,9 +45,9 @@ export default function Computers() {
                         </label>
                     </div>
                     <div className="flex justify-center">
-                        <button className="btn btn-primary btn-wide btn-outline btn-sm py-2 h-auto ">
+                        <button className="btn btn-primary w-fit px-5 btn-outline btn-sm py-2 h-auto">
                             <DownloadIcon className="text-xl" />
-                            Descargar productos
+                            Descargar lista PDF de computadores
                         </button>
                     </div>
                     <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-14">
@@ -98,11 +98,13 @@ export default function Computers() {
                                         </p>
                                     </div>
                                 </div>
-                                <div className="absolute top-2 right-2">
-                                    <div className="w-fit px-2 h-9 bg-primary rounded-full flex items-center justify-center text-sm font-semibold">
-                                        {product.product_discount}%
+                                {product.product_discount > 0 && (
+                                    <div className="absolute top-2 right-2">
+                                        <div className="w-fit px-2 h-9 bg-primary rounded-full flex items-center justify-center text-sm font-semibold">
+                                            {product.product_discount}%
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                             </div>
                         ))}
                     </div>
