@@ -14,6 +14,7 @@ export default class ProductController {
                 include: [
                     { model: models.Category, as: "category" },
                     { model: models.Spec, as: "specs" },
+                    { model: models.Multimedia, as: "multimedias" },
                 ],
                 where: whereClause,
                 order: [

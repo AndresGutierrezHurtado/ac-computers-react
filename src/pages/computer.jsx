@@ -8,44 +8,28 @@ import SwiperThumbnails from "../components/swiperThumbnails.jsx";
 export default function Computer() {
     const location = useLocation();
 
-    let computer = {};
-    if (location.state.product) computer = location.state.product;
-    else computer = useGetData(`/products/${useParams().id}`).data;
+    const { data: product, loading: loadingProduct } = useGetData(
+        `/products/${useParams().id}`
+    );
 
+    const computer = location.state?.product || product;
+
+    if (loadingProduct && !location.state) return <h1> Cargando producto </h1>;
+
+    console.log(computer);
     const images = [
         {
-            id: computer.product_id,
-            url: computer.product_image_url,
-            alt: computer.product_name,
+            id: computer?.product_id,
+            url: computer?.product_image_url,
+            alt: computer?.product_name,
         },
-        {
-            id: 2,
-            url: "https://swiperjs.com/demos/images/nature-2.jpg",
-            alt: "nature-2",
-        },
-        {
-            id: 3,
-            url: "https://swiperjs.com/demos/images/nature-3.jpg",
-            alt: "nature-3",
-        },
-        {
-            id: 4,
-            url: "https://swiperjs.com/demos/images/nature-4.jpg",
-            alt: "nature-4",
-        },
-        {
-            id: 5,
-            url: "https://swiperjs.com/demos/images/nature-5.jpg",
-            alt: "nature-5",
-        },
-        {
-            id: 6,
-            url: "https://swiperjs.com/demos/images/nature-6.jpg",
-            alt: "nature-6",
-        },
+        ...computer?.multimedias?.map((multimedia) => ({
+            id: multimedia.media_id,
+            url: multimedia.media_url,
+            alt: multimedia.media_name,
+        })),
     ];
 
-    if (true && !location.state) return <h1> Cargando producto </h1>;
     return (
         <>
             <section className="w-full px-3">
