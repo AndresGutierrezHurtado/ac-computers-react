@@ -5,18 +5,20 @@ import { AuthContextProvider } from "./contexts/authContext.jsx";
 
 // Pages
 import Home from "./pages/home.jsx";
+import Contact from "./pages/contact.jsx";
 import Computers from "./pages/computers.jsx";
 import Components from "./pages/components.jsx";
-import Contact from "./pages/contact.jsx";
 import Computer from "./pages/computer.jsx";
+import Component from "./pages/component.jsx";
 import Login from "./pages/auth/login.jsx";
+import Register from "./pages/auth/register.jsx";
+import UsersAdmin from "./pages/admin/users.jsx";
+import ProductsAdmin from "./pages/admin/products.jsx";
 
 // Layouts
 import GuestLayout from "./layouts/guestLayout.jsx";
 import AdminLayout from "./layouts/adminLayout.jsx";
 import AppLayout from "./layouts/appLayout.jsx";
-import Component from "./pages/component.jsx";
-import Register from "./pages/auth/register.jsx";
 
 function App() {
     return (
@@ -41,11 +43,11 @@ function App() {
                     <Route element={<AdminLayout />}>
                         <Route
                             path="/admin/users"
-                            element={<h1> Componentes </h1>}
+                            element={<UsersAdmin />}
                         />
                         <Route
                             path="/admin/products"
-                            element={<h1> Componentes </h1>}
+                            element={<ProductsAdmin />}
                         />
                     </Route>
                 </Routes>

@@ -9,9 +9,11 @@ import {
     FaEyeSlash,
     FaPhoneAlt,
     FaRegTrashAlt,
+    FaBoxes,
+    FaUsers,
 } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
-import { MdFileUpload, MdFileDownload } from "react-icons/md";
+import { MdFileUpload, MdModeEditOutline, MdFileDownload } from "react-icons/md";
 import { IoSearch, IoLocationOutline } from "react-icons/io5";
 
 export {
@@ -30,4 +32,7 @@ export {
     FaWhatsapp as WhatsappIcon,
     FaRegTrashAlt as TrashIcon,
     FaGear as GearIcon,
+    MdModeEditOutline as EditIcon,
+    FaBoxes as ProductsIcon,
+    FaUsers as UsersIcon,
 };
