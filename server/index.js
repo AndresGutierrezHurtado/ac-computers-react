@@ -44,7 +44,6 @@ app.use(async (req, res, next) => {
             include: [{ model: models.Role, as: "role" }],
         });
     }
-    console.log(req.session.user);
 
     next();
 });

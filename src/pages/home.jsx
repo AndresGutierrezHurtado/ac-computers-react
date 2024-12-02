@@ -43,15 +43,15 @@ export default function Home() {
         });
     }, [loadingDiscounts, discounts]);
 
-    const handleNavigation = (path) => {
+    const handleNavigation = (path, product) => {
         if (!document.startViewTransition) {
-            console.log("No view transition");
-            return navigate(path);
+            console.error("No view transition");
+            return navigate(path, { state: { product } });
         }
 
         document.startViewTransition(() => {
             flushSync(() => {
-                navigate(path, { state: { product: "fetchedData" } });
+                navigate(path, { state: { product } });
             });
         });
     };
@@ -122,27 +122,33 @@ export default function Home() {
                                                 <a
                                                     onClick={() =>
                                                         handleNavigation(
-                                                            `/computers/${computer.product_id}`
+                                                            `/computers/${computer.product_id}`,
+                                                            computer
                                                         )
                                                     }
-                                                    style={{
-                                                        viewTransitionName: `product-${computer.product_id}`,
-                                                    }}
                                                     className="btn btn-outline btn-primary"
                                                 >
                                                     Información
                                                 </a>
                                             </div>
                                         </div>
-                                        <Link
-                                            to={`/computers/${computer.product_id}`}
+                                        <figure
+                                            onClick={() =>
+                                                handleNavigation(
+                                                    `/computers/${computer.product_id}`,
+                                                    computer
+                                                )
+                                            }
                                             className="w-full md:max-w-1/2 rounded overflow-hidden p-5"
                                         >
                                             <img
                                                 src={computer.product_image_url}
                                                 alt={`Imagen del producto ${computer.product_name}`}
+                                                style={{
+                                                    viewTransitionName: `product-${computer.product_id}`,
+                                                }}
                                             />
-                                        </Link>
+                                        </figure>
                                     </div>
                                 </SwiperSlide>
                             ))}

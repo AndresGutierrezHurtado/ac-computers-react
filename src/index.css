@@ -30,10 +30,7 @@ input:-webkit-autofill:active {
     opacity: 1;
 }
 
-.view-transition {
-    transition: opacity 5s ease-in-out, transform 5s ease-in-out;
-}
-
-[view-transition-name] {
-    will-change: transform, opacity;
+::view-transition-group(root) {
+    animation-duration: 5s;
+    animation-timing-function: ease-in-out;
 }

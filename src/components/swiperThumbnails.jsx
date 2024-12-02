@@ -11,7 +11,6 @@ import "swiper/css/thumbs";
 export default function SwiperThumbnails({
     images = [],
     size = 300,
-    product_id,
 }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [current, setCurrent] = useState(0);
@@ -45,10 +44,7 @@ export default function SwiperThumbnails({
                                 src={image.url}
                                 alt={image.alt}
                                 style={{
-                                    viewTransitionName:
-                                        index == 0
-                                            ? `product-${product_id}`
-                                            : null,
+                                    viewTransitionName: `product-${image.id}`
                                 }}
                             />
                         </SwiperSlide>

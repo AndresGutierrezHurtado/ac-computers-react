@@ -6,18 +6,17 @@ import { useGetData } from "../hooks/useFetchApi.js";
 import SwiperThumbnails from "../components/swiperThumbnails.jsx";
 
 export default function Computer() {
-    const { data: computer, loading: loadingComputer } = useGetData(
-        `/products/${useParams().id}`
-    );
-
     const location = useLocation();
-    console.log(location.state);
+
+    let computer = {};
+    if (location.state.product) computer = location.state.product;
+    else computer = useGetData(`/products/${useParams().id}`).data;
 
     const images = [
         {
-            id: 1,
-            url: computer?.product_image_url,
-            alt: computer?.product_name,
+            id: computer.product_id,
+            url: computer.product_image_url,
+            alt: computer.product_name,
         },
         {
             id: 2,
@@ -46,14 +45,18 @@ export default function Computer() {
         },
     ];
 
-    if (loadingComputer) return <h1> Cargando producto </h1>;
+    if (true && !location.state) return <h1> Cargando producto </h1>;
     return (
         <>
             <section className="w-full px-3">
                 <div className="w-full max-w-[1200px] mx-auto py-10">
                     <div className="flex gap-10">
                         <div className="w-fit">
-                            <SwiperThumbnails images={images} size={450} product_id={computer.product_id} />
+                            <SwiperThumbnails
+                                images={images}
+                                size={450}
+                                product_id={computer.product_id}
+                            />
                         </div>
                         <div className="grow flex flex-col gap-2">
                             <h1 className="text-5xl font-extrabold tracking-tight">
@@ -99,7 +102,8 @@ export default function Computer() {
                 <div className="w-full max-w-[1200px] mx-auto py-10">
                     <div className="space-y-2">
                         <h2 className="text-5xl font-extrabold tracking-tight mb-4">
-                            {computer.product_name}{" - "}
+                            {computer.product_name}
+                            {" - "}
                             <span className="text-3xl text-primary">
                                 {"COP "}
                                 {parseInt(
