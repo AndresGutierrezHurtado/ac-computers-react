@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router";
 import { useAuthContext } from "../contexts/authContext";
+import { GearIcon, TrashIcon } from "../components/icons";
 
 export default function Header() {
     const { userSession, handleLogout } = useAuthContext();
@@ -122,26 +123,48 @@ export default function Header() {
                                 >
                                     {userSession ? (
                                         <>
+                                            {userSession.role_id == 2 && (
+                                                <>
+                                                    <li>
+                                                        <Link
+                                                            to="/admin/users"
+                                                            className="text-blue-400"
+                                                        >
+                                                            <GearIcon />
+                                                            Usuarios
+                                                        </Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link
+                                                            to="/admin/products"
+                                                            className="text-blue-400"
+                                                        >
+                                                            <GearIcon />
+                                                            Productos
+                                                        </Link>
+                                                    </li>
+                                                </>
+                                            )}
                                             <li>
-                                                <Link
-                                                    to="/profile"
-                                                    className="justify-between"
+                                                <a
+                                                    onClick={handleLogout}
+                                                    className="text-red-400"
                                                 >
-                                                    Profile
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <a onClick={handleLogout}>Logout</a>
+                                                    <TrashIcon />
+                                                    Cerrar sesión
+                                                </a>
                                             </li>
                                         </>
                                     ) : (
                                         <>
                                             <li>
-                                                <Link to="/login">Login</Link>
+                                                <Link to="/login">
+                                                    Iniciar sesión
+                                                </Link>
                                             </li>
                                             <li>
                                                 <Link to="/register">
-                                                    Register
+                                                    Registrarme
                                                 </Link>
                                             </li>
                                         </>

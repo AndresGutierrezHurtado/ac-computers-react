@@ -1,7 +1,18 @@
-import { FaStar, FaGoogle, FaFacebook, FaWhatsapp, FaInstagram, FaAt, FaEye, FaEyeSlash, FaPhoneAlt  } from "react-icons/fa";
+import {
+    FaStar,
+    FaGoogle,
+    FaFacebook,
+    FaWhatsapp,
+    FaInstagram,
+    FaAt,
+    FaEye,
+    FaEyeSlash,
+    FaPhoneAlt,
+    FaRegTrashAlt,
+} from "react-icons/fa";
+import { FaGear } from "react-icons/fa6";
 import { MdFileUpload, MdFileDownload } from "react-icons/md";
-import { IoSearch, IoLocationOutline  } from "react-icons/io5";
-
+import { IoSearch, IoLocationOutline } from "react-icons/io5";
 
 export {
     FaStar as StarIcon,
@@ -16,5 +27,7 @@ export {
     FaAt as AtIcon,
     FaPhoneAlt as PhoneIcon,
     IoLocationOutline as LocationIcon,
-    FaWhatsapp as WhatsappIcon
+    FaWhatsapp as WhatsappIcon,
+    FaRegTrashAlt as TrashIcon,
+    FaGear as GearIcon,
 };
