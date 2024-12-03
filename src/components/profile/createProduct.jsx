@@ -3,7 +3,7 @@ import { UploadIcon } from "../icons";
 import { useBase64 } from "../../hooks/useBase64.js";
 import { usePostData } from "../../hooks/useFetchApi";
 
-export default function CreateProduct() {
+export default function CreateProduct({ reloadProducts }) {
     const [specs, setSpecs] = useState([{ name: "", value: "" }]);
 
     const handleFormSubmit = async (e) => {
@@ -13,8 +13,8 @@ export default function CreateProduct() {
 
         // Convertir specs en un array de objetos
         const specsArray = specs.map((_, i) => ({
-            name: formData.get(`specs[${i}].name`),
-            value: formData.get(`specs[${i}].value`),
+            spec_key: formData.get(`specs[${i}].name`),
+            spec_value: formData.get(`specs[${i}].value`),
         }));
 
         const data = {
@@ -24,7 +24,7 @@ export default function CreateProduct() {
                     .getAll("multimedias")
                     .map(async (file) => await useBase64(file))
             ),
-            specs: specsArray.filter((spec) => spec.name && spec.value),
+            specs: specsArray.filter((spec) => spec.spec_key && spec.spec_value),
             product: {
                 product_name: json.product_name,
                 product_description: json.product_description,
@@ -39,6 +39,7 @@ export default function CreateProduct() {
         if (response.success) {
             e.target.closest("dialog").close();
             e.target.reset();
+            reloadProducts();
         }
     };
 
@@ -83,7 +84,7 @@ export default function CreateProduct() {
                             <textarea
                                 name="product_description"
                                 placeholder="Ingresa una descripción"
-                                className="textarea textarea-sm textarea-bordered focus:textarea-primary focus:outline-0 w-full h-32 resize-none"
+                                className="textarea textarea-sm textarea-bordered focus:textarea-primary focus:outline-0 w-full h-32 resize-none leading-[1.3]"
                             ></textarea>
                         </div>
                         <div className="form-control">

@@ -88,11 +88,13 @@ export default class ProductController {
             req.body.product.product_id = crypto.randomUUID();
 
             if (req.body.product_image) {
-                req.body.product.product_image_Url = await uploadFile(
+                const url = await uploadFile(
                     req.body.product_image,
                     req.body.product.product_id,
                     "/"
                 );
+
+                req.body.product.product_image_url = url.data;
             }
 
             const product = await models.Product.create(req.body.product);

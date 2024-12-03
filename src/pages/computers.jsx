@@ -50,6 +50,18 @@ export default function Computers() {
                             Descargar lista PDF de computadores
                         </button>
                     </div>
+
+                    {filteredProducts.length === 0 && (
+                        <section className="flex items-center justify-center flex-col gap-2 text-center">
+                            <h1 className="text-7xl tracking-tight font-extrabold lg:text-9xl text-primary">
+                                404
+                            </h1>
+                            <p className="mb-4 text-3xl tracking-tight font-bold text-white">
+                                No se encuentran productos
+                            </p>
+                        </section>
+                    )}
+
                     <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-14">
                         {filteredProducts.map((product) => (
                             <div

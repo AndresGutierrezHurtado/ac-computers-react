@@ -73,6 +73,16 @@ export default function Home() {
                         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-center">
                             Computadoras:
                         </h2>
+                        {computers.length === 0 && (
+                            <section className="flex items-center justify-center flex-col gap-2 text-center">
+                                <h1 className="text-7xl tracking-tight font-extrabold lg:text-9xl text-primary">
+                                    404
+                                </h1>
+                                <p className="mb-4 text-3xl tracking-tight font-bold text-white">
+                                    No se encuentran productos
+                                </p>
+                            </section>
+                        )}
                         <Swiper
                             slidesPerView={1}
                             rewind={true}
@@ -171,6 +181,16 @@ export default function Home() {
                         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-center">
                             Componentes:
                         </h2>
+                        {components.length === 0 && (
+                            <section className="flex items-center justify-center flex-col gap-2 text-center">
+                                <h1 className="text-7xl tracking-tight font-extrabold lg:text-9xl text-primary">
+                                    404
+                                </h1>
+                                <p className="mb-4 text-3xl tracking-tight font-bold text-white">
+                                    No se encuentran componentes
+                                </p>
+                            </section>
+                        )}
                         <Swiper
                             slidesPerView={1}
                             rewind={true}
@@ -256,6 +276,17 @@ export default function Home() {
                         <h2 className="text-5xl font-extrabold tracking-tight text-center">
                             Descuentos:
                         </h2>
+
+                        {discounts.length === 0 && (
+                            <section className="flex items-center justify-center flex-col gap-2 text-center">
+                                <h1 className="text-7xl tracking-tight font-extrabold lg:text-9xl text-primary">
+                                    404
+                                </h1>
+                                <p className="mb-4 text-3xl tracking-tight font-bold text-white">
+                                    No se encuentran productos
+                                </p>
+                            </section>
+                        )}
                         <div className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] md:grid-cols-[repeat(auto-fit,_minmax(500px,_1fr))] gap-12">
                             {discounts.map((discount) => (
                                 <article
@@ -320,6 +351,16 @@ export default function Home() {
                         <h2 className="text-5xl font-extrabold tracking-tight text-center">
                             Productos nuevos:
                         </h2>
+                        {recents.length === 0 && (
+                            <section className="flex items-center justify-center flex-col gap-2 text-center">
+                                <h1 className="text-7xl tracking-tight font-extrabold lg:text-9xl text-primary">
+                                    404
+                                </h1>
+                                <p className="mb-4 text-3xl tracking-tight font-bold text-white">
+                                    No se encuentran productos
+                                </p>
+                            </section>
+                        )}
                         <Swiper
                             slidesPerView={1}
                             spaceBetween={50}

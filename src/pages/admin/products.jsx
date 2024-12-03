@@ -60,7 +60,14 @@ export default function Products() {
                             <h1 className="text-3xl font-bold mb-4">
                                 Administrar productos
                             </h1>
-                            <button onClick={() => document.getElementById("create-product").show()} className="btn btn-primary btn-outline">
+                            <button
+                                onClick={() =>
+                                    document
+                                        .getElementById("create-product")
+                                        .show()
+                                }
+                                className="btn btn-primary btn-outline"
+                            >
                                 + Crear Producto
                             </button>
                         </div>
@@ -181,8 +188,12 @@ export default function Products() {
                                             </td>
                                         </tr>
                                     ))}
-                                    <tr className="[&>*]:py-4 bg-[#242430]">
-                                        <td colSpan={7}></td>
+
+                                    <tr className="[&>*]:py-4 bg-[#242430] text-center text-xl ">
+                                        <td colSpan={7}>
+                                            {products.length === 0 &&
+                                                "No hay productos..."}
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -230,7 +241,7 @@ export default function Products() {
                     </div>
                 </div>
             </section>
-            <CreateProduct />
+            <CreateProduct reloadProducts={reloadProducts} />
         </>
     );
 }

@@ -27,8 +27,8 @@ export default function SwiperThumbnails({
 
                 <Swiper
                     style={{
-                        "--swiper-navigation-color": "#000",
-                        "--swiper-pagination-color": "#000",
+                        "--swiper-navigation-color": "#4e99d3",
+                        "--swiper-pagination-color": "#4e99d3",
                         width: `${size - 120}px`,
                     }}
                     spaceBetween={10}
@@ -46,6 +46,7 @@ export default function SwiperThumbnails({
                                 style={{
                                     viewTransitionName: `product-${image.id}`
                                 }}
+                                className="w-full h-full object-contain"
                             />
                         </SwiperSlide>
                     ))}

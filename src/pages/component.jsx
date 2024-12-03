@@ -86,7 +86,7 @@ export default function Component() {
             <div className="w-full">
                 <div className="w-full max-w-[1200px] mx-auto">
                     <img
-                        src="https://cdn.shopify.com/s/files/1/0482/9983/5557/files/PARA_PAGINA_WEB_BANNER_diciembre-min.jpg?v=1730930575"
+                        src="/images/banner.jpg"
                         alt={component.product_name}
                     />
                 </div>
