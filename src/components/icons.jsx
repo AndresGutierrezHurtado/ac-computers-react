@@ -14,7 +14,7 @@ import {
 } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
 import { MdFileUpload, MdModeEditOutline, MdFileDownload } from "react-icons/md";
-import { IoSearch, IoLocationOutline } from "react-icons/io5";
+import { IoSearch, IoLocationOutline, IoHomeSharp } from "react-icons/io5";
 
 export {
     FaStar as StarIcon,
@@ -35,4 +35,5 @@ export {
     MdModeEditOutline as EditIcon,
     FaBoxes as ProductsIcon,
     FaUsers as UsersIcon,
+    IoHomeSharp as HomeIcon,
 };

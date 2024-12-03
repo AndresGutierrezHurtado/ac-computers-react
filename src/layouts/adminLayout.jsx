@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, Outlet } from "react-router";
-import { GearIcon, ProductsIcon, UsersIcon } from "../components/icons";
+import { GearIcon, HomeIcon, ProductsIcon, UsersIcon } from "../components/icons";
 
 export default function AdminLayout() {
     return (
@@ -8,7 +8,7 @@ export default function AdminLayout() {
             <header className="w-full z-50 sticky top-0 bg-[#20202b]">
                 <div className="w-full mx-auto p-5 border-b border-gray-900">
                     <div className="flex justify-between items-center">
-                        <h1 className="text-3xl font-bold">Admin</h1>
+                        <h1 className="text-3xl font-bold">Administrador</h1>
                     </div>
                 </div>
             </header>
@@ -34,6 +34,12 @@ export default function AdminLayout() {
                         className="drawer-overlay"
                     ></label>
                     <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4 pt-[100px] lg:pt-4">
+                        <li>
+                            <Link to="/">
+                                <HomeIcon />
+                                Inicio
+                            </Link>
+                        </li>
                         <li>
                             <Link to="/admin/users">
                                 <UsersIcon />

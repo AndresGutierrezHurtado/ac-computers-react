@@ -1,46 +1,66 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
+
+// Components
 import { UploadIcon } from "../icons";
+
+// Hooks
 import { useBase64 } from "../../hooks/useBase64.js";
 import { usePostData } from "../../hooks/useFetchApi";
 
 export default function CreateProduct({ reloadProducts }) {
     const [specs, setSpecs] = useState([{ name: "", value: "" }]);
 
-    const handleFormSubmit = async (e) => {
+    const handleFormSubmit = (e) => {
         e.preventDefault();
-        const formData = new FormData(e.target);
-        const json = Object.fromEntries(formData);
+        Swal.fire({
+            icon: "info",
+            title: "¿Estas seguro de crear el producto?",
+            text: "El producto se creara con los datos ingresados",
+            showDenyButton: true,
+            confirmButtonText: "Crear",
+            denyButtonText: "Cancelar",
+            confirmButtonColor: "#3085d6",
+            denyButtonColor: "#d33",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const formData = new FormData(e.target);
+                const json = Object.fromEntries(formData);
 
-        // Convertir specs en un array de objetos
-        const specsArray = specs.map((_, i) => ({
-            spec_key: formData.get(`specs[${i}].name`),
-            spec_value: formData.get(`specs[${i}].value`),
-        }));
+                // Convertir specs en un array de objetos
+                const specsArray = specs.map((_, i) => ({
+                    spec_key: formData.get(`specs[${i}].name`),
+                    spec_value: formData.get(`specs[${i}].value`),
+                }));
 
-        const data = {
-            product_image: await useBase64(json.product_image),
-            multimedias: await Promise.all(
-                formData
-                    .getAll("multimedias")
-                    .map(async (file) => await useBase64(file))
-            ),
-            specs: specsArray.filter((spec) => spec.spec_key && spec.spec_value),
-            product: {
-                product_name: json.product_name,
-                product_description: json.product_description,
-                product_price: json.product_price,
-                product_discount: json.product_discount,
-                category_id: json.category_id,
-            },
-        };
+                const data = {
+                    product_image: await useBase64(json.product_image),
+                    multimedias: await Promise.all(
+                        formData
+                            .getAll("multimedias")
+                            .map(async (file) => await useBase64(file))
+                    ),
+                    specs: specsArray.filter(
+                        (spec) => spec.spec_key && spec.spec_value
+                    ),
+                    product: {
+                        product_name: json.product_name,
+                        product_description: json.product_description,
+                        product_price: json.product_price,
+                        product_discount: json.product_discount,
+                        category_id: json.category_id,
+                    },
+                };
 
-        const response = await usePostData("/products", data);
+                const response = await usePostData("/products", data);
 
-        if (response.success) {
-            e.target.closest("dialog").close();
-            e.target.reset();
-            reloadProducts();
-        }
+                if (response.success) {
+                    e.target.closest("dialog").close();
+                    e.target.reset();
+                    reloadProducts();
+                }
+            }
+        });
     };
 
     return (
