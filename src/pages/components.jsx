@@ -46,10 +46,15 @@ export default function Components() {
                         </label>
                     </div>
                     <div className="flex justify-center">
-                        <button className="btn btn-primary w-fit px-5 btn-outline btn-sm py-2 h-auto">
+                        <Link
+                            to={`${
+                                import.meta.env.VITE_API_URL
+                            }/pdf/list?category_id=2`}
+                            className="btn btn-primary w-fit px-5 btn-outline btn-sm py-2 h-auto"
+                        >
                             <DownloadIcon className="text-xl" />
                             Descargar lista PDF de componentes
-                        </button>
+                        </Link>
                     </div>
 
                     {filteredProducts.length === 0 && (
