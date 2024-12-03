@@ -10,7 +10,7 @@ import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 
 // Hooks
-import { useGetData } from "../hooks/useFetchApi.js";
+import { usePaginateData } from "../hooks/useFetchApi.js";
 
 // Components
 import { StarIcon } from "../components/icons.jsx";
@@ -19,17 +19,17 @@ import LoadingContent from "../components/loadingContent.jsx";
 export default function Home() {
     const navigate = useNavigate();
 
-    const { data: computers, loading: loadingComputers } = useGetData(
+    const { data: computers, loading: loadingComputers } = usePaginateData(
         "/products?category_id=1"
     );
-    const { data: components, loading: loadingComponents } = useGetData(
+    const { data: components, loading: loadingComponents } = usePaginateData(
         "/products?category_id=2"
     );
-    const { data: discounts, loading: loadingDiscounts } = useGetData(
-        "/products?sort=product_discount&order=DESC&limit=4"
+    const { data: discounts, loading: loadingDiscounts } = usePaginateData(
+        "/products?sort=product_discount:DESC&limit=4"
     );
-    const { data: recents, loading: loadingRecents } = useGetData(
-        "/products?sort=product_date&order=DESC&limit=5"
+    const { data: recents, loading: loadingRecents } = usePaginateData(
+        "/products?sort=product_date:DESC&limit=5"
     );
 
     useEffect(() => {

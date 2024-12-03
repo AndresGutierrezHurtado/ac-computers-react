@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // Hooks
-import { useGetData } from "../hooks/useFetchApi";
+import { usePaginateData } from "../hooks/useFetchApi";
 
 // Components
 import LoadingContent from "../components/loadingContent.jsx";
@@ -10,8 +10,8 @@ import { DownloadIcon, SearchIcon } from "../components/icons.jsx";
 
 export default function Computers() {
     const [filter, setFilter] = useState("");
-    const { data: products, loading: loadingProducts } = useGetData(
-        "/products?category_id=1"
+    const { data: products, loading: loadingProducts } = usePaginateData(
+        "/products?category_id=1&limit=10"
     );
 
     if (loadingProducts) return <LoadingContent />;
