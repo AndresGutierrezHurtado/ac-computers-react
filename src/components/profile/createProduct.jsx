@@ -94,7 +94,6 @@ export default function CreateProduct({ reloadProducts }) {
                                 className="input input-sm input-bordered focus:input-primary focus:outline-0 w-full"
                             />
                         </div>
-
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-0.5">

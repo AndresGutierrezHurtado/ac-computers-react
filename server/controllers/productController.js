@@ -1,6 +1,6 @@
 import { Op } from "sequelize";
 import * as models from "../models/relations.js";
-import { uploadFile } from "../config/useUploadImage.js";
+import { deleteFile, uploadFile } from "../config/useUploadImage.js";
 
 export default class ProductController {
     static async getProducts(req, res) {
@@ -112,10 +112,11 @@ export default class ProductController {
                 const multimediaData = await Promise.all(
                     req.body.multimedias.map(async (file) => {
                         const id = crypto.randomUUID();
-                        const url = await uploadFile(file, id, "/medias");
+                        const { data: url } = await uploadFile(file, id, "/medias");
+
                         return {
                             media_id: id,
-                            media_url: url.data,
+                            media_url: url,
                             product_id: product.product_id,
                         };
                     })
@@ -140,6 +141,16 @@ export default class ProductController {
 
     static async updateProduct(req, res) {
         try {
+            if (req.body.product_image) {
+                const { data: url } = await uploadFile(
+                    req.body.product_image,
+                    req.params.id,
+                    "/"
+                );
+
+                req.body.product.product_image_url = url;
+            }
+
             const product = await models.Product.update(req.body.product, {
                 where: { product_id: req.params.id },
             });
@@ -157,12 +168,32 @@ export default class ProductController {
                 );
             }
 
+            if (req.body.multimedias) {
+
+                const multimediaData = await Promise.all(
+                    req.body.multimedias.map(async (file) => {
+                        const id = crypto.randomUUID();
+                        const { data: url } = await uploadFile(file, id, "/medias");
+
+                        return {
+                            media_id: id,
+                            media_url: url,
+                            product_id: req.params.id,
+                        };
+                    })
+                );
+
+
+                const medias = await models.Multimedia.bulkCreate(multimediaData)
+            }
+
             res.status(200).json({
                 success: true,
                 message: "Producto actualizado con éxito",
                 data: product,
             });
         } catch (error) {
+            console.error(error);
             res.status(500).json({
                 success: false,
                 message: "Error al actualizar el producto",
@@ -173,11 +204,26 @@ export default class ProductController {
 
     static async deleteProduct(req, res) {
         try {
+            const referenceProduct = await models.Product.findByPk(req.params.id, {
+                include: [
+                    { model: models.Category, as: "category" },
+                    { model: models.Spec, as: "specs" },
+                    { model: models.Multimedia, as: "multimedias" },
+                ],
+            });
+
             const product = await models.Product.destroy({
                 where: { product_id: req.params.id },
             });
 
+            const image = await deleteFile(`ac-computers/${req.params.id}`);
+            const medias = Promise.all(referenceProduct.multimedias.map(async media => await deleteFile(`ac-computers/medias/${media_id}`)));
+
             await models.Spec.destroy({
+                where: { product_id: req.params.id },
+            });
+
+            await models.Multimedia.destroy({
                 where: { product_id: req.params.id },
             });
 
@@ -191,6 +237,32 @@ export default class ProductController {
                 success: false,
                 message: "Error al eliminar el producto",
                 error: error.message,
+            });
+        }
+    }
+
+    static async deleteMedia(req, res) {
+        try {
+            const image = await deleteFile(`ac-computers/medias/${req.params.id}`);
+
+            if (!image.success) throw new Error(image.data);
+
+            const media = await models.Multimedia.destroy({
+                where: { media_id: req.params.id },
+            });
+
+            if (media == 0) throw new Error("No se encontró la multimedia");
+
+            res.status(200).json({
+                success: true,
+                message: "Producto eliminado con éxito",
+                data: { image, media },
+            });
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: error.message,
+                error: error,
             });
         }
     }

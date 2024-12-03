@@ -39,6 +39,8 @@ export const deleteFile = async (public_id) => {
     try {
         const result = await cloudinary.uploader.destroy(public_id);
 
+        if (result.result == "not found") throw new Error("No se encontró el archivo.");
+
         return {
             success: true,
             message: "Imagen eliminada correctamente",

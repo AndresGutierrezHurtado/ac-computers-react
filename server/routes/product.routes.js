@@ -9,6 +9,7 @@ productRoutes.get("/products/:id", ProductController.getProduct);
 productRoutes.post("/products", ProductController.createProduct);
 productRoutes.put("/products/:id", ProductController.updateProduct);
 productRoutes.delete("/products/:id", ProductController.deleteProduct);
+productRoutes.delete("/medias/:id", ProductController.deleteMedia);
 
 productRoutes.get("/pdf/list", pdfGenerator);
 
