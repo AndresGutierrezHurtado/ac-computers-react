@@ -39,7 +39,7 @@ export default function SwiperThumbnails({
                     className="mySwiper2"
                 >
                     {images.map((image, index) => (
-                        <SwiperSlide key={image.id}>
+                        <SwiperSlide key={image.id} className="flex items-center justify-center h-[auto_!important]">
                             <img
                                 src={image.url}
                                 alt={image.alt}
@@ -66,9 +66,9 @@ export default function SwiperThumbnails({
                     {images.map((image) => (
                         <SwiperSlide
                             key={image.id}
-                            className="aspect-square w-[100%_!important]"
+                            className="aspect-square w-[100%_!important] bg-black/20 rounded h-[auto_!important]"
                         >
-                            <img src={image.url} alt={image.alt} />
+                            <img src={image.url} alt={image.alt} className="w-full h-full object-contain" />
                         </SwiperSlide>
                     ))}
                 </Swiper>
