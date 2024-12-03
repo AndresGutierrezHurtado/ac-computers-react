@@ -14,6 +14,7 @@ import Login from "./pages/auth/login.jsx";
 import Register from "./pages/auth/register.jsx";
 import UsersAdmin from "./pages/admin/users.jsx";
 import ProductsAdmin from "./pages/admin/products.jsx";
+import ProductProfile from "./pages/admin/product.jsx";
 
 // Layouts
 import GuestLayout from "./layouts/guestLayout.jsx";
@@ -48,6 +49,10 @@ function App() {
                         <Route
                             path="/admin/products"
                             element={<ProductsAdmin />}
+                        />
+                        <Route
+                            path="/admin/products/:id"
+                            element={<ProductProfile />}
                         />
                     </Route>
                 </Routes>

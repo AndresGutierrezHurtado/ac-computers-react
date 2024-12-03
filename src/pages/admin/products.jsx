@@ -169,7 +169,7 @@ export default function Products() {
                                             </td>
                                             <td className="space-x-2">
                                                 <Link
-                                                    to={`/profile/products/${product.product_id}`}
+                                                    to={`/admin/products/${product.product_id}`}
                                                     className="btn btn-primary btn-outline btn-sm"
                                                 >
                                                     <EditIcon size={16} />

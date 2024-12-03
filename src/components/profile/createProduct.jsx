@@ -174,7 +174,6 @@ export default function CreateProduct({ reloadProducts }) {
                                 maxLength={8}
                             />
                         </div>
-                        {/* Especificaciones dinámicas */}
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text font-semibold">
