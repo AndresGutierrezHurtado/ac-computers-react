@@ -33,13 +33,14 @@ export default function CreateProduct({ reloadProducts }) {
                     spec_value: formData.get(`specs[${i}].value`),
                 }));
 
+                const multimediasdata = await Promise.all(
+                    formData
+                        .getAll("multimedias")
+                        .filter(file => file.size !== 0)
+                        .map(async (file) => await useBase64(file))
+                );
+
                 const data = {
-                    product_image: await useBase64(json.product_image),
-                    multimedias: await Promise.all(
-                        formData
-                            .getAll("multimedias")
-                            .map(async (file) => await useBase64(file))
-                    ),
                     specs: specsArray.filter(
                         (spec) => spec.spec_key && spec.spec_value
                     ),
@@ -50,6 +51,8 @@ export default function CreateProduct({ reloadProducts }) {
                         product_discount: json.product_discount,
                         category_id: json.category_id,
                     },
+                    multimedias: multimediasdata.length == 0 ? null : multimediasdata,
+                    product_image: json.product_image.size == 0 ? null : await useBase64(json.product_image),
                 };
 
                 const response = await usePostData("/products", data);

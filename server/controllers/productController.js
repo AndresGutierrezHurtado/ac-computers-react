@@ -1,6 +1,7 @@
 import { Op } from "sequelize";
 import * as models from "../models/relations.js";
 import { deleteFile, uploadFile } from "../config/useUploadImage.js";
+import { sequelize } from "../config/database.js";
 
 export default class ProductController {
     static async getProducts(req, res) {
@@ -203,6 +204,7 @@ export default class ProductController {
     }
 
     static async deleteProduct(req, res) {
+        const transaction = sequelize.transaction();
         try {
             const referenceProduct = await models.Product.findByPk(req.params.id, {
                 include: [
@@ -210,29 +212,37 @@ export default class ProductController {
                     { model: models.Spec, as: "specs" },
                     { model: models.Multimedia, as: "multimedias" },
                 ],
+                transaction
             });
 
             const product = await models.Product.destroy({
                 where: { product_id: req.params.id },
+                transaction
             });
 
             const image = await deleteFile(`ac-computers/${req.params.id}`);
             const medias = Promise.all(referenceProduct.multimedias.map(async media => await deleteFile(`ac-computers/medias/${media_id}`)));
 
+            if (!image.success || medias.filter(el => !el.success).length > 0) throw new Error(image.data);
+
             await models.Spec.destroy({
                 where: { product_id: req.params.id },
+                transaction
             });
 
             await models.Multimedia.destroy({
                 where: { product_id: req.params.id },
+                transaction
             });
 
+            (await transaction).commit();
             res.status(200).json({
                 success: true,
                 message: "Producto eliminado con éxito",
                 data: product,
             });
         } catch (error) {
+            await (await transaction).rollback();
             res.status(500).json({
                 success: false,
                 message: "Error al eliminar el producto",

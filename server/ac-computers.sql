@@ -95,6 +95,18 @@ INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `pr
 
 -- Components
 
+INSERT INTO `products` (`product_id`, `product_name`, `product_description`, `product_image_url`, `product_price`, `product_discount`, `product_date`, `category_id`) VALUES
+('0dcc4d23-f815-4417-a224-123344547219', 'Fuente XPG Pylon 750W 80+ Bronze', 'Fuente de poder de 750W con certificación 80 Plus Bronze, ideal para equipos gaming y estaciones de trabajo.', '/images/products/default.jpg', 306000, 0, '2024-12-03 20:04:01', 2),
+('297d6182-8ccb-48d4-9f30-b7a2736c32d2', 'Thermaltake View 200 TG ARGB', 'Chasis para PC ATX con panel lateral de vidrio templado y ventiladores ARGB preinstalados.', '/images/products/default.jpg', 416000, 0, '2024-12-03 20:03:56', 2),
+('2d0d648e-8492-4446-a23b-fc803c11f600', 'MSI GeForce RTX 3050 6GB', 'Tarjeta gráfica con 6GB GDDR6, ideal para juegos en 1080p con soporte para Ray Tracing.', '/images/products/default.jpg', 956000, 0, '2024-12-03 20:03:48', 2),
+('8f30e3e7-05db-49dc-9da3-e77d0504c78c', 'Procesador AMD Ryzen 9 7900', 'CPU de alto rendimiento con 12 núcleos y 24 hilos, ideal para multitarea y juegos exigentes.', '/images/products/default.jpg', 1989000, 0, '2024-12-03 20:03:52', 2),
+('967cc582-c49e-42bf-9e0e-db4a052f568b', 'Fuente de Poder Aerocool VX650', 'Fuente de poder de 650W con certificación 80 PLUS Bronze.', '/images/products/default.jpg', 250000, 0, '2024-12-03 20:03:14', 2),
+('a8b55d93-f902-4b01-aa0d-deaf89e2de86', 'Procesador Intel Core i5-12400', 'Procesador de 6 núcleos y 12 hilos, frecuencia base de 2.5 GHz y turbo hasta 4.4 GHz.', 'https://res.cloudinary.com/dyuh7jesr/image/upload/v1733256108/ac-computers/a8b55d93-f902-4b01-aa0d-deaf89e2de86.jpg', 930000, 0, '2024-12-03 20:00:22', 2),
+('aef6ad01-a22b-4f4b-94e8-8626dfc71888', 'SSD Kingston NV2 512GB', 'Unidad SSD M.2 NVMe de alto rendimiento y capacidad.', '/images/products/default.jpg', 300000, 0, '2024-12-03 20:03:05', 2),
+('c51a5c55-7487-4645-9016-8474174e46a9', 'Tarjeta Madre MSI B760M-P', 'Placa base compatible con procesadores Intel de 12va y 13va generación.', '/images/products/default.jpg', 670000, 0, '2024-12-03 20:02:04', 2),
+('ca913a4b-5217-467f-aa60-eeb4a9ebc63b', 'Monitor LG 34WQ75C-B UltraWide', 'Monitor ultrapanorámico de 34 pulgadas con resolución UWFHD y soporte HDR10.', '/images/products/default.jpg', 3089000, 0, '2024-12-03 20:04:08', 2),
+('f00d98e9-d0de-4245-b181-124854362889', 'Memoria RAM Corsair Vengeance LPX 16GB', 'Módulo de memoria DDR4 de 3200 MHz, ideal para gaming y multitarea.', '/images/products/default.jpg', 380000, 0, '2024-12-03 20:02:50', 2);
+
 
 -- ---------------------------------------------------------------
 --
