@@ -1,8 +1,22 @@
-import React from "react";
-import { Link, Outlet } from "react-router";
-import { GearIcon, HomeIcon, ProductsIcon, UsersIcon } from "../components/icons";
+import React, { useEffect } from "react";
+import { Link, Outlet, useNavigate } from "react-router";
+
+// Components
+import { HomeIcon, ProductsIcon, UsersIcon } from "../components/icons";
+
+// Contexts
+import { useAuthContext } from "../contexts/authContext.jsx";
 
 export default function AdminLayout() {
+    const { userSession } = useAuthContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!userSession || userSession.role_id !== 2) {
+            navigate("/");
+        }
+    }, [userSession]);
+
     return (
         <>
             <header className="w-full z-50 sticky top-0 bg-[#20202b]">

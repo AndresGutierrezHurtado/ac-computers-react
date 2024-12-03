@@ -15,7 +15,7 @@ export const Product = sequelize.define(
             allowNull: false,
         },
         product_description: {
-            type: DataTypes.STRING(100),
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         product_price: {
