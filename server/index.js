@@ -15,8 +15,9 @@ const app = express();
 const store = new SequelizeStore({ db: sequelize, tableName: "sessions" });
 
 await store.sync();
+//limit 50mb
 
-app.use(express.json());
+app.use(express.json({ limit: "20mb" }));
 app.use(
     cors({
         origin: process.env.VITE_APP_URL,
