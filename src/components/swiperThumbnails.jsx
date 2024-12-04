@@ -17,8 +17,8 @@ export default function SwiperThumbnails({
 
     return (
         <figure
-            className="flex gap-5 w-full"
-            style={{ width: `${size}px`, height: `${size - 120}px` }}
+            className="flex items-center justify-center gap-5 w-full"
+            style={{ maxWidth: `${size}px`, height: `${size - 120}px` }}
         >
             <div className="w-fit relative">
                 <div className="badge badge-sm absolute top-2 right-2 z-10">
@@ -36,7 +36,7 @@ export default function SwiperThumbnails({
                     thumbs={{ swiper: thumbsSwiper }}
                     modules={[FreeMode, Navigation, Thumbs]}
                     onSlideChange={(swiper) => setCurrent(swiper.activeIndex)}
-                    className="mySwiper2"
+                    className="mySwiper2 bg-black/20 rounded"
                 >
                     {images.map((image, index) => (
                         <SwiperSlide key={image.id} className="flex items-center justify-center h-[auto_!important]">
@@ -52,7 +52,7 @@ export default function SwiperThumbnails({
                     ))}
                 </Swiper>
             </div>
-            <div className="w-[100px] h-full">
+            <div className="w-[100px] hidden md:block h-full">
                 <Swiper
                     onSwiper={setThumbsSwiper}
                     spaceBetween={10}

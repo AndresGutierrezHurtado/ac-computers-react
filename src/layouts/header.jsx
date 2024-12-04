@@ -13,8 +13,14 @@ export default function Header() {
             document.documentElement.scrollTop > 10
         ) {
             document.getElementById("header").style.backgroundColor =
-                "rgba(0, 0, 0, 0.2)";
-            document.getElementById("header").style.paddingInline = "35px";
+                "rgba(0, 0, 0, 0.35)";
+            const header = document.getElementById("header");
+            if (window.innerWidth < 768) {
+                // Small screen
+                header.style.paddingInline = "15px";
+            } else {
+                header.style.paddingInline = "35px";
+            }
         } else {
             document.getElementById("header").style.backgroundColor =
                 "rgba(0, 0, 0, 0)";
@@ -64,7 +70,7 @@ export default function Header() {
                             className="navbar-start tooltip tooltip-bottom tooltip-accent"
                             data-tip="Ir al inicio"
                         >
-                            <h2 className="text-2xl text-start md:text-[27px] text-[#4e99d3] uppercase font-extrabold">
+                            <h2 className=" text-start text-lg sm:text-2xl md:text-[27px] text-[#4e99d3] uppercase font-extrabold tracking-tight">
                                 AC COMPUTERS
                             </h2>
                         </Link>
@@ -184,16 +190,40 @@ export default function Header() {
                 <ul className="menu bg-base-200 min-h-full w-80 p-4">
                     {/* Sidebar content here */}
                     <li>
-                        <a>Inicio</a>
+                        <Link to="/">Inicio</Link>
                     </li>
                     <li>
-                        <a>Computadores</a>
+                        <Link
+                            to="/computers"
+                            className={`${
+                                location.pathname === "/computers" &&
+                                "text-[#4e99d3] font-semibold"
+                            }`}
+                        >
+                            Computadores
+                        </Link>
                     </li>
                     <li>
-                        <a>Componentes</a>
+                        <Link
+                            to="/components"
+                            className={`${
+                                location.pathname === "/components" &&
+                                "text-[#4e99d3] font-semibold"
+                            }`}
+                        >
+                            Componentes
+                        </Link>
                     </li>
                     <li>
-                        <a>Contactanos</a>
+                        <Link
+                            to="/contact"
+                            className={`${
+                                location.pathname === "/contact" &&
+                                "text-[#4e99d3] font-semibold"
+                            }`}
+                        >
+                            Contáctanos
+                        </Link>
                     </li>
                 </ul>
             </div>

@@ -36,7 +36,7 @@ export default function Computer() {
         <>
             <section className="w-full px-3">
                 <div className="w-full max-w-[1200px] mx-auto py-10">
-                    <div className="flex gap-10">
+                    <div className="flex flex-col md:flex-row gap-10">
                         <div className="w-fit">
                             <SwiperThumbnails
                                 images={images}

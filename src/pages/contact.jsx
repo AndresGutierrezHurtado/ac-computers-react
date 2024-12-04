@@ -58,7 +58,7 @@ export default function Contact() {
         <>
             <section className="w-full px-3">
                 <div className="w-full max-w-[1200px] mx-auto py-10">
-                    <div className="flex gap-10 w-full">
+                    <div className="flex flex-col md:flex-row gap-10 w-full">
                         <div className="w-full md:w-1/2 space-y-8">
                             <div className="space-y-3">
                                 <h2 className="text-4xl font-extrabold tracking-tight">

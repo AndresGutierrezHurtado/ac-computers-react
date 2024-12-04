@@ -35,7 +35,7 @@ export default function AdminLayout() {
                 <main className="drawer-content h-[calc(100vh-77px)] overflow-y-auto">
                     <label
                         htmlFor="my-drawer-2"
-                        className="btn btn-primary btn-sm btn-outline w-fit drawer-button lg:hidden absolute top-2 right-2"
+                        className="btn btn-primary btn-sm btn-outline w-fit drawer-button lg:hidden absolute top-[-55px] z-50 right-2"
                     >
                         Open drawer
                     </label>

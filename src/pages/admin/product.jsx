@@ -99,8 +99,8 @@ export default function ProductProfile() {
                     <h2 className="text-4xl font-extrabold tracking-tight">
                         Perfil producto:
                     </h2>
-                    <div className="flex gap-10">
-                        <div className="w-full max-w-[400px] space-y-5">
+                    <div className="flex flex-col md:flex-row gap-10">
+                        <div className="w-full mx-auto max-w-[400px] space-y-5">
                             <article className="card h-fit bg-black/10 w-full [&_p]:grow-0">
                                 <div className="card-body">
                                     <figure className="w-full max-w-[400px] aspect-square">
@@ -205,7 +205,7 @@ export default function ProductProfile() {
                                             disabled={!editable}
                                         ></textarea>
                                     </div>
-                                    <div className="flex w-full gap-4">
+                                    <div className="flex flex-col sm:flex-row w-full gap-4">
                                         <div className="form-control grow">
                                             <label className="label">
                                                 <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-1">

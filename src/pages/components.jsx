@@ -30,7 +30,7 @@ export default function Components() {
         <section className="w-full px-3">
             <div className="w-full max-w-[1200px] mx-auto py-10">
                 <div className="space-y-10">
-                    <div className="flex items-end justify-between">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 justify-between">
                         <h2 className="text-4xl font-extrabold tracking-tight">
                             Lista componentes:
                         </h2>

@@ -64,7 +64,7 @@ export default function UsersAdmin() {
                         </div>
                         <div className="card bg-[#20202b] rounded [&_p]:grow-0">
                             <div className="card-body p-4">
-                                <div className="flex justify-between items-center w-full">
+                                <div className="flex flex-col sm:flex-row gap-4 justify-between items-center w-full">
                                     <h2 className="text-3xl font-bold">
                                         Usuarios
                                     </h2>
@@ -84,102 +84,106 @@ export default function UsersAdmin() {
                                     </label>
                                 </div>
                             </div>
-                            <table className="w-full table rounded">
-                                <thead className="transparent bg-[#242430]">
-                                    <tr className="text-[15px] [&>*]:py-3 [&>*]:cursor-pointer [&>*:hover]:text-white">
-                                        <th
-                                            onClick={() =>
-                                                setSort("user_id:asc")
-                                            }
-                                        >
-                                            ID
-                                        </th>
-                                        <th
-                                            onClick={() =>
-                                                setSort("user_name:asc")
-                                            }
-                                        >
-                                            Nombres
-                                        </th>
-                                        <th
-                                            onClick={() =>
-                                                setSort("user_email:asc")
-                                            }
-                                        >
-                                            Correo Electrónico
-                                        </th>
-                                        <th
-                                            onClick={() =>
-                                                setSort("role_id:asc")
-                                            }
-                                        >
-                                            Rol
-                                        </th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {users.map((user) => (
-                                        <tr key={user.user_id}>
-                                            <td>
-                                                {user.user_id.split("-")[1]}
-                                            </td>
-                                            <td>
-                                                {user.user_name}{" "}
-                                                {user.user_lastname}
-                                            </td>
-                                            <td>{user.user_email}</td>
-                                            <td>{user.role.role_name}</td>
-                                            <td>
-                                                <div className="flex gap-2 items-center">
-                                                    <button
-                                                        onClick={() =>
-                                                            document
-                                                                .getElementById(
-                                                                    `edit-user-${user.user_id}`
-                                                                )
-                                                                .show()
-                                                        }
-                                                        className="btn btn-primary btn-outline btn-sm"
-                                                    >
-                                                        <EditIcon size={16} />
-                                                    </button>
-                                                    <div
-                                                        className="tooltip tooltip-accent tooltip-left"
-                                                        data-tip={
-                                                            userSession.user_id ==
-                                                            user.user_id
-                                                                ? "No puedes eliminar tu propia cuenta"
-                                                                : "Eliminar usuario"
-                                                        }
-                                                    >
+                            <div className="w-full overflow-x-auto">
+                                <table className="w-full table rounded">
+                                    <thead className="transparent bg-[#242430]">
+                                        <tr className="text-[15px] [&>*]:py-3 [&>*]:cursor-pointer [&>*:hover]:text-white">
+                                            <th
+                                                onClick={() =>
+                                                    setSort("user_id:asc")
+                                                }
+                                            >
+                                                ID
+                                            </th>
+                                            <th
+                                                onClick={() =>
+                                                    setSort("user_name:asc")
+                                                }
+                                            >
+                                                Nombres
+                                            </th>
+                                            <th
+                                                onClick={() =>
+                                                    setSort("user_email:asc")
+                                                }
+                                            >
+                                                Correo Electrónico
+                                            </th>
+                                            <th
+                                                onClick={() =>
+                                                    setSort("role_id:asc")
+                                                }
+                                            >
+                                                Rol
+                                            </th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {users.map((user) => (
+                                            <tr key={user.user_id}>
+                                                <td>
+                                                    {user.user_id.split("-")[1]}
+                                                </td>
+                                                <td>
+                                                    {user.user_name}{" "}
+                                                    {user.user_lastname}
+                                                </td>
+                                                <td>{user.user_email}</td>
+                                                <td>{user.role.role_name}</td>
+                                                <td>
+                                                    <div className="flex gap-2 items-center">
                                                         <button
                                                             onClick={() =>
-                                                                handleDeleteUser(
-                                                                    user.user_id,
-                                                                    user.name
-                                                                )
+                                                                document
+                                                                    .getElementById(
+                                                                        `edit-user-${user.user_id}`
+                                                                    )
+                                                                    .show()
                                                             }
-                                                            className="btn btn-error btn-outline btn-sm"
-                                                            disabled={
-                                                                userSession.user_id ==
-                                                                user.user_id
-                                                            }
+                                                            className="btn btn-primary btn-outline btn-sm"
                                                         >
-                                                            <TrashIcon
+                                                            <EditIcon
                                                                 size={16}
                                                             />
                                                         </button>
+                                                        <div
+                                                            className="tooltip tooltip-accent tooltip-left"
+                                                            data-tip={
+                                                                userSession.user_id ==
+                                                                user.user_id
+                                                                    ? "No puedes eliminar tu propia cuenta"
+                                                                    : "Eliminar usuario"
+                                                            }
+                                                        >
+                                                            <button
+                                                                onClick={() =>
+                                                                    handleDeleteUser(
+                                                                        user.user_id,
+                                                                        user.name
+                                                                    )
+                                                                }
+                                                                className="btn btn-error btn-outline btn-sm"
+                                                                disabled={
+                                                                    userSession.user_id ==
+                                                                    user.user_id
+                                                                }
+                                                            >
+                                                                <TrashIcon
+                                                                    size={16}
+                                                                />
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                        <tr className="[&>*]:py-4 bg-[#242430]">
+                                            <td colSpan={7}></td>
                                         </tr>
-                                    ))}
-                                    <tr className="[&>*]:py-4 bg-[#242430]">
-                                        <td colSpan={7}></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                             <div className="card-body p-4">
                                 <div className="flex justify-between items-center w-full">
                                     <p>

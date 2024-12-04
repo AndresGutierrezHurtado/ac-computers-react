@@ -73,7 +73,7 @@ export default function Products() {
                         </div>
                         <div className="card bg-[#20202b] rounded [&_p]:grow-0">
                             <div className="card-body p-4">
-                                <div className="flex justify-between items-center w-full">
+                                <div className="flex flex-col sm:flex-row gap-4 justify-between items-center w-full">
                                     <h2 className="text-3xl font-bold">
                                         Productos
                                     </h2>
@@ -93,110 +93,124 @@ export default function Products() {
                                     </label>
                                 </div>
                             </div>
-                            <table className="w-full table rounded">
-                                <thead className="transparent bg-[#242430]">
-                                    <tr className="text-[15px] [&>*]:py-3 [&>*]:cursor-pointer [&>*:hover]:text-white">
-                                        <th
-                                            onClick={() =>
-                                                setSort("product_id:asc")
-                                            }
-                                        >
-                                            ID
-                                        </th>
-                                        <th
-                                            onClick={() =>
-                                                setSort("product_name:asc")
-                                            }
-                                        >
-                                            Nombre
-                                        </th>
-                                        <th
-                                            onClick={() =>
-                                                setSort("product_price:desc")
-                                            }
-                                        >
-                                            Precio
-                                        </th>
-                                        <th
-                                            onClick={() =>
-                                                setSort("product_discount:desc")
-                                            }
-                                        >
-                                            Descuento
-                                        </th>
-                                        <th
-                                            onClick={() =>
-                                                setSort("category_id:asc")
-                                            }
-                                        >
-                                            Tipo
-                                        </th>
-                                        <th
-                                            onClick={() =>
-                                                setSort("product_date:desc")
-                                            }
-                                        >
-                                            Fecha
-                                        </th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {products.map((product) => (
-                                        <tr key={product.product_id}>
-                                            <td>
-                                                {
-                                                    product.product_id.split(
-                                                        "-"
-                                                    )[1]
+                            <div className="w-full overflow-x-auto">
+                                <table className="w-full table rounded">
+                                    <thead className="transparent bg-[#242430]">
+                                        <tr className="text-[15px] [&>*]:py-3 [&>*]:cursor-pointer [&>*:hover]:text-white">
+                                            <th
+                                                onClick={() =>
+                                                    setSort("product_id:asc")
                                                 }
-                                            </td>
-                                            <td>{product.product_name}</td>
-                                            <td>
-                                                COP{" "}
-                                                {parseInt(
-                                                    product.product_price
-                                                ).toLocaleString("es-CO")}
-                                            </td>
-                                            <td>{product.product_discount}%</td>
-                                            <td className="capitalize">
-                                                {product.category.category_name}
-                                            </td>
-                                            <td>
-                                                {new Date(
-                                                    product.product_date
-                                                ).toLocaleString("es-CO")}
-                                            </td>
-                                            <td className="space-x-2">
-                                                <Link
-                                                    to={`/admin/products/${product.product_id}`}
-                                                    className="btn btn-primary btn-outline btn-sm"
-                                                >
-                                                    <EditIcon size={16} />
-                                                </Link>
-                                                <button
-                                                    onClick={() =>
-                                                        handleDeleteUser(
-                                                            product.product_id,
-                                                            product.product_name
-                                                        )
+                                            >
+                                                ID
+                                            </th>
+                                            <th
+                                                onClick={() =>
+                                                    setSort("product_name:asc")
+                                                }
+                                            >
+                                                Nombre
+                                            </th>
+                                            <th
+                                                onClick={() =>
+                                                    setSort(
+                                                        "product_price:desc"
+                                                    )
+                                                }
+                                            >
+                                                Precio
+                                            </th>
+                                            <th
+                                                onClick={() =>
+                                                    setSort(
+                                                        "product_discount:desc"
+                                                    )
+                                                }
+                                            >
+                                                Descuento
+                                            </th>
+                                            <th
+                                                onClick={() =>
+                                                    setSort("category_id:asc")
+                                                }
+                                            >
+                                                Tipo
+                                            </th>
+                                            <th
+                                                onClick={() =>
+                                                    setSort("product_date:desc")
+                                                }
+                                            >
+                                                Fecha
+                                            </th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {products.map((product) => (
+                                            <tr key={product.product_id}>
+                                                <td>
+                                                    {
+                                                        product.product_id.split(
+                                                            "-"
+                                                        )[1]
                                                     }
-                                                    className="btn btn-error btn-outline btn-sm"
-                                                >
-                                                    <TrashIcon />
-                                                </button>
+                                                </td>
+                                                <td>{product.product_name}</td>
+                                                <td>
+                                                    COP{" "}
+                                                    {parseInt(
+                                                        product.product_price
+                                                    ).toLocaleString("es-CO")}
+                                                </td>
+                                                <td>
+                                                    {product.product_discount}%
+                                                </td>
+                                                <td className="capitalize">
+                                                    {
+                                                        product.category
+                                                            .category_name
+                                                    }
+                                                </td>
+                                                <td>
+                                                    {new Date(
+                                                        product.product_date
+                                                    ).toLocaleString("es-CO")}
+                                                </td>
+                                                <td>
+                                                    <div className="flex gap-2">
+
+                                                    <Link
+                                                        to={`/admin/products/${product.product_id}`}
+                                                        className="btn btn-primary btn-outline btn-sm"
+                                                    >
+                                                        <EditIcon size={16} />
+                                                    </Link>
+                                                    <button
+                                                        onClick={() =>
+                                                            handleDeleteUser(
+                                                                product.product_id,
+                                                                product.product_name
+                                                            )
+                                                        }
+                                                        className="btn btn-error btn-outline btn-sm"
+                                                    >
+                                                        <TrashIcon />
+                                                    </button>
+                                                    </div>
+                                                    </td>
+                                            </tr>
+                                        ))}
+
+                                        <tr className="[&>*]:py-4 bg-[#242430] text-center text-xl ">
+                                            <td colSpan={7}>
+                                                {products.length === 0 &&
+                                                    "No hay productos..."}
                                             </td>
                                         </tr>
-                                    ))}
-
-                                    <tr className="[&>*]:py-4 bg-[#242430] text-center text-xl ">
-                                        <td colSpan={7}>
-                                            {products.length === 0 &&
-                                                "No hay productos..."}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                             <div className="card-body p-4">
                                 <div className="flex justify-between items-center w-full">
                                     <p>
