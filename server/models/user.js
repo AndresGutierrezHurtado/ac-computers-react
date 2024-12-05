@@ -90,10 +90,6 @@ export const Recovery = sequelize.define(
             type: DataTypes.DATE,
             allowNull: false,
         },
-        recovery_expiration: {
-            type: DataTypes.DATE,
-            allowNull: false,
-        },
     },
     {
         tableName: "recoveries",

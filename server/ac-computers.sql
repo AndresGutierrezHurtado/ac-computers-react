@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS `ac-computers-db`;
 CREATE DATABASE `ac-computers-db`;
 USE `ac-computers-db`;
 
-DROP TABLE IF EXISTS `products`, `users`, `sessions`, `recovery`;
+DROP TABLE IF EXISTS `products`, `users`, `sessions`, `recovery`, `categories`, `multimedias`, `specs`, `roles`;
 
 -- ---------------------------------------------------------------
 --
@@ -21,8 +21,7 @@ CREATE TABLE `sessions` (
 CREATE TABLE `recoveries` (
     `recovery_id` VARCHAR(60) NOT NULL PRIMARY KEY,
     `user_id` VARCHAR(60) NOT NULL,
-    `recovery_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `recovery_expiration` TIMESTAMP NOT NULL DEFAULT DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 1 HOUR)
+    `recovery_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ---------------------------------------------------------------

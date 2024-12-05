@@ -33,8 +33,8 @@ app.use(
         store: store,
         cookie: {
             maxAge: 1000 * 60 * 60 * 24,
-            secure: false,
-            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            httpOnly: process.env.NODE_ENV === "production",
             sameSite: "lax",
         },
     })
