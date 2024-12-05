@@ -12,6 +12,7 @@ import productRoutes from "./routes/product.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 
 const app = express();
+app.set("trust proxy", 1);
 const store = new SequelizeStore({ db: sequelize, tableName: "sessions" });
 
 await store.sync();
@@ -33,8 +34,9 @@ app.use(
         store: store,
         cookie: {
             maxAge: 1000 * 60 * 60 * 24,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
+            secure: process.env.NODE_ENV == "production",
+            httpOnly: true,
+            sameSite: "none",
         },
     })
 );
