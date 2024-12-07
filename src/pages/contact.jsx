@@ -82,6 +82,7 @@ export default function Contact() {
                                     <Link
                                         key={socialMedia.text}
                                         to={socialMedia.url}
+                                        target="_blank"
                                         role="alert"
                                         className="alert rounded-lg w-full max-w-lg"
                                     >

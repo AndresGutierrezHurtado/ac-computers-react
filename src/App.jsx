@@ -8,8 +8,7 @@ import Home from "./pages/home.jsx";
 import Contact from "./pages/contact.jsx";
 import Computers from "./pages/computers.jsx";
 import Components from "./pages/components.jsx";
-import Computer from "./pages/computer.jsx";
-import Component from "./pages/component.jsx";
+import Product from "./pages/product.jsx";
 import Login from "./pages/auth/login.jsx";
 import Register from "./pages/auth/register.jsx";
 import UsersAdmin from "./pages/admin/users.jsx";
@@ -29,8 +28,8 @@ function App() {
                     <Route element={<AppLayout />}>
                         <Route path="/" element={<Home />} />
                         <Route path="/computers" element={<Computers />} />
-                        <Route path="/computers/:id" element={<Computer />} />
-                        <Route path="/components/:id" element={<Component />} />
+                        <Route path="/computers/:id" element={<Product />} />
+                        <Route path="/components/:id" element={<Product />} />
                         <Route path="/components" element={<Components />} />
                         <Route path="/contact" element={<Contact />} />
                     </Route>
