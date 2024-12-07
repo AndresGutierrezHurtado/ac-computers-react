@@ -19,13 +19,13 @@ export default function Contact() {
     const socialMedias = [
         {
             icon: <InstagramIcon size={20} />,
-            url: "https://www.instagram.com/accomputers/",
-            text: "Instagram: @accomputers",
+            url: "https://www.instagram.com/accomputersas/",
+            text: "Instagram: @accomputersas",
         },
         {
             icon: <FacebookIcon size={20} />,
-            url: "https://www.facebook.com/ACComputers",
-            text: "Facebook: ACComputers",
+            url: "https://web.facebook.com/Amaliacastrode",
+            text: "Facebook: Amalia Castro Ardila",
         },
         {
             icon: <WhatsappIcon size={20} />,
@@ -34,7 +34,7 @@ export default function Contact() {
         },
         {
             icon: <AtIcon size={20} />,
-            url: "mailto:KtH5d@example.com",
+            url: "mailto:amaliacastro78@example.com",
             text: "Correo: amaliacastro78@gmail.com",
         },
         {
