@@ -7,6 +7,7 @@ import { useGetData } from "../hooks/useFetchApi.js";
 // Components
 import SwiperThumbnails from "../components/swiperThumbnails.jsx";
 import LoadingContent from "../components/loadingContent.jsx";
+import { BackIcon } from "../components/icons.jsx";
 
 export default function Computer() {
     const location = useLocation();
@@ -77,17 +78,20 @@ export default function Computer() {
                                     )}
                                 </p>
                             </div>
-                            <button className="btn btn-primary">Volver</button>
+                            <button
+                                onClick={() => window.history.back()}
+                                className="btn btn-primary"
+                            >
+                                <BackIcon size={20} />
+                                Volver
+                            </button>
                         </div>
                     </div>
                 </div>
             </section>
             <div className="w-full">
                 <div className="w-full max-w-[1200px] mx-auto">
-                    <img
-                        src="/images/banner.jpg"
-                        alt={computer.product_name}
-                    />
+                    <img src="/images/banner.jpg" alt={computer.product_name} />
                 </div>
             </div>
             <section className="w-full px-3">
