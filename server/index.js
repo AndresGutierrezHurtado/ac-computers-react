@@ -12,12 +12,16 @@ import productRoutes from "./routes/product.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 
 const app = express();
-app.set("trust proxy", 1);
-const store = new SequelizeStore({ db: sequelize, tableName: "sessions" });
 
+const store = new SequelizeStore({
+    db: sequelize,
+    tableName: "sessions",
+    checkExpirationInterval: 15 * 60 * 1000,
+    expiration: 60 * 60 * 1000,
+});
 await store.sync();
-//limit 50mb
 
+// Middlewares
 app.use(express.json({ limit: "20mb" }));
 app.use(
     cors({
@@ -29,14 +33,12 @@ app.use(
     session({
         secret: process.env.SESSION_SECRET,
         resave: false,
-        proxy: true,
         saveUninitialized: false,
         store: store,
         cookie: {
-            maxAge: 1000 * 60 * 60 * 24,
-            secure: process.env.NODE_ENV == "production",
+            secure: process.env.NODE_ENV === "production",
             httpOnly: true,
-            sameSite: "none",
+            maxAge: 60 * 60 * 1000,
         },
     })
 );
