@@ -8,7 +8,6 @@ import { useGetData } from "../hooks/useFetchApi.js";
 import SwiperThumbnails from "../components/swiperThumbnails.jsx";
 import LoadingContent from "../components/loadingContent.jsx";
 import { BackIcon } from "../components/icons.jsx";
-import { useRemoveBg } from "../hooks/useremoveBg.js";
 
 export default function Product() {
     const { data: product, loading: loadingProduct } = useGetData(
@@ -27,7 +26,6 @@ export default function Product() {
             alt: multimedia.media_name,
         })),
     ];
-
     
     if (loadingProduct) return <LoadingContent />;
 
