@@ -13,6 +13,8 @@ import authRoutes from "./routes/auth.routes.js";
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 const store = new SequelizeStore({
     db: sequelize,
     tableName: "sessions",
@@ -35,6 +37,7 @@ app.use(
         resave: false,
         saveUninitialized: false,
         store: store,
+        proxy: true,
         cookie: {
             secure: true,
             httpOnly: true,
