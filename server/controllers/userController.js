@@ -158,7 +158,7 @@ export default class UserController {
         } catch (error) {
             res.status(500).json({
                 success: false,
-                message: "Error al actualizar el usuario",
+                message: "Error al autenticar el usuario",
                 error: error.message,
             });
         }
