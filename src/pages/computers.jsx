@@ -117,7 +117,7 @@ export default function Computers() {
                                 </div>
                                 {product.product_discount > 0 && (
                                     <div className="absolute top-2 right-2">
-                                        <div className="w-fit px-2 h-9 bg-primary rounded-full flex items-center justify-center text-sm font-semibold">
+                                        <div className="w-fit px-2 h-9 bg-primary rounded-full flex items-center justify-center text-sm font-semibold text-white">
                                             {product.product_discount}%
                                         </div>
                                     </div>

@@ -91,23 +91,23 @@ passport.deserializeUser(async (id, done) => {
 
 // google routes
 authRoutes.get(
-    "/user/auth/google",
+    "/auth/google",
     passport.authenticate("google", { scope: ["profile", "email"] })
 );
 authRoutes.get(
-    "/user/auth/google/callback",
+    "/auth/google/callback",
     passport.authenticate("google", {
-        failureRedirect: process.env.VITE_APP_URL + "/login",
+        failureRedirect: process.env.VITE_APP_DOMAIN + "/login",
     }),
     (req, res) => {
         req.session.user_id = req.user.user_id;
-        res.redirect(process.env.VITE_APP_URL);
+        res.redirect(process.env.VITE_APP_DOMAIN);
     }
 );
 
 // facebook routes
 authRoutes.get(
-    "/user/auth/facebook",
+    "/auth/facebook",
     passport.authenticate("facebook", {
         authType: "rerequest",
         scope: ["email", "public_profile"],
@@ -115,12 +115,12 @@ authRoutes.get(
 );
 
 authRoutes.get(
-    "/user/auth/facebook/callback",
+    "/auth/facebook/callback",
     passport.authenticate("facebook", {
-        failureRedirect: process.env.VITE_APP_URL + "/login",
+        failureRedirect: process.env.VITE_APP_DOMAIN + "/login",
     }),
     (req, res) => {
-        res.redirect(process.env.VITE_APP_URL);
+        res.redirect(process.env.VITE_APP_DOMAIN);
     }
 );
 

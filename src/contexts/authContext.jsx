@@ -12,7 +12,7 @@ export const AuthContextProvider = ({ children }) => {
         data: userSession,
         loading: loadingUserSession,
         reload: reloadUserSession,
-    } = useGetData("/user/session");
+    } = useGetData("/auth/session");
 
     const handleLogout = () => {
         Swal.fire({
@@ -26,7 +26,7 @@ export const AuthContextProvider = ({ children }) => {
             denyButtonColor: "#3085d6",
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const response = await usePostData("/user/logout");
+                const response = await usePostData("/auth/logout");
                 if (response.success) {
                     reloadUserSession();
                 }

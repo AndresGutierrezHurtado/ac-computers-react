@@ -21,7 +21,7 @@ export default function Login() {
         e.preventDefault();
 
         const data = Object.fromEntries(new FormData(e.target));
-        const response = await usePostData("/user/login", data);
+        const response = await usePostData("/auth/login", data);
 
         if (response.success) {
             navigate("/");
@@ -120,7 +120,7 @@ export default function Login() {
                             <Link
                                 to={
                                     import.meta.env.VITE_API_URL +
-                                    "/user/auth/google"
+                                    "/auth/google"
                                 }
                                 className="btn bg-gray-300 text-gray-600 hover:bg-gray-200 hover:text-gray-700 font-semibold"
                             >
@@ -130,7 +130,7 @@ export default function Login() {
                             <Link
                                 to={
                                     import.meta.env.VITE_API_URL +
-                                    "/user/auth/facebook"
+                                    "/auth/facebook"
                                 }
                                 className="btn bg-blue-700 text-blue-400 hover:bg-blue-800 hover:text-blue-300 font-semibold"
                             >
