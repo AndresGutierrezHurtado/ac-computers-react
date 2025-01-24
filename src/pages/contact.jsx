@@ -39,8 +39,8 @@ export default function Contact() {
         },
         {
             icon: <LocationIcon size={20} />,
-            url: "https://www.google.com/maps/place/AC+Computers/@3.4015677,-76.5133004,15z/data=!4m5!3m4!1s0x8e3b9d8a5d8d8d8d:0x8e3b9d8a5d8d8d8d!8m2!3d3.4015677!4d-76.5133004",
-            text: "Ubicación: Calle 12 # 12-12, Bogotá, Colombia",
+            url: "https://maps.app.goo.gl/qHg7MtCmABNfReT8A",
+            text: "Ubicación: Cra. 15 #77 05, Bogotá",
         },
     ];
 

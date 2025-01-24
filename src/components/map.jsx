@@ -11,7 +11,7 @@ function MyComponent() {
 }
 
 export const StoreMap = () => {
-    const position = [4.583419189886751, -74.16127145290376];
+    const position = [4.6642, -74.0589];
 
     return (
         <MapContainer center={position} zoom={13} scrollWheelZoom={true}>
