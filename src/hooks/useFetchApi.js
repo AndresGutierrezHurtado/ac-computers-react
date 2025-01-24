@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import Swal from "sweetalert2";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const useFetchData = async (endpoint, options) => {

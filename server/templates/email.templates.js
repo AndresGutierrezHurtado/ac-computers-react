@@ -48,7 +48,7 @@ export const recoverAccount = (token) => {
                     </h1>
 
                     <p style="font-size: 16px; margin: 10px 0; color: #666;">Dale click al siguiente botón para recuperar tu cuenta:</p>
-                    <a href="${process.env.VITE_APP_URL}/reset_password/${token}" style="display: inline-block; background-color: #007bff; color: #ffffff; padding: 12px 25px; text-decoration: none; border-radius: 4px; font-size: 16px; margin: 20px 0;">
+                    <a href="${process.env.VITE_APP_DOMAIN}/reset_password/${token}" style="display: inline-block; background-color: #007bff; color: #ffffff; padding: 12px 25px; text-decoration: none; border-radius: 4px; font-size: 16px; margin: 20px 0;">
                         Recuperar cuenta
                     </a>
 

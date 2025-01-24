@@ -16,7 +16,7 @@ export const StoreMap = () => {
     return (
         <MapContainer center={position} zoom={13} scrollWheelZoom={true}>
             <TileLayer
-                attribution={`&copy; <a href="${import.meta.env.VITE_APP_URL}">AC Computers</a>`}
+                attribution={`&copy; <a href="${import.meta.env.VITE_APP_DOMAIN}">AC Computers</a>`}
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <Marker position={position}>

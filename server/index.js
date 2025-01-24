@@ -27,7 +27,7 @@ await store.sync();
 app.use(express.json({ limit: "20mb" }));
 app.use(
     cors({
-        origin: process.env.VITE_APP_URL,
+        origin: process.env.VITE_APP_DOMAIN,
         credentials: true,
     })
 );
@@ -60,7 +60,7 @@ app.use("/api/v1", userRoutes);
 app.use("/api/v1", productRoutes);
 app.use("/api/v1", authRoutes);
 
-app.get("/", (req, res) => res.redirect(process.env.VITE_APP_URL));
+app.get("/", (req, res) => res.redirect(process.env.VITE_APP_DOMAIN));
 
 app.listen(process.env.VITE_API_PORT, () =>
     console.log(`Server running on port ${process.env.VITE_API_PORT}`)
