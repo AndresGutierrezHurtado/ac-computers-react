@@ -41,10 +41,9 @@ app.use(
         store: store,
         proxy: true,
         cookie: {
-            secure: true, // production
-            // secure: false, // development
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
             httpOnly: true,
-            sameSite: "none", // production
             maxAge: 60 * 60 * 1000,
         },
     })

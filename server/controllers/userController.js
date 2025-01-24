@@ -157,7 +157,7 @@ export default class UserController {
     }
 
     static async verifyUserSession(req, res) {
-        if (!req.session.user_id) {
+        if (!req.session.user_id || !req.session.user) {
             return res.status(200).json({
                 success: false,
                 message: "Usuario no autenticado",
@@ -174,19 +174,7 @@ export default class UserController {
 
     static logoutUser(req, res) {
         try {
-            req.session.user_id = null;
-            req.session.user = null;
-
-            req.session.destroy((err) => {
-                if (err) {
-                    res.status(500).json({
-                        success: false,
-                        message: err.message,
-                        data: null,
-                    });
-                    return;
-                }
-            });
+            req.session.destroy();
 
             res.status(200).json({
                 success: true,

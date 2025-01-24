@@ -1,7 +1,12 @@
 import { useContext, createContext } from "react";
-import { useGetData, usePostData } from "../hooks/useFetchApi.js";
-import LoadingContent from "../components/loadingContent.jsx";
+import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+
+// Hooks
+import { useGetData, usePostData } from "../hooks/useFetchApi.js";
+
+// Components
+import LoadingContent from "../components/loadingContent.jsx";
 
 const AuthContext = createContext();
 
@@ -13,6 +18,8 @@ export const AuthContextProvider = ({ children }) => {
         loading: loadingUserSession,
         reload: reloadUserSession,
     } = useGetData("/auth/session");
+
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         Swal.fire({
@@ -30,6 +37,7 @@ export const AuthContextProvider = ({ children }) => {
 
                 if (response.success) {
                     reloadUserSession();
+                    navigate("/");
                 }
             }
         });
