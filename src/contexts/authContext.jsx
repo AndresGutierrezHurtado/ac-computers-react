@@ -27,18 +27,17 @@ export const AuthContextProvider = ({ children }) => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 const response = await usePostData("/auth/logout");
+
                 if (response.success) {
                     reloadUserSession();
                 }
             }
-        })
+        });
     };
 
     if (loadingUserSession) return <LoadingContent />;
     return (
-        <AuthContext.Provider
-            value={{ userSession, reloadUserSession, handleLogout }}
-        >
+        <AuthContext.Provider value={{ userSession, reloadUserSession, handleLogout }}>
             {children}
         </AuthContext.Provider>
     );

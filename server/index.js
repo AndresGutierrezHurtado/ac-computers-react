@@ -41,9 +41,10 @@ app.use(
         store: store,
         proxy: true,
         cookie: {
-            secure: true,
+            secure: true, // production
+            // secure: false, // development
             httpOnly: true,
-            sameSite: "none",
+            sameSite: "none", // production
             maxAge: 60 * 60 * 1000,
         },
     })

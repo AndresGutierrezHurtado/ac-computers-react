@@ -82,10 +82,7 @@ export default class UserController {
 
     static async createUser(req, res) {
         try {
-            req.body.user.user_password = await bcrypt.hash(
-                req.body.user.user_password,
-                10
-            );
+            req.body.user.user_password = await bcrypt.hash(req.body.user.user_password, 10);
 
             const user = await models.User.create(req.body.user);
 
@@ -106,10 +103,7 @@ export default class UserController {
     static async updateUser(req, res) {
         try {
             if (req.body.user.user_password) {
-                req.body.user.user_password = await bcrypt.hash(
-                    req.body.user.user_password,
-                    10
-                );
+                req.body.user.user_password = await bcrypt.hash(req.body.user.user_password, 10);
             }
 
             const user = await models.User.update(req.body.user, {
@@ -141,9 +135,7 @@ export default class UserController {
                 return;
             }
 
-            if (
-                !bcrypt.compareSync(req.body.user_password, user.user_password)
-            ) {
+            if (!bcrypt.compareSync(req.body.user_password, user.user_password)) {
                 throw new Error("Contraseña inválida");
                 return;
             }
@@ -183,6 +175,8 @@ export default class UserController {
     static logoutUser(req, res) {
         try {
             req.session.user_id = null;
+            req.session.user = null;
+
             req.session.destroy((err) => {
                 if (err) {
                     res.status(500).json({
@@ -225,11 +219,7 @@ export default class UserController {
                     from: '"AC Computers" <andres52885241@gmail.com>',
                     to: "andres52885241@gmail.com",
                     subject: "Formulario contacto AC Computers",
-                    html: feedbackTemplate(
-                        req.body.email,
-                        req.body.subject,
-                        req.body.message
-                    ),
+                    html: feedbackTemplate(req.body.email, req.body.subject, req.body.message),
                 },
                 (error, info) => {
                     if (error) {
