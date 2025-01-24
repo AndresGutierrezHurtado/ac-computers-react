@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import morgan from "morgan";
 import session from "express-session";
 import sequelizeStore from "connect-session-sequelize";
 import { sequelize } from "./config/database.js";
@@ -24,6 +25,7 @@ const store = new SequelizeStore({
 await store.sync();
 
 // Middlewares
+app.use(morgan("dev"));
 app.use(express.json({ limit: "20mb" }));
 app.use(
     cors({
