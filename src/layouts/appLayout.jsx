@@ -1,5 +1,8 @@
 import React from "react";
 import { Outlet } from "react-router";
+import { ToastContainer } from "react-toastify";
+
+// Components
 import Header from "./header";
 import Footer from "./footer";
 
@@ -11,6 +14,7 @@ export default function AppLayout() {
                 <Outlet />
             </main>
             <Footer />
+            <ToastContainer />
         </div>
     );
 }

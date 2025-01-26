@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, Outlet, useNavigate } from "react-router";
+import { ToastContainer } from "react-toastify";
 
 // Components
 import { HomeIcon, ProductsIcon, UsersIcon } from "../components/icons";
@@ -69,6 +70,7 @@ export default function AdminLayout() {
                     </ul>
                 </aside>
             </article>
+            <ToastContainer />
         </>
     );
 }
