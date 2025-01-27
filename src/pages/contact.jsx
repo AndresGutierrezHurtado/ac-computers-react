@@ -14,6 +14,7 @@ import { StoreMap } from "../components/map";
 
 // Hooks
 import { usePostData } from "../hooks/useFetchApi";
+import { useValidateform } from "../hooks/useValidateForm";
 
 export default function Contact() {
     const socialMedias = [
@@ -46,11 +47,16 @@ export default function Contact() {
 
     const handleContactFormSubmit = async (e) => {
         e.preventDefault();
-        const data = Object.fromEntries(new FormData(e.target));
-        const response = await usePostData("/user/feedback", data);
 
-        if (response.success) {
-            e.target.reset();
+        const data = Object.fromEntries(new FormData(e.target));
+        const validation = useValidateform(data, "contact-form");
+
+        if (validation.success) {
+            const response = await usePostData("/user/feedback", data);
+
+            if (response.success) {
+                e.target.reset();
+            }
         }
     };
 
@@ -65,15 +71,12 @@ export default function Contact() {
                                     Contáctanos:
                                 </h2>
                                 <p>
-                                    Lorem ipsum dolor sit, amet consectetur
-                                    adipisicing elit. Suscipit corrupti qui
-                                    adipisci eius dignissimos sunt quo libero,
-                                    quae voluptates magnam temporibus in
-                                    reprehenderit voluptatum porro animi dolor.
-                                    Minima, repudiandae at reiciendis obcaecati,
-                                    necessitatibus ducimus odio fugit iure
-                                    quaerat natus amet modi! Ipsam, tempore!
-                                    Odit ducimus molestias dolor neque doloribus
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                                    Suscipit corrupti qui adipisci eius dignissimos sunt quo libero,
+                                    quae voluptates magnam temporibus in reprehenderit voluptatum
+                                    porro animi dolor. Minima, repudiandae at reiciendis obcaecati,
+                                    necessitatibus ducimus odio fugit iure quaerat natus amet modi!
+                                    Ipsam, tempore! Odit ducimus molestias dolor neque doloribus
                                     qui.
                                 </p>
                             </div>
@@ -88,9 +91,7 @@ export default function Contact() {
                                     >
                                         {socialMedia.icon}
                                         <div>
-                                            <div className="text-lg">
-                                                {socialMedia.text}
-                                            </div>
+                                            <div className="text-lg">{socialMedia.text}</div>
                                         </div>
                                     </Link>
                                 ))}
@@ -98,17 +99,13 @@ export default function Contact() {
                         </div>
                         <div className="card bg-[#20202b] w-full md:w-1/2">
                             <div className="card-body [&_p]:grow-0">
-                                <form
-                                    onSubmit={handleContactFormSubmit}
-                                    className="space-y-2"
-                                >
+                                <form onSubmit={handleContactFormSubmit} className="space-y-2">
                                     <div>
                                         <h2 className="text-3xl font-extrabold">
                                             ¡Queremos escucharte!
                                         </h2>
                                         <p className="leading-[1.35]">
-                                            Dejanos tu mensaje y nos pondremos
-                                            en contacto.{" "}
+                                            Dejanos tu mensaje y nos pondremos en contacto.{" "}
                                         </p>
                                     </div>
 
@@ -121,7 +118,7 @@ export default function Contact() {
                                         <input
                                             placeholder="ejemplo@gmail.com"
                                             className="input input-bordered focus:input-primary focus:outline-0"
-                                            name="email"
+                                            name="user_email"
                                         />
                                     </div>
                                     <div className="form-control">
@@ -133,7 +130,7 @@ export default function Contact() {
                                         <input
                                             placeholder="¿De que se trata el mensaje?"
                                             className="input input-bordered focus:input-primary focus:outline-0"
-                                            name="subject"
+                                            name="email_subject"
                                         />
                                     </div>
                                     <div className="form-control">
@@ -145,7 +142,7 @@ export default function Contact() {
                                         <textarea
                                             className="textarea textarea-bordered resize-none h-32 focus:textarea-primary focus:outline-0"
                                             placeholder="Ingresa tu mensaje"
-                                            name="message"
+                                            name="email_message"
                                         ></textarea>
                                     </div>
 

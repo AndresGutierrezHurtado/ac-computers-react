@@ -56,6 +56,25 @@ export const useValidateform = (data = {}, form = "") => {
                     ),
                 });
                 break;
+            case "contact-form":
+                schema = object({
+                    user_email: pipe(
+                        nonEmpty("Correo requerido"),
+                        string("Correo requerido"),
+                        email("El correo debe ser válido")
+                    ),
+                    email_subject: pipe(
+                        nonEmpty("Asunto requerido"),
+                        string("Asunto requerido"),
+                        minLength(5, "El asunto debe tener al menos 5 caracteres")
+                    ),
+                    email_message: pipe(
+                        nonEmpty("Mensaje requerido"),
+                        string("Mensaje requerido"),
+                        minLength(10, "El mensaje debe tener al menos 10 caracteres")
+                    ),
+                });
+                break;
             default:
                 return { success: false, message: "Formulario no encontrado", data: null };
                 break;
