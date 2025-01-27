@@ -28,7 +28,31 @@ export const useValidateform = (data = {}, form = "") => {
                     user_password: pipe(
                         nonEmpty("Contraseña requerida"),
                         string("Contraseña requerida"),
-                        minLength(4, "La contraseña debe tener al menos 6 caracteres")
+                        minLength(4, "La contraseña debe tener al menos 4 caracteres")
+                    ),
+                });
+                break;
+            case "register-form":
+                schema = object({
+                    user_name: pipe(
+                        nonEmpty("Nombre requerido"),
+                        string("Nombre requerido"),
+                        minLength(3, "El nombre debe tener al menos 3 caracteres")
+                    ),
+                    user_lastname: pipe(
+                        nonEmpty("Apellido requerido"),
+                        string("Apellido requerido"),
+                        minLength(3, "El apellido debe tener al menos 3 caracteres")
+                    ),
+                    user_email: pipe(
+                        nonEmpty("Correo requerido"),
+                        string("Correo requerido"),
+                        email("El correo debe ser válido")
+                    ),
+                    user_password: pipe(
+                        nonEmpty("Contraseña requerida"),
+                        string("Contraseña requerida"),
+                        minLength(4, "La contraseña debe tener al menos 4 caracteres")
                     ),
                 });
                 break;

@@ -12,6 +12,7 @@ import {
 
 // Hooks
 import { usePostData } from "../../hooks/useFetchApi";
+import { useValidateform } from "../../hooks/useValidateForm";
 
 export default function Register() {
     const [showPassword, setShowPassword] = useState(false);
@@ -19,12 +20,16 @@ export default function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         const data = Object.fromEntries(new FormData(e.target));
+        const validation = useValidateform(data, "register-form");
 
-        const response = await usePostData("/users", { user: data });
+        if (validation.success) {
+            const response = await usePostData("/users", { user: data });
 
-        if (response.success) {
-            navigate("/login");
+            if (response.success) {
+                navigate("/login");
+            }
         }
     };
 
@@ -34,18 +39,12 @@ export default function Register() {
             <div className="hero-content flex-col gap-10 lg:flex-row">
                 <div className="text-center lg:text-left space-y-5">
                     <div className="space-y-2">
-                        <h1 className="text-5xl font-extrabold">
-                            ¿Ya tienes una cuenta?
-                        </h1>
+                        <h1 className="text-5xl font-extrabold">¿Ya tienes una cuenta?</h1>
                         <p className="">
-                            Si ya tienes una cuenta, puedes iniciar sesión en
-                            nuestro sitio web.
+                            Si ya tienes una cuenta, puedes iniciar sesión en nuestro sitio web.
                         </p>
                     </div>
-                    <Link
-                        to="/login"
-                        className="btn btn-primary btn-outline btn-wide"
-                    >
+                    <Link to="/login" className="btn btn-primary btn-outline btn-wide">
                         Inicia sesión
                     </Link>
                 </div>
@@ -59,12 +58,9 @@ export default function Register() {
                                 AC COMPUTERS
                             </Link>
                             <div className="space-y-2">
-                                <h2 className="text-2xl font-extrabold">
-                                    INICIA SESIÓN:
-                                </h2>
+                                <h2 className="text-2xl font-extrabold">INICIA SESIÓN:</h2>
                                 <p className="leading-none">
-                                    Ingresa en tu cuenta para obtener una mejor
-                                    experiencia.
+                                    Ingresa en tu cuenta para obtener una mejor experiencia.
                                 </p>
                             </div>
                         </div>
@@ -132,15 +128,9 @@ export default function Register() {
                                 />
                                 <kbd
                                     className="kbd kbd-sm cursor-pointer"
-                                    onClick={() =>
-                                        setShowPassword(!showPassword)
-                                    }
+                                    onClick={() => setShowPassword(!showPassword)}
                                 >
-                                    {showPassword ? (
-                                        <EyeSlashIcon />
-                                    ) : (
-                                        <EyeIcon />
-                                    )}
+                                    {showPassword ? <EyeSlashIcon /> : <EyeIcon />}
                                 </kbd>
                             </label>
                         </div>
@@ -154,20 +144,14 @@ export default function Register() {
                         <div className="divider">Ó</div>
                         <div className="form-control space-y-2">
                             <Link
-                                to={
-                                    import.meta.env.VITE_API_URL +
-                                    "/auth/google"
-                                }
+                                to={import.meta.env.VITE_API_URL + "/auth/google"}
                                 className="btn bg-gray-300 text-gray-600 hover:bg-gray-200 hover:text-gray-700 font-semibold"
                             >
                                 <GoogleIcon size={18} />
                                 Continua con Google
                             </Link>
                             <Link
-                                to={
-                                    import.meta.env.VITE_API_URL +
-                                    "/auth/facebook"
-                                }
+                                to={import.meta.env.VITE_API_URL + "/auth/facebook"}
                                 className="btn bg-blue-700 text-blue-400 hover:bg-blue-800 hover:text-blue-300 font-semibold"
                             >
                                 <FacebookIcon size={18} />
