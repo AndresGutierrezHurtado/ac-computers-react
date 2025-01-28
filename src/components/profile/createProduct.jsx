@@ -45,7 +45,6 @@ export default function CreateProduct({ reloadProducts }) {
         };
 
         const validation = useValidateform(data.product, "create-product-form");
-        console.log(data.product);
 
         if (!validation.success) return;
 
