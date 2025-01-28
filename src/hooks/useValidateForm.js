@@ -102,7 +102,7 @@ export const useValidateform = (data = {}, form = "") => {
                     ),
                     category_id: pipe(
                         nonEmpty("Categoría requerida"),
-                        string("Categoría requerida"),
+                        string("Categoría requerida")
                     ),
                 });
                 break;
@@ -130,6 +130,30 @@ export const useValidateform = (data = {}, form = "") => {
                         minValue(0, "El descuento debe ser mayor o igual a 0"),
                         maxValue(99, "El descuento debe ser menor o igual a 99"),
                         regex(/^[0-9]+$/, "El descuento debe ser un número")
+                    ),
+                });
+                break;
+            case "update-user-form":
+                schema = object({
+                    user_name: pipe(
+                        nonEmpty("Nombre requerido"),
+                        string("Nombre requerido"),
+                        minLength(3, "El nombre debe tener al menos 3 caracteres")
+                    ),
+                    user_lastname: pipe(
+                        nonEmpty("Apellido requerido"),
+                        string("Apellido requerido"),
+                        minLength(3, "El apellido debe tener al menos 3 caracteres")
+                    ),
+                    user_phone: pipe(
+                        nonEmpty("Teléfono requerido"),
+                        string("Teléfono requerido"),
+                        regex(/^[0-9]+$/, "El teléfono debe ser un número")
+                    ),
+                    role_id: pipe(
+                        nonEmpty("Rol requerido"),
+                        string("Rol requerido"),
+                        regex(/^[0-9]+$/, "El rol debe ser un número")
                     ),
                 });
                 break;

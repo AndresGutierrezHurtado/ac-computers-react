@@ -5,16 +5,22 @@ import { UploadIcon } from "../icons";
 
 // Hooks
 import { usePutData } from "../../hooks/useFetchApi.js";
+import { useValidateform } from "../../hooks/useValidateForm.js";
 
 export default function EditUser({ user, userSession, reloadUsers }) {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        const data = Object.fromEntries(new FormData(e.target));
-        const response = await usePutData(`/users/${user.user_id}`, { user: data });
 
-        e.target.closest("dialog").close();
-        if (response.success) {
-            reloadUsers();
+        const data = Object.fromEntries(new FormData(e.target));
+        const validation = useValidateform(data, "update-user-form");
+
+        if (validation.success) {
+            const response = await usePutData(`/users/${user.user_id}`, { user: data });
+
+            e.target.closest("dialog").close();
+            if (response.success) {
+                reloadUsers();
+            }
         }
     };
 

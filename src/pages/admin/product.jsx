@@ -71,6 +71,7 @@ export default function ProductProfile() {
 
         if (response.success) {
             reloadProduct();
+            setEditable(false);
         }
     };
 
