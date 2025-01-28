@@ -75,6 +75,37 @@ export const useValidateform = (data = {}, form = "") => {
                     ),
                 });
                 break;
+            case "create-product-form":
+                schema = object({
+                    product_name: pipe(
+                        nonEmpty("Nombre requerido"),
+                        string("Nombre requerido"),
+                        minLength(3, "El nombre debe tener al menos 3 caracteres")
+                    ),
+                    product_description: pipe(
+                        nonEmpty("Descripción requerida"),
+                        string("Descripción requerida"),
+                        minLength(10, "La descripción debe tener al menos 10 caracteres")
+                    ),
+                    product_price: pipe(
+                        nonEmpty("Precio requerido"),
+                        string("Precio requerido"),
+                        minValue(1000, "El precio debe ser mayor a 1,000"),
+                        regex(/^[0-9]+$/, "El precio debe ser un número")
+                    ),
+                    product_discount: pipe(
+                        nonEmpty("Descuento requerido"),
+                        string("Descuento requerido"),
+                        minValue(0, "El descuento debe ser mayor o igual a 0"),
+                        maxValue(99, "El descuento debe ser menor o igual a 99"),
+                        regex(/^[0-9]+$/, "El descuento debe ser un número")
+                    ),
+                    category_id: pipe(
+                        nonEmpty("Categoría requerida"),
+                        string("Categoría requerida"),
+                    ),
+                });
+                break;
             default:
                 return { success: false, message: "Formulario no encontrado", data: null };
                 break;

@@ -7,12 +7,48 @@ import { UploadIcon } from "../icons";
 // Hooks
 import { useBase64 } from "../../hooks/useBase64.js";
 import { usePostData } from "../../hooks/useFetchApi";
+import { useValidateform } from "../../hooks/useValidateForm.js";
 
 export default function CreateProduct({ reloadProducts }) {
     const [specs, setSpecs] = useState([{ name: "", value: "" }]);
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const json = Object.fromEntries(formData);
+
+        const specsArray = specs.map((_, i) => ({
+            spec_key: formData.get(`specs[${i}].name`),
+            spec_value: formData.get(`specs[${i}].value`),
+        }));
+
+        const multimediasdata = await Promise.all(
+            formData
+                .getAll("multimedias")
+                .filter((file) => file.size !== 0)
+                .map(async (file) => await useBase64(file))
+        );
+
+        const data = {
+            specs: specsArray.filter((spec) => spec.spec_key && spec.spec_value),
+            product: {
+                product_name: json.product_name,
+                product_description: json.product_description,
+                product_price: json.product_price,
+                product_discount: json.product_discount,
+                category_id: json.category_id,
+            },
+            multimedias: multimediasdata.length == 0 ? null : multimediasdata,
+            product_image:
+                json.product_image.size == 0 ? null : await useBase64(json.product_image),
+        };
+
+        const validation = useValidateform(data.product, "create-product-form");
+        console.log(data.product);
+
+        if (!validation.success) return;
+
         Swal.fire({
             icon: "info",
             title: "¿Estas seguro de crear el producto?",
@@ -24,37 +60,6 @@ export default function CreateProduct({ reloadProducts }) {
             denyButtonColor: "#d33",
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const formData = new FormData(e.target);
-                const json = Object.fromEntries(formData);
-
-                // Convertir specs en un array de objetos
-                const specsArray = specs.map((_, i) => ({
-                    spec_key: formData.get(`specs[${i}].name`),
-                    spec_value: formData.get(`specs[${i}].value`),
-                }));
-
-                const multimediasdata = await Promise.all(
-                    formData
-                        .getAll("multimedias")
-                        .filter(file => file.size !== 0)
-                        .map(async (file) => await useBase64(file))
-                );
-
-                const data = {
-                    specs: specsArray.filter(
-                        (spec) => spec.spec_key && spec.spec_value
-                    ),
-                    product: {
-                        product_name: json.product_name,
-                        product_description: json.product_description,
-                        product_price: json.product_price,
-                        product_discount: json.product_discount,
-                        category_id: json.category_id,
-                    },
-                    multimedias: multimediasdata.length == 0 ? null : multimediasdata,
-                    product_image: json.product_image.size == 0 ? null : await useBase64(json.product_image),
-                };
-
                 const response = await usePostData("/products", data);
 
                 if (response.success) {
@@ -75,12 +80,9 @@ export default function CreateProduct({ reloadProducts }) {
                             ✕
                         </button>
                     </form>
-                    <h3 className="font-extrabold text-2xl tracking-tight">
-                        Crea un producto:
-                    </h3>
+                    <h3 className="font-extrabold text-2xl tracking-tight">Crea un producto:</h3>
                     <p className="py-4">
-                        Para cerrar presiona{" "}
-                        <kbd className="kbd kbd-sm">Esc</kbd> o haz click fuera
+                        Para cerrar presiona <kbd className="kbd kbd-sm">Esc</kbd> o haz click fuera
                         de la ventana modal.
                     </p>
                     <form onSubmit={handleFormSubmit} className="space-y-2">
@@ -178,16 +180,11 @@ export default function CreateProduct({ reloadProducts }) {
                         </div>
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text font-semibold">
-                                    Especificaciones:
-                                </span>
+                                <span className="label-text font-semibold">Especificaciones:</span>
                             </label>
                             <div className="flex flex-col gap-2">
                                 {specs.map((_, i) => (
-                                    <div
-                                        key={i}
-                                        className="flex items-center gap-2"
-                                    >
+                                    <div key={i} className="flex items-center gap-2">
                                         <input
                                             name={`specs[${i}].name`}
                                             placeholder={`Nombre ${i + 1}`}
@@ -203,11 +200,7 @@ export default function CreateProduct({ reloadProducts }) {
                                             className="btn btn-sm btn-error"
                                             onClick={() => {
                                                 if (specs.length === 1) return;
-                                                setSpecs(
-                                                    specs.filter(
-                                                        (_, j) => j !== i
-                                                    )
-                                                );
+                                                setSpecs(specs.filter((_, j) => j !== i));
                                             }}
                                         >
                                             Eliminar
@@ -217,12 +210,7 @@ export default function CreateProduct({ reloadProducts }) {
                                 <button
                                     type="button"
                                     className="btn btn-sm btn-secondary mt-2"
-                                    onClick={() =>
-                                        setSpecs([
-                                            ...specs,
-                                            { name: "", value: "" },
-                                        ])
-                                    }
+                                    onClick={() => setSpecs([...specs, { name: "", value: "" }])}
                                 >
                                     Agregar Especificación
                                 </button>
@@ -230,20 +218,14 @@ export default function CreateProduct({ reloadProducts }) {
                         </div>
 
                         <div className="form-control pt-5">
-                            <button
-                                type="submit"
-                                className="btn btn-primary btn-sm w-full"
-                            >
+                            <button type="submit" className="btn btn-primary btn-sm w-full">
                                 <UploadIcon size={20} />
                                 Subir
                             </button>
                         </div>
                     </form>
                 </div>
-                <form
-                    method="dialog"
-                    className="modal-backdrop bg-black/80 backdrop-blur-[1px]"
-                >
+                <form method="dialog" className="modal-backdrop bg-black/80 backdrop-blur-[1px]">
                     <button>close</button>
                 </form>
             </dialog>
