@@ -2,6 +2,7 @@ import { Op } from "sequelize";
 import * as models from "../models/relations.js";
 import { deleteFile, uploadFile } from "../config/useUploadImage.js";
 import { sequelize } from "../config/database.js";
+import { data } from "react-router";
 
 export default class ProductController {
     static async getProducts(req, res) {
@@ -16,8 +17,7 @@ export default class ProductController {
                 },
             };
         }
-        if (req.query.category_id)
-            whereClause.category_id = req.query.category_id;
+        if (req.query.category_id) whereClause.category_id = req.query.category_id;
         if (req.query.sort && req.query.sort === "product_discount:desc")
             whereClause.product_discount = { [Op.gt]: 0 };
 
@@ -31,9 +31,7 @@ export default class ProductController {
                 where: whereClause,
                 order: [
                     [
-                        req.query.sort
-                            ? req.query.sort.split(":")[0]
-                            : "product_id",
+                        req.query.sort ? req.query.sort.split(":")[0] : "product_id",
                         req.query.sort ? req.query.sort.split(":")[1] : "asc",
                     ],
                 ],
@@ -78,8 +76,8 @@ export default class ProductController {
         } catch (error) {
             res.status(500).json({
                 success: false,
-                message: "Error al obtener el producto",
-                error: error.message,
+                message: error.message,
+                data: null,
             });
         }
     }
@@ -135,7 +133,7 @@ export default class ProductController {
             res.status(500).json({
                 success: false,
                 message: error.message,
-                data: error,
+                data: null,
             });
         }
     }
@@ -143,11 +141,7 @@ export default class ProductController {
     static async updateProduct(req, res) {
         try {
             if (req.body.product_image) {
-                const { data: url } = await uploadFile(
-                    req.body.product_image,
-                    req.params.id,
-                    "/"
-                );
+                const { data: url } = await uploadFile(req.body.product_image, req.params.id, "/");
 
                 req.body.product.product_image_url = url;
             }
@@ -170,7 +164,6 @@ export default class ProductController {
             }
 
             if (req.body.multimedias) {
-
                 const multimediaData = await Promise.all(
                     req.body.multimedias.map(async (file) => {
                         const id = crypto.randomUUID();
@@ -184,8 +177,7 @@ export default class ProductController {
                     })
                 );
 
-
-                const medias = await models.Multimedia.bulkCreate(multimediaData)
+                const medias = await models.Multimedia.bulkCreate(multimediaData);
             }
 
             res.status(200).json({
@@ -194,11 +186,10 @@ export default class ProductController {
                 data: product,
             });
         } catch (error) {
-            console.error(error);
             res.status(500).json({
                 success: false,
-                message: "Error al actualizar el producto",
-                error: error.message,
+                message: error.message,
+                data: null,
             });
         }
     }
@@ -212,27 +203,32 @@ export default class ProductController {
                     { model: models.Spec, as: "specs" },
                     { model: models.Multimedia, as: "multimedias" },
                 ],
-                transaction
+                transaction,
             });
 
             const product = await models.Product.destroy({
                 where: { product_id: req.params.id },
-                transaction
+                transaction,
             });
 
             const image = await deleteFile(`ac-computers/${req.params.id}`);
-            const medias = Promise.all(referenceProduct.multimedias.map(async media => await deleteFile(`ac-computers/medias/${media_id}`)));
+            const medias = Promise.all(
+                referenceProduct.multimedias.map(
+                    async (media) => await deleteFile(`ac-computers/medias/${media_id}`)
+                )
+            );
 
-            if (!image.success || medias.filter(el => !el.success).length > 0) throw new Error(image.data);
+            if (!image.success || medias.filter((el) => !el.success).length > 0)
+                throw new Error(image.data);
 
             await models.Spec.destroy({
                 where: { product_id: req.params.id },
-                transaction
+                transaction,
             });
 
             await models.Multimedia.destroy({
                 where: { product_id: req.params.id },
-                transaction
+                transaction,
             });
 
             (await transaction).commit();
@@ -245,8 +241,8 @@ export default class ProductController {
             await (await transaction).rollback();
             res.status(500).json({
                 success: false,
-                message: "Error al eliminar el producto",
-                error: error.message,
+                message: error.message,
+                data: null,
             });
         }
     }
@@ -272,7 +268,7 @@ export default class ProductController {
             res.status(500).json({
                 success: false,
                 message: error.message,
-                error: error,
+                data: null,
             });
         }
     }

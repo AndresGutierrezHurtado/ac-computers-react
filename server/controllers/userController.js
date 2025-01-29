@@ -49,8 +49,8 @@ export default class UserController {
         } catch (error) {
             res.status(500).json({
                 success: false,
-                message: "Error al obtener los usuarios",
-                error: error.message,
+                message: error.message,
+                data: null,
             });
         }
     }
@@ -74,8 +74,8 @@ export default class UserController {
         } catch (error) {
             res.status(500).json({
                 success: false,
-                message: "Error al obtener el usuario",
-                error: error.message,
+                message: error.message,
+                data: null,
             });
         }
     }
@@ -95,7 +95,7 @@ export default class UserController {
             res.status(500).json({
                 success: false,
                 message: error.errors[0].message,
-                data: error,
+                data: null,
             });
         }
     }
@@ -118,8 +118,8 @@ export default class UserController {
         } catch (error) {
             res.status(500).json({
                 success: false,
-                message: "Error al actualizar el usuario",
-                error: error.message,
+                message: error.message,
+                data: null,
             });
         }
     }
@@ -150,8 +150,8 @@ export default class UserController {
         } catch (error) {
             res.status(500).json({
                 success: false,
-                message: "Error al autenticar el usuario",
-                error: error.message,
+                message: error.message,
+                data: null,
             });
         }
     }
@@ -245,7 +245,7 @@ export default class UserController {
             res.status(500).json({
                 success: false,
                 message: error.message,
-                data: error,
+                data: null,
             });
         }
     }

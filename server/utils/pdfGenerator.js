@@ -81,7 +81,6 @@ export const pdfGenerator = async (req, res) => {
 
         doc.end();
     } catch (error) {
-        console.error("Error al generar el PDF:", error);
         res.status(500).json({ message: "Error al generar el PDF" });
     }
 };
