@@ -53,7 +53,10 @@ export const pdfGenerator = async (req, res) => {
                     .slice(page * maxPerPage, (page + 1) * maxPerPage)
                     .map((producto) => [
                         producto.product_id.split("-")[1] + " - " + producto.product_name,
-                        "COP " + parseInt(producto.product_price).toLocaleString("es-CO"),
+                        "COP " +
+                            parseInt(
+                                producto.product_price * (1 - producto.product_discount / 100)
+                            ).toLocaleString("es-CO"),
                     ]),
             };
 
@@ -76,7 +79,10 @@ export const pdfGenerator = async (req, res) => {
                     .slice(page * maxPerPage, (page + 1) * maxPerPage)
                     .map((producto) => [
                         producto.product_id.split("-")[1] + " - " + producto.product_name,
-                        "COP " + parseInt(producto.product_price).toLocaleString("es-CO"),
+                        "COP " +
+                            parseInt(
+                                producto.product_price * (1 - producto.product_discount / 100)
+                            ).toLocaleString("es-CO"),
                     ]),
             };
 
