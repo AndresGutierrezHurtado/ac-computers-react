@@ -1,16 +1,17 @@
-import { Product, Category, Spec } from "../models/relations.js";
+import { Product, Category } from "../models/relations.js";
 import PDFDocument from "pdfkit-table";
 
 export const pdfGenerator = async (req, res) => {
-    let whereClause = {};
-    if (req.query.category_id) whereClause.category_id = req.query.category_id;
     try {
-        const productos = await Product.findAll({
-            include: [
-                { model: Category, as: "category" },
-                { model: Spec, as: "specs" },
-            ],
-            where: whereClause,
+        const computers = await Product.findAll({
+            include: [{ model: Category, as: "category" }],
+            where: { category_id: 1 },
+            distinct: true,
+        });
+
+        const components = await Product.findAll({
+            include: [{ model: Category, as: "category" }],
+            where: { category_id: 2 },
             distinct: true,
         });
 
@@ -34,8 +35,7 @@ export const pdfGenerator = async (req, res) => {
             .text("AC COMPUTERS", { align: "center" });
         doc.moveDown();
 
-        // Mensaje si no hay productos
-        if (productos.length === 0) {
+        if (computers.length === 0 && components.length === 0) {
             doc.fontSize(16)
                 .fillColor("red")
                 .text("No hay productos disponibles", { align: "center" });
@@ -43,13 +43,13 @@ export const pdfGenerator = async (req, res) => {
             return;
         }
 
-        const maxPerPage = 10;
-        const pages = Math.ceil(productos.length / maxPerPage);
+        const maxPerPage = 20;
+        const pages = Math.ceil((computers.length + components.length) / maxPerPage);
 
         for (let page = 0; page < pages; page++) {
-            const table = {
+            const computersTable = {
                 headers: ["Computadores", ""],
-                rows: productos
+                rows: computers
                     .slice(page * maxPerPage, (page + 1) * maxPerPage)
                     .map((producto) => [
                         producto.product_id.split("-")[1] + " - " + producto.product_name,
@@ -57,10 +57,32 @@ export const pdfGenerator = async (req, res) => {
                     ]),
             };
 
-            doc.table(table, {
+            doc.table(computersTable, {
                 prepareHeader: () => doc.font("Helvetica-Bold").fontSize(13).fillColor("black"),
                 prepareRow: (row, indexColumn, indexRow, rectRow) => {
-                    const product = productos[indexRow];
+                    doc.font("Helvetica").fontSize(11).fillColor("black");
+                    if (indexColumn === 1) {
+                        doc.font("Helvetica-Bold");
+                    }
+                },
+                columnsSize: [380, 90],
+            });
+
+            doc.moveDown();
+
+            const componentsTable = {
+                headers: ["Componentes", ""],
+                rows: components
+                    .slice(page * maxPerPage, (page + 1) * maxPerPage)
+                    .map((producto) => [
+                        producto.product_id.split("-")[1] + " - " + producto.product_name,
+                        "COP " + parseInt(producto.product_price).toLocaleString("es-CO"),
+                    ]),
+            };
+
+            doc.table(componentsTable, {
+                prepareHeader: () => doc.font("Helvetica-Bold").fontSize(13).fillColor("black"),
+                prepareRow: (row, indexColumn, indexRow, rectRow) => {
                     doc.font("Helvetica").fontSize(11).fillColor("black");
                     if (indexColumn === 1) {
                         doc.font("Helvetica-Bold");
