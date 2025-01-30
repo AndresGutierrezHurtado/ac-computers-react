@@ -6,7 +6,7 @@ import { usePaginateData } from "../hooks/useFetchApi";
 // Components
 import LoadingContent from "../components/loadingContent.jsx";
 import { Link } from "react-router";
-import { DownloadIcon, SearchIcon } from "../components/icons.jsx";
+import { DownloadIcon, PriceTagsIcon, SearchIcon } from "../components/icons.jsx";
 
 export default function Components() {
     const [filter, setFilter] = useState("");
@@ -45,7 +45,7 @@ export default function Components() {
                             <SearchIcon className="opacity-70 w-4 h-4" />
                         </label>
                     </div>
-                    <div className="flex justify-center">
+                    <div className="flex justify-center gap-4">
                         <Link
                             to={`${
                                 import.meta.env.VITE_API_URL
@@ -54,6 +54,15 @@ export default function Components() {
                         >
                             <DownloadIcon className="text-xl" />
                             Descargar lista PDF de componentes
+                        </Link>
+                        <Link
+                            to={`${
+                                import.meta.env.VITE_API_URL
+                            }/pdf/list`}
+                            className="btn btn-primary w-fit px-5 btn-sm py-2 h-auto"
+                        >
+                            <PriceTagsIcon className="text-xl" />
+                            Descargar lista de precios
                         </Link>
                     </div>
 
