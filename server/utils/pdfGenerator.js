@@ -60,18 +60,20 @@ export const pdfGenerator = async (req, res) => {
                     ]),
             };
 
-            doc.table(computersTable, {
-                prepareHeader: () => doc.font("Helvetica-Bold").fontSize(13).fillColor("black"),
-                prepareRow: (row, indexColumn, indexRow, rectRow) => {
-                    doc.font("Helvetica").fontSize(11).fillColor("black");
-                    if (indexColumn === 1) {
-                        doc.font("Helvetica-Bold");
-                    }
-                },
-                columnsSize: [380, 90],
-            });
+            if (req.query.category_id && req.query.category_id === "1" || !req.query.category_id) {
+                doc.table(computersTable, {
+                    prepareHeader: () => doc.font("Helvetica-Bold").fontSize(13).fillColor("black"),
+                    prepareRow: (row, indexColumn, indexRow, rectRow) => {
+                        doc.font("Helvetica").fontSize(11).fillColor("black");
+                        if (indexColumn === 1) {
+                            doc.font("Helvetica-Bold");
+                        }
+                    },
+                    columnsSize: [380, 90],
+                });
 
-            doc.moveDown();
+                doc.moveDown();
+            }
 
             const componentsTable = {
                 headers: ["Componentes", ""],
@@ -86,16 +88,18 @@ export const pdfGenerator = async (req, res) => {
                     ]),
             };
 
-            doc.table(componentsTable, {
-                prepareHeader: () => doc.font("Helvetica-Bold").fontSize(13).fillColor("black"),
-                prepareRow: (row, indexColumn, indexRow, rectRow) => {
-                    doc.font("Helvetica").fontSize(11).fillColor("black");
-                    if (indexColumn === 1) {
-                        doc.font("Helvetica-Bold");
-                    }
-                },
-                columnsSize: [380, 90],
-            });
+            if (req.query.category_id && req.query.category_id === "2" || !req.query.category_id) {
+                doc.table(componentsTable, {
+                    prepareHeader: () => doc.font("Helvetica-Bold").fontSize(13).fillColor("black"),
+                    prepareRow: (row, indexColumn, indexRow, rectRow) => {
+                        doc.font("Helvetica").fontSize(11).fillColor("black");
+                        if (indexColumn === 1) {
+                            doc.font("Helvetica-Bold");
+                        }
+                    },
+                    columnsSize: [380, 90],
+                });
+            }
 
             doc.fontSize(12)
                 .font("Helvetica")
