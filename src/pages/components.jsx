@@ -45,12 +45,12 @@ export default function Components() {
                             <SearchIcon className="opacity-70 w-4 h-4" />
                         </label>
                     </div>
-                    <div className="flex justify-center gap-4">
+                    <div className="flex justify-center gap-4 flex-wrap">
                         <Link
                             to={`${
                                 import.meta.env.VITE_API_URL
                             }/pdf/list?category_id=2`}
-                            className="btn btn-primary w-fit px-5 btn-outline btn-sm py-2 h-auto"
+                            className="btn btn-primary w-fit px-5 btn-outline btn-sm py-2 h-auto flex-nowrap"
                         >
                             <DownloadIcon className="text-xl" />
                             Descargar lista PDF de componentes
@@ -59,7 +59,7 @@ export default function Components() {
                             to={`${
                                 import.meta.env.VITE_API_URL
                             }/pdf/list`}
-                            className="btn btn-primary w-fit px-5 btn-sm py-2 h-auto"
+                            className="btn btn-primary w-fit px-5 btn-sm py-2 h-auto flex-nowrap"
                         >
                             <PriceTagsIcon className="text-xl" />
                             Descargar lista de precios

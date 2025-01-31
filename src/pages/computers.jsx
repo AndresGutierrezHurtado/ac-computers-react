@@ -19,9 +19,7 @@ export default function Computers() {
     const filteredProducts = products.filter((product) => {
         return (
             product.product_name.toLowerCase().includes(filter.toLowerCase()) ||
-            product.product_description
-                .toLowerCase()
-                .includes(filter.toLowerCase()) ||
+            product.product_description.toLowerCase().includes(filter.toLowerCase()) ||
             product.product_price.toLowerCase().includes(filter.toLowerCase())
         );
     });
@@ -44,25 +42,21 @@ export default function Computers() {
                             <SearchIcon className="opacity-70 w-4 h-4" />
                         </label>
                     </div>
-                    <div className="flex justify-center gap-4">
+                    <div className="flex justify-center gap-4 flex-wrap">
                         <Link
-                            to={`${
-                                import.meta.env.VITE_API_URL
-                            }/pdf/list?category_id=1`}
-                            className="btn btn-primary w-fit px-5 btn-outline btn-sm py-2 h-auto"
+                            to={`${import.meta.env.VITE_API_URL}/pdf/list?category_id=1`}
+                            className="btn btn-primary w-fit px-5 btn-outline btn-sm py-2 h-auto flex-nowrap"
                         >
                             <DownloadIcon className="text-xl" />
                             Descargar lista PDF de computadores
                         </Link>
-                                                <Link
-                                                    to={`${
-                                                        import.meta.env.VITE_API_URL
-                                                    }/pdf/list`}
-                                                    className="btn btn-primary w-fit px-5 btn-sm py-2 h-auto"
-                                                >
-                                                    <PriceTagsIcon className="text-xl" />
-                                                    Descargar lista de precios
-                                                </Link>
+                        <Link
+                            to={`${import.meta.env.VITE_API_URL}/pdf/list`}
+                            className="btn btn-primary w-fit px-5 btn-sm py-2 h-auto flex-nowrap"
+                        >
+                            <PriceTagsIcon className="text-xl" />
+                            Descargar lista de precios
+                        </Link>
                     </div>
 
                     {filteredProducts.length === 0 && (
@@ -103,20 +97,19 @@ export default function Computers() {
                                     <div className="flex justify-center gap-2">
                                         {product.product_discount > 0 && (
                                             <p className="line-through text-gray-400">
-                                                {parseInt(
-                                                    product.product_price
-                                                ).toLocaleString("es-CO", {
-                                                    style: "currency",
-                                                    currency: "COP",
-                                                })}
+                                                {parseInt(product.product_price).toLocaleString(
+                                                    "es-CO",
+                                                    {
+                                                        style: "currency",
+                                                        currency: "COP",
+                                                    }
+                                                )}
                                             </p>
                                         )}
                                         <p>
                                             {parseInt(
                                                 product.product_price *
-                                                    (1 -
-                                                        product.product_discount /
-                                                            100)
+                                                    (1 - product.product_discount / 100)
                                             ).toLocaleString("es-CO", {
                                                 style: "currency",
                                                 currency: "COP",
