@@ -1,19 +1,23 @@
 import React from "react";
 import { Link, useLocation } from "react-router";
 import { useAuthContext } from "../contexts/authContext";
-import { GearIcon, TrashIcon } from "../components/icons";
+import {
+    CloseIcon,
+    ComponentIcon,
+    ComputerIcon,
+    GearIcon,
+    HomeIcon,
+    PhoneIcon,
+    TrashIcon,
+} from "../components/icons";
 
 export default function Header() {
     const { userSession, handleLogout } = useAuthContext();
     const location = useLocation();
 
     const scrollFunction = () => {
-        if (
-            document.body.scrollTop > 10 ||
-            document.documentElement.scrollTop > 10
-        ) {
-            document.getElementById("header").style.backgroundColor =
-                "rgba(0, 0, 0, 0.35)";
+        if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+            document.getElementById("header").style.backgroundColor = "rgba(0, 0, 0, 0.35)";
             const header = document.getElementById("header");
             if (window.innerWidth < 768) {
                 // Small screen
@@ -22,8 +26,7 @@ export default function Header() {
                 header.style.paddingInline = "35px";
             }
         } else {
-            document.getElementById("header").style.backgroundColor =
-                "rgba(0, 0, 0, 0)";
+            document.getElementById("header").style.backgroundColor = "rgba(0, 0, 0, 0)";
             document.getElementById("header").style.paddingInline = "0px";
         }
     };
@@ -81,8 +84,7 @@ export default function Header() {
                                     <Link
                                         to="/computers"
                                         className={`${
-                                            location.pathname ===
-                                                "/computers" &&
+                                            location.pathname === "/computers" &&
                                             "text-[#4e99d3] font-semibold"
                                         }`}
                                     >
@@ -93,8 +95,7 @@ export default function Header() {
                                     <Link
                                         to="/components"
                                         className={`${
-                                            location.pathname ===
-                                                "/components" &&
+                                            location.pathname === "/components" &&
                                             "text-[#4e99d3] font-semibold"
                                         }`}
                                     >
@@ -116,11 +117,7 @@ export default function Header() {
                         </div>
                         <div className="navbar-end">
                             <div className="dropdown dropdown-end">
-                                <div
-                                    tabIndex="0"
-                                    role="button"
-                                    className="btn btn-ghost avatar"
-                                >
+                                <div tabIndex="0" role="button" className="btn btn-ghost avatar">
                                     {userSession ? "Cuenta" : "Autentícate"}
                                 </div>
                                 <ul
@@ -152,10 +149,7 @@ export default function Header() {
                                                 </>
                                             )}
                                             <li>
-                                                <a
-                                                    onClick={handleLogout}
-                                                    className="text-red-400"
-                                                >
+                                                <a onClick={handleLogout} className="text-red-400">
                                                     <TrashIcon />
                                                     Cerrar sesión
                                                 </a>
@@ -164,14 +158,10 @@ export default function Header() {
                                     ) : (
                                         <>
                                             <li>
-                                                <Link to="/login">
-                                                    Iniciar sesión
-                                                </Link>
+                                                <Link to="/login">Iniciar sesión</Link>
                                             </li>
                                             <li>
-                                                <Link to="/register">
-                                                    Registrarme
-                                                </Link>
+                                                <Link to="/register">Registrarme</Link>
                                             </li>
                                         </>
                                     )}
@@ -182,49 +172,70 @@ export default function Header() {
                 </div>
             </div>
             <div className="drawer-side">
-                <label
-                    htmlFor="my-drawer-3"
-                    aria-label="close sidebar"
-                    className="drawer-overlay"
-                ></label>
-                <ul className="menu bg-base-200 min-h-full w-80 p-4">
-                    {/* Sidebar content here */}
-                    <li>
-                        <Link to="/">Inicio</Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/computers"
-                            className={`${
-                                location.pathname === "/computers" &&
-                                "text-[#4e99d3] font-semibold"
-                            }`}
+                <ul className="menu bg-base-200 min-h-full w-80 p-4 justify-between">
+                    <div>
+                        <li>
+                            <Link
+                                to="/"
+                                className={`${
+                                    location.pathname === "/" && "text-[#4e99d3] font-semibold"
+                                }`}
+                            >
+                                <HomeIcon />
+                                <p>Inicio</p>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to="/computers"
+                                className={`${
+                                    location.pathname === "/computers" &&
+                                    "text-[#4e99d3] font-semibold"
+                                }`}
+                            >
+                                <ComputerIcon />
+                                <p>Computadores</p>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to="/components"
+                                className={`${
+                                    location.pathname === "/components" &&
+                                    "text-[#4e99d3] font-semibold"
+                                }`}
+                            >
+                                <ComponentIcon />
+                                <p>Componentes</p>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to="/contact"
+                                className={`${
+                                    location.pathname === "/contact" &&
+                                    "text-[#4e99d3] font-semibold"
+                                }`}
+                            >
+                                <PhoneIcon />
+                                <p>Contáctanos</p>
+                            </Link>
+                        </li>
+                    </div>
+                    <div>
+                        <label
+                            htmlFor="my-drawer-3"
+                            aria-label="close sidebar"
+                            className="drawer-overlay"
                         >
-                            Computadores
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/components"
-                            className={`${
-                                location.pathname === "/components" &&
-                                "text-[#4e99d3] font-semibold"
-                            }`}
-                        >
-                            Componentes
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/contact"
-                            className={`${
-                                location.pathname === "/contact" &&
-                                "text-[#4e99d3] font-semibold"
-                            }`}
-                        >
-                            Contáctanos
-                        </Link>
-                    </li>
+                            <li>
+                                <a>
+                                    <CloseIcon />
+                                    <p>Cerrar</p>
+                                </a>
+                            </li>
+                        </label>
+                    </div>
                 </ul>
             </div>
         </div>

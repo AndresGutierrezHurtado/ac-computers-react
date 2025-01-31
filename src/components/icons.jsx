@@ -12,10 +12,11 @@ import {
     FaBoxes,
     FaUsers,
 } from "react-icons/fa";
-import { FaGear } from "react-icons/fa6";
+import { FaGear, FaComputer } from "react-icons/fa6";
 import { MdFileUpload, MdModeEditOutline, MdFileDownload } from "react-icons/md";
 import { IoSearch, IoLocationOutline, IoHomeSharp } from "react-icons/io5";
-import { IoIosArrowBack,IoMdPricetags } from "react-icons/io";
+import { IoIosArrowBack, IoMdPricetags, IoMdClose } from "react-icons/io";
+import { RxComponent1 } from "react-icons/rx";
 
 export {
     FaStar as StarIcon,
@@ -38,5 +39,8 @@ export {
     FaUsers as UsersIcon,
     IoHomeSharp as HomeIcon,
     IoIosArrowBack as BackIcon,
-    IoMdPricetags as PriceTagsIcon
+    IoMdPricetags as PriceTagsIcon,
+    FaComputer as ComputerIcon,
+    RxComponent1 as ComponentIcon,
+    IoMdClose as CloseIcon,
 };
