@@ -73,7 +73,7 @@ export default function Header() {
                             className="navbar-start tooltip tooltip-bottom tooltip-accent"
                             data-tip="Ir al inicio"
                         >
-                            <h2 className=" text-start text-lg sm:text-2xl md:text-[27px] text-[#4e99d3] uppercase font-extrabold tracking-tight">
+                            <h2 className="text-nowrap text-start text-lg sm:text-2xl md:text-[27px] text-[#4e99d3] uppercase font-extrabold tracking-tight">
                                 AC COMPUTERS
                             </h2>
                         </Link>
