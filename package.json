@@ -1,0 +1,31 @@
+{
+    "name": "ac-computers",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev --turbopack",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "db:migrate": "npx sequelize-cli db:migrate",
+        "db:seed": "npx sequelize-cli db:seed:all",
+        "db:seed:rollback": "npx sequelize-cli db:seed:undo:all",
+        "db:migreate:rollback": "npx sequelize-cli db:migrate:undo:all"
+    },
+    "dependencies": {
+        "next": "15.2.2",
+        "pg": "^8.14.0",
+        "pg-hstore": "^2.3.4",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "sequelize": "^6.37.6"
+    },
+    "devDependencies": {
+        "@eslint/eslintrc": "^3",
+        "@tailwindcss/postcss": "^4",
+        "eslint": "^9",
+        "eslint-config-next": "15.2.2",
+        "sequelize-cli": "^6.6.2",
+        "tailwindcss": "^4"
+    }
+}
