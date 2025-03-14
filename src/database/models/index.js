@@ -47,4 +47,4 @@ Multimedia.belongsTo(Product, { foreignKey: "product_id", as: "product" });
 Product.hasMany(Spec, { foreignKey: "product_id", as: "specs" });
 Spec.belongsTo(Product, { foreignKey: "product_id", as: "product" });
 
-module.exports = { User, Category, Product, Spec, Multimedia };
+module.exports = { User, Category, Product, Spec, Multimedia, connection: sequelize };
