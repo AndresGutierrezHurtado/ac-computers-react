@@ -15,15 +15,22 @@ export default function Home(props) {
 function Auth() {
     const { data: session, status } = useSession();
 
-    console.log(session, status);
+    if (status === "loading") {
+        return <p>Loading...</p>;
+    }
+
     if (status === "unauthenticated") {
         return (
             <>
-                <button onClick={() => signIn("google")} className="btn mx-3">Iniciar sesion con Google</button>
-                <button onClick={() => signIn("facebook")} className="btn mx-3">Iniciar sesion con Facebook</button>
+                <button onClick={() => signIn("google")} className="btn mx-3">
+                    Iniciar sesion con Google
+                </button>
+                <button onClick={() => signIn("facebook")} className="btn mx-3">
+                    Iniciar sesion con Facebook
+                </button>
             </>
         );
     }
 
-    return <p>Iniciaste sesion con {JSON.stringify(session)}</p>;
+    return <p>Iniciaste sesion como {session.user.user_name}</p>;
 }

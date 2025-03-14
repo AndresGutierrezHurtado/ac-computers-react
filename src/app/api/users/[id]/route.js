@@ -3,7 +3,12 @@ import { NextResponse } from "next/server";
 import { User } from "@/database/models";
 
 export async function GET(request, { params }) {
-    const user = await User.findByPk(params.id);
+    const user = await User.findByPk(params.id, {
+        attributes: {
+            exclude: ["user_password"],
+        },
+        include: ["role"],
+    });
 
     return NextResponse.json({
         success: true,

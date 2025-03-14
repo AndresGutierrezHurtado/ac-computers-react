@@ -70,7 +70,14 @@ const handler = NextAuth({
             return true;
         },
         async session({ session, user }) {
-            session.user = user;
+            session.user = await models.User.findOne({
+                where: { user_email: user.email },
+                attributes: {
+                    exclude: ["user_password"],
+                },
+                include: ["role"],
+            });
+
             return session;
         },
         async redirect({ url, baseUrl }) {
