@@ -10,6 +10,7 @@ const sequelize = new Sequelize(
         dialect: config.development.dialect,
         dialectModule: require("pg"),
         port: config.development.port,
+        logging: false,
     }
 );
 
