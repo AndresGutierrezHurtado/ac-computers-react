@@ -13,10 +13,11 @@
         "db:migrate": "npx sequelize-cli db:migrate",
         "db:seed": "npx sequelize-cli db:seed:all",
         "db:seed:rollback": "npx sequelize-cli db:seed:undo:all",
-        "db:migreate:rollback": "npx sequelize-cli db:migrate:undo:all"
+        "db:migrate:rollback": "npx sequelize-cli db:migrate:undo:all"
     },
     "dependencies": {
         "bcrypt": "^5.1.1",
+        "daisyui": "^5.0.3",
         "next": "15.2.2",
         "pg": "^8.14.0",
         "pg-hstore": "^2.3.4",
@@ -26,10 +27,10 @@
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3",
-        "@tailwindcss/postcss": "^4",
+        "@tailwindcss/postcss": "^4.0.14",
         "eslint": "^9",
         "eslint-config-next": "15.2.2",
         "sequelize-cli": "^6.6.2",
-        "tailwindcss": "^4"
+        "tailwindcss": "^4.0.14"
     }
 }
