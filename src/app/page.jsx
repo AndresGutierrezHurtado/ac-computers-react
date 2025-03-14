@@ -1,18 +1,7 @@
 "use client";
-import { SessionProvider, signIn, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
-export default function Home(props) {
-    return (
-        <SessionProvider session={props.session}>
-            <div>
-                <h1>Inicio</h1>
-                <Auth />
-            </div>
-        </SessionProvider>
-    );
-}
-
-function Auth() {
+export default function Home() {
     const { data: session, status } = useSession();
 
     if (status === "loading") {
@@ -32,5 +21,11 @@ function Auth() {
         );
     }
 
-    return <p>Iniciaste sesion como {session.user.user_name}</p>;
+    return (
+        <section className="w-full px-3">
+            <div className="w-full max-w-[1200px] mx-auto">
+                <h1 className="text-5xl font-extrabold">Bienvenido {session.user.user_name}!</h1>
+            </div>
+        </section>
+    );
 }

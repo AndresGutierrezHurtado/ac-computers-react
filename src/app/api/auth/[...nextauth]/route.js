@@ -5,7 +5,6 @@ import SequelizeAdapter from "@auth/sequelize-adapter";
 import * as models from "@/database/models";
 
 const handler = NextAuth({
-    debug: true,
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
