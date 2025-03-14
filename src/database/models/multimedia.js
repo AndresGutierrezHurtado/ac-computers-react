@@ -2,21 +2,23 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-    class Multimedia extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
-        static associate(models) {
-            // define association here
-        }
-    }
+    class Multimedia extends Model {}
+
     Multimedia.init(
         {
-            media_id: DataTypes.UUID,
-            media_url: DataTypes.STRING,
-            product_id: DataTypes.UUID,
+            media_id: {
+                type: DataTypes.UUID,
+                defaultValue: DataTypes.UUIDV4,
+                primaryKey: true,
+            },
+            media_url: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            product_id: {
+                type: DataTypes.UUID,
+                allowNull: false,
+            },
         },
         {
             sequelize,
@@ -24,5 +26,6 @@ module.exports = (sequelize, DataTypes) => {
             timestamps: false,
         }
     );
+
     return Multimedia;
 };

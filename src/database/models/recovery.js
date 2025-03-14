@@ -2,21 +2,24 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-    class Recovery extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
-        static associate(models) {
-            // define association here
-        }
-    }
+    class Recovery extends Model {}
+
     Recovery.init(
         {
-            recovery_id: DataTypes.UUID,
-            user_id: DataTypes.UUID,
-            recovery_date: DataTypes.DATE,
+            recovery_id: {
+                type: DataTypes.UUID,
+                defaultValue: DataTypes.UUIDV4,
+                primaryKey: true,
+            },
+            user_id: {
+                type: DataTypes.UUID,
+                allowNull: false,
+            },
+            recovery_date: {
+                type: DataTypes.DATE,
+                defaultValue: DataTypes.NOW,
+                allowNull: false,
+            },
         },
         {
             sequelize,
@@ -24,5 +27,6 @@ module.exports = (sequelize, DataTypes) => {
             timestamps: false,
         }
     );
+
     return Recovery;
 };

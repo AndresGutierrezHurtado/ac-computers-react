@@ -2,26 +2,45 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-    class Product extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
-        static associate(models) {
-            // define association here
-        }
-    }
+    class Product extends Model {}
+
     Product.init(
         {
-            product_id: DataTypes.UUID,
-            product_name: DataTypes.STRING,
-            product_description: DataTypes.TEXT,
-            product_image_url: DataTypes.STRING,
-            product_price: DataTypes.DECIMAL,
-            product_discount: DataTypes.INTEGER,
-            product_date: DataTypes.DATE,
-            category_id: DataTypes.INTEGER,
+            product_id: {
+                type: DataTypes.UUID,
+                defaultValue: DataTypes.UUIDV4,
+                primaryKey: true,
+            },
+            product_name: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            product_description: {
+                type: DataTypes.TEXT,
+                allowNull: false,
+            },
+            product_image_url: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            product_price: {
+                type: DataTypes.DECIMAL,
+                allowNull: false,
+            },
+            product_discount: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                defaultValue: 0,
+            },
+            product_date: {
+                type: DataTypes.DATE,
+                allowNull: false,
+                defaultValue: DataTypes.NOW,
+            },
+            category_id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
         },
         {
             sequelize,
@@ -29,5 +48,6 @@ module.exports = (sequelize, DataTypes) => {
             timestamps: false,
         }
     );
+
     return Product;
 };

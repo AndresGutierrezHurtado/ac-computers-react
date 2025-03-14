@@ -2,22 +2,27 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-    class Spec extends Model {
-        /**
-         * Helper method for defining associations.
-         * This method is not a part of Sequelize lifecycle.
-         * The `models/index` file will call this method automatically.
-         */
-        static associate(models) {
-            // define association here
-        }
-    }
+    class Spec extends Model {}
+
     Spec.init(
         {
-            spec_id: DataTypes.UUID,
-            spec_key: DataTypes.STRING,
-            spec_value: DataTypes.STRING,
-            product_id: DataTypes.UUID,
+            spec_id: {
+                type: DataTypes.UUID,
+                defaultValue: DataTypes.UUIDV4,
+                primaryKey: true,
+            },
+            spec_key: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            spec_value: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            product_id: {
+                type: DataTypes.UUID,
+                allowNull: false,
+            },
         },
         {
             sequelize,
@@ -25,5 +30,6 @@ module.exports = (sequelize, DataTypes) => {
             timestamps: false,
         }
     );
+
     return Spec;
 };
