@@ -18,7 +18,7 @@ module.exports = {
 
         await queryInterface.bulkInsert("Users", users, {});
         await queryInterface.bulkInsert("Roles", roles, {});
-        await queryInterface.bulkInsert("Recoveries", [], {});
+        // await queryInterface.bulkInsert("Recoveries", [], {});
     },
 
     async down(queryInterface, Sequelize) {
