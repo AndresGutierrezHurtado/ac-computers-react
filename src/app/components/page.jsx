@@ -4,10 +4,10 @@ import Pagination from "../../components/pagination";
 import { DownloadIcon, PriceTagsIcon, SearchIcon } from "@/components/icons";
 
 export default async function Page({ searchParams }) {
-    const { page = 1 } = await searchParams;
+    const { page = 1, search = "" } = await searchParams;
 
     const response = await fetch(
-        `${process.env.APP_DOMAIN}/api/products?type=2&limit=8&page=${page}`
+        `${process.env.APP_DOMAIN}/api/products?type=2&limit=8&page=${page}&search=${search}`
     );
     const { data: computers, limit, count } = await response.json();
 
@@ -19,14 +19,20 @@ export default async function Page({ searchParams }) {
                         <h2 className="text-4xl font-extrabold tracking-tight">
                             Lista componentes:
                         </h2>
-                        <label className="input input-sm input-bordered focus-within:outline-0 focus-within:input-primary flex items-center gap-2 w-full max-w-sm">
-                            <input
-                                type="text"
-                                className="grow group"
-                                placeholder="Buscar componentes"
-                            />
-                            <SearchIcon className="opacity-70 w-4 h-4" />
-                        </label>
+                        <form action="/components" method="get" className="w-full max-w-sm">
+                            <label className="input input-sm input-bordered focus-within:outline-0 focus-within:input-primary flex items-center gap-2 w-full">
+                                <input
+                                    type="text"
+                                    className="grow group"
+                                    placeholder="Buscar componentes"
+                                    name="search"
+                                    defaultValue={search}
+                                />
+                                <button type="submit">
+                                    <SearchIcon className="opacity-70 w-4 h-4" />
+                                </button>
+                            </label>
+                        </form>
                     </div>
                     <div className="flex justify-center gap-4 flex-wrap">
                         <Link
@@ -44,7 +50,6 @@ export default async function Page({ searchParams }) {
                             Descargar lista de precios
                         </Link>
                     </div>
-
 
                     <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-14">
                         {computers.map((product) => (
