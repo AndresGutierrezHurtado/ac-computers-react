@@ -13,14 +13,32 @@ import {
     PhoneIcon,
     TrashIcon,
 } from "@/components/icons";
+import { useEffect } from "react";
 
 export default function Header() {
     const router = useRouter();
     const { data: session, status } = useSession();
     const userSession = session?.user;
 
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 0) {
+                document.querySelector("#header").classList.add("bg-black/20");
+                document.querySelector("#header").classList.add("px-5");
+            } else {
+                document.querySelector("#header").classList.remove("bg-black/20");
+                document.querySelector("#header").classList.remove("px-5");
+            }
+        };
+        window.addEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
     return (
-        <div className="drawer sticky top-0 z-50">
+        <div className="fixed w-full top-0 z-50">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col">
                 {/* Navbar */}
@@ -54,12 +72,13 @@ export default function Header() {
 
                         <Link
                             href="/"
-                            className="navbar-start tooltip tooltip-bottom tooltip-accent"
-                            data-tip="Ir al inicio"
+                            className="navbar-start"
                         >
-                            <h2 className="text-nowrap text-start text-lg sm:text-2xl md:text-[27px] text-[#4e99d3] uppercase font-extrabold tracking-tight">
-                                AC COMPUTERS
-                            </h2>
+                            <div className="tooltip tooltip-neutral tooltip-bottom" data-tip="Ir al inicio">
+                                <h2 className="text-nowrap text-start text-lg sm:text-2xl md:text-[27px] text-[#4e99d3] uppercase font-extrabold tracking-tight">
+                                    AC COMPUTERS
+                                </h2>
+                            </div>
                         </Link>
                         <div className="hidden flex-none lg:block navbar-center">
                             <ul className="menu menu-horizontal text-lg [&>li>a:hover]:text-[#4e99d3] [&>li>a:hover]:scale-105 [&>li>a:hover]:duration-300 [&>li>a:hover]:bg-transparent [&>li>a:focus]:bg-transparent [&>li>a:focus]:text-[#4e99d3]">
@@ -133,7 +152,10 @@ export default function Header() {
                                                 </>
                                             )}
                                             <li>
-                                                <a onClick={() => signOut()} className="text-red-400">
+                                                <a
+                                                    onClick={() => signOut()}
+                                                    className="text-red-400"
+                                                >
                                                     <TrashIcon />
                                                     Cerrar sesión
                                                 </a>
@@ -197,8 +219,7 @@ export default function Header() {
                             <Link
                                 href="/contact"
                                 className={`${
-                                    router.pathname === "/contact" &&
-                                    "text-[#4e99d3] font-semibold"
+                                    router.pathname === "/contact" && "text-[#4e99d3] font-semibold"
                                 }`}
                             >
                                 <PhoneIcon />
@@ -225,4 +246,3 @@ export default function Header() {
         </div>
     );
 }
-
