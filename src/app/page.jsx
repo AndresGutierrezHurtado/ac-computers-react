@@ -11,10 +11,15 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Home() {
     const mainref = useRef();
     const sceneRef = useRef();
+    const sectionRefs = useRef([]);
 
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
+        gsap.set(sectionRefs.current[1], { x: "150%", opacity: "-3.5" });
+        gsap.set(sectionRefs.current[2], { x: "-150%", opacity: "-3.5" });
+        gsap.set(sectionRefs.current[3], { x: "150%", opacity: "-3.5" });
+
         gsap.timeline({
             scrollTrigger: {
                 trigger: mainref.current,
@@ -28,31 +33,65 @@ export default function Home() {
         })
             .to(sceneRef.current, {
                 x: "-40%",
+                opacity: 1,
                 ease: "none",
             })
             .to(sceneRef.current, {
-                x: "8%",
+                x: "3%",
                 ease: "none",
             })
             .to(sceneRef.current, {
                 x: "-40%",
                 ease: "none",
             });
+
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: mainref.current,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1,
+                onUpdate: (self) => {
+                    setProgress(self.progress);
+                },
+            },
+        })
+            .to(sectionRefs.current[1], {
+                x: "0%",
+                opacity: 1,
+                ease: "none",
+            })
+            .to(sectionRefs.current[2], {
+                x: "0%",
+                opacity: 1,
+                ease: "none",
+            })
+            .to(sectionRefs.current[3], {
+                x: "0%",
+                opacity: 1,
+                ease: "none",
+            });
     }, []);
 
     return (
-        <main className="w-full min-h-screen flex flex-col gap-[100px] lg:gap-10 " ref={mainref}>
+        <main
+            className="w-full min-h-screen flex flex-col gap-[100px] lg:gap-10 overflow-x-hidden overflow-y-scroll snap-y snap-mandatory"
+            ref={mainref}
+        >
             <div
-                className="fixed top-[2.5%] right-[-20%] h-screen w-screen hidden lg:block pointer-events-none z-40"
+                className="fixed top-[2.5%] right-[-20%] h-screen w-screen hidden lg:block pointer-events-none z-40 snap-center"
                 ref={sceneRef}
             >
                 <Modelo3D progress={progress} />
             </div>
 
             {/* Hero section */}
-            <section className="w-full px-3 mt-[150px] lg:mt-0">
+            <section className="w-full px-3 mt-[150px] lg:mt-0 snap-center">
                 <div className="w-full h-auto lg:h-[90vh] max-w-[1200px] mx-auto flex items-center">
-                    <article className="w-full lg:w-1/2 flex flex-col gap-2">
+                    <article
+                        ref={(el) => (sectionRefs.current[0] = el)}
+                        className="w-full lg:w-1/2 flex flex-col gap-2"
+                    >
                         <div className="badge bg-[#4e99d3]/20 text text-[#4e99d3] font-medium border border-[#4e99d3]/50 mb-1">
                             <GearIcon size={12} /> Lo mejor de la tecnologia
                         </div>
@@ -74,7 +113,7 @@ export default function Home() {
                         </button>
                         <p className="flex items-center gap-1 font-medium text-gray-300">
                             <span className="text-[#4e99d3] flex items-center">
-                                + <UsersIcon size={20} className="mr-2" /> 1000
+                                + <UsersIcon size={20} className="mr-2" /> 100
                             </span>{" "}
                             clientes satisfechos
                         </p>
@@ -83,92 +122,143 @@ export default function Home() {
             </section>
 
             {/* Second section */}
-            <section className="w-full px-3">
+            <section className="w-full px-3 snap-center">
                 <div className="w-full h-auto lg:h-[90vh] max-w-[1200px] mx-auto flex items-center">
                     <article className="w-3/5 hidden lg:block"></article>
-                    <article className="w-full lg:w-3/5 flex flex-col gap-4">
-                        <div>
-                            <p className="text-[#4e99d3] font-bold tracking-tight uppercase">
-                                Los mejores
-                            </p>
-                            <h1 className="text-5xl font-extrabold">Componentes</h1>
+                    <article
+                        ref={(el) => (sectionRefs.current[1] = el)}
+                        className="w-full lg:w-3/5 flex flex-col gap-4"
+                    >
+                        <div className="w-full flex justify-between items-center">
+                            <div>
+                                <p className="text-[#4e99d3] font-bold tracking-tight uppercase">
+                                    Los mejores
+                                </p>
+                                <h1 className="text-5xl font-extrabold text-balance">
+                                    Componentes{" "}
+                                    <span className="text-[#4e99d3] italic">para tu PC</span>
+                                </h1>
+                            </div>
+                            <Link
+                                href="/components"
+                                className="group text-[#4e99d3] font-medium text-sm flex items-center gap-2 text-nowrap"
+                            >
+                                <p>Ver Todos</p>
+                                <span className="text-lg">»</span>
+                            </Link>
                         </div>
                         <p className="text-pretty w-full text-gray-300 text-lg mb-4">
-                            Descubre nuestra amplia selección de componentes de la más alta calidad, 
-                            que abarca desde avanzadas placas base hasta veloces discos duros, 
+                            Descubre nuestra amplia selección de componentes de la más alta calidad,
+                            que abarca desde avanzadas placas base hasta veloces discos duros,
                             potentes tarjetas gráficas y memorias RAM de gran capacidad.
                         </p>
-                        <Link href="/components">
-                            <button className="btn bg-[#4e99d3] hover:bg-[#4e99d3]/80 w-fit text-black rounded-lg font-medium">
-                                Ver Componentes
-                            </button>
-                        </Link>
+                        <div className="flex gap-4">
+                            <Link href="/components">
+                                <button className="btn btn-outline border-[#4e99d3] text-[#4e99d3] hover:bg-[#4e99d3]/10 w-fit rounded-lg font-medium">
+                                    Ver lista de componentes
+                                </button>
+                            </Link>
+                            <Link href="/components">
+                                <button className="btn bg-[#4e99d3] hover:bg-[#4e99d3]/80 w-fit text-black rounded-lg font-medium">
+                                    <DownloadIcon size={18} />
+                                    Descargar Catalogo Componentes
+                                </button>
+                            </Link>
+                        </div>
                     </article>
                 </div>
             </section>
 
             {/* Third section */}
-            <section className="w-full px-3">
+            <section className="w-full px-3 snap-center">
                 <div className="w-full h-auto lg:h-[90vh] max-w-[1200px] mx-auto flex items-center">
-                    <article className="w-full lg:max-w-1/2 flex flex-col gap-2">
-                        <div>
-                            <p className="text-[#4e99d3] font-bold tracking-tight uppercase">
-                                Los mejores
-                            </p>
-                            <h1 className="text-5xl font-extrabold">Computadores</h1>
+                    <article
+                        ref={(el) => (sectionRefs.current[2] = el)}
+                        className="w-full lg:max-w-3/5 flex flex-col gap-5"
+                    >
+                        <div className="w-full flex justify-between items-center">
+                            <div>
+                                <p className="text-[#4e99d3] font-bold tracking-tight uppercase">
+                                    Los mejores
+                                </p>
+                                <h1 className="text-5xl font-extrabold">Computadores</h1>
+                            </div>
+                            <Link
+                                href="/computers"
+                                className="group text-[#4e99d3] font-medium text-sm flex items-center gap-2 text-nowrap"
+                            >
+                                <p>Ver Todos</p>
+                                <span className="text-lg">»</span>
+                            </Link>
                         </div>
                         <p className="text-pretty w-full text-gray-300 text-lg mb-4">
-                            Descubre nuestra amplia selección de computadores de la más alta calidad, 
-                            que abarca desde potentes laptops hasta veloces desktops, 
+                            Descubre nuestra amplia selección de computadores de la más alta
+                            calidad, que abarca desde potentes laptops hasta veloces desktops,
                             pasando por avanzadas workstations y servidores.
                         </p>
-                        <Link href="/computers">
-                            <button className="btn bg-[#4e99d3] hover:bg-[#4e99d3]/80 w-fit text-black rounded-lg font-medium">
-                                Ver Componentes
-                            </button>
-                        </Link>
+                        <div className="flex gap-4">
+                            <Link href="/computers">
+                                <button className="btn btn-outline border-[#4e99d3] text-[#4e99d3] hover:bg-[#4e99d3]/10 w-fit rounded-lg font-medium">
+                                    Ver lista de computadores
+                                </button>
+                            </Link>
+                            <Link href="/computers">
+                                <button className="btn bg-[#4e99d3] hover:bg-[#4e99d3]/80 w-fit text-black rounded-lg font-medium">
+                                    <DownloadIcon size={18} />
+                                    Descargar Catalogo Computadores
+                                </button>
+                            </Link>
+                        </div>
                     </article>
                 </div>
             </section>
 
             {/* Fourth section */}
-            <section className="w-full px-3">
+            <section className="w-full px-3 snap-center">
                 <div className="w-full h-auto lg:h-[90vh] max-w-[1200px] mx-auto flex items-center">
                     <article className="w-2/5 hidden lg:block"></article>
-                    <article className="w-full lg:max-w-3/5 flex flex-col gap-4">
-                        <h1 className="text-5xl font-extrabold">Nuestras Caracteristicas</h1>
+                    <article
+                        ref={(el) => (sectionRefs.current[3] = el)}
+                        className="w-full lg:max-w-3/5 flex flex-col gap-5"
+                    >
+                        <div>
+                            <p className="text-[#4e99d3] font-bold tracking-tight uppercase">
+                                Sobre nosotros
+                            </p>
+                            <h1 className="text-5xl font-extrabold">Conocenos más</h1>
+                        </div>
                         <p className="text-pretty w-full text-gray-300 text-lg mb-5">
                             En AC Computers nos enfocamos en brindar a nuestros clientes los mejores
                             productos y servicios al mejor precio del mercado. A continuacion, te
                             presentamos algunas de las caracteristicas que nos hacen destacar.
                         </p>
-                        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-10">
+                        <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-10">
                             {[
                                 {
-                                    title: "Calidad",
-                                    text: "Ofrecemos productos de alta calidad a precios competitivos, cumpliendo con los estándares de la industria.",
+                                    title: "+10 años",
+                                    text: "Vendiendo los mejores productos tecnologicos",
                                 },
                                 {
-                                    title: "Garantía",
-                                    text: "Brindamos garantía de 1 año en todos nuestros productos para mayor confianza.",
+                                    title: "+100 clientes",
+                                    text: "Satisfechos con nuestros productos y servicios",
                                 },
                                 {
-                                    title: "Servicio",
-                                    text: "Nuestro equipo está capacitado para ofrecer la mejor atención al cliente.",
+                                    title: "+150 ventas",
+                                    text: "En los ultimos 5 años",
                                 },
                                 {
-                                    title: "Envío",
-                                    text: "Aseguramos envíos seguros y eficientes para una mejor experiencia de compra.",
+                                    title: "100% seguro",
+                                    text: "Nuestros productos y servicios son seguros y confiables",
                                 },
                             ].map((item, index) => (
                                 <div
                                     key={index}
-                                    className="bg-black/20 backdrop-blur p-4 rounded-lg text-center hover:scale-105 transition duration-300 ease-in-out cursor-default"
+                                    className="flex flex-col items-start gap-2 text-center border-t-2 border-[#4e99d3] py-2 w-full max-w-[300px] mx-auto"
                                 >
-                                    <h3 className="text-white text-2xl font-bold tracking-tight uppercase mb-2">
+                                    <h3 className="text-2xl font-bold uppercase text-[#4e99d3] w-full">
                                         {item.title}
                                     </h3>
-                                    <p>{item.text}</p>
+                                    <p className="font-medium text-sm text-gray-300 w-full">{item.text}</p>
                                 </div>
                             ))}
                         </div>

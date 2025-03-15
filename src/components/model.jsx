@@ -44,7 +44,7 @@ const CameraController = ({ progress }) => {
 
     useEffect(() => {
         const positions = [
-            [-5.5, 0.8, 6.9],
+            [-4.5, 0.8, 5.5],
             [-10, 1, 0],
             [0, 10, 1],
             [0, 2, 9],
@@ -94,7 +94,7 @@ const Modelo3D = ({ progress }) => {
     return (
         <Canvas
             camera={{
-                position: [-5.5, 0.8, 6.9],
+                position: [-4.5, 0.8, 5.5],
                 fov: 50,
             }}
             style={{
@@ -104,13 +104,9 @@ const Modelo3D = ({ progress }) => {
             }}
         >
             {/* Lights and Environment */}
-            <Environment preset="city" environmentIntensity={0.04} />
-            <ambientLight intensity={20} position={[0, 0, 0]} />
-            <ambientLight intensity={20} position={[-5, 0, 0]} />
-            <directionalLight position={[5, 5, 5]} intensity={15} />
-            <directionalLight position={[0, 5, 0]} intensity={10} />
-            <pointLight position={[-3, 3, 3]} intensity={50} />
-            <pointLight position={[0, 0, 5]} intensity={100} />
+            <Environment preset="city" environmentIntensity={.5} />
+            <ambientLight intensity={5} position={[0, 0, 0]} />
+            <ambientLight intensity={15} position={[-5, 0, 0]} />
 
             {/* Model */}
             <Modelo />
