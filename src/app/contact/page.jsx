@@ -1,4 +1,5 @@
 "use client";
+
 import {
     AtIcon,
     FacebookIcon,
@@ -7,6 +8,7 @@ import {
     UploadIcon,
     WhatsappIcon,
 } from "@/components/icons";
+import { StoreMap } from "@/components/map";
 import Link from "next/link";
 import React from "react";
 
@@ -159,7 +161,7 @@ export default function Page() {
                             Nuestra ubicación:
                         </h2>
                         <div className="w-full h-[400px] overflow-hidden border rounded-lg">
-                            {/* <StoreMap /> */}
+                            <StoreMap />
                         </div>
                     </div>
                 </div>
