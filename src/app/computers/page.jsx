@@ -7,6 +7,8 @@ export const metadata = {
     title: "Computadores | AC Computers",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function Page({ searchParams }) {
     const { page = 1, search = "" } = await searchParams;
 
