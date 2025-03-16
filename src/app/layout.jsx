@@ -20,6 +20,8 @@ export default function RootLayout({ children }) {
     const noLayoutRoutes = ["/login", "/register", "/admin"];
 
     useEffect(() => {
+        if (noLayoutRoutes.includes(pathname)) return;
+
         gsap.timeline({
             scrollTrigger: {
                 trigger: "body",

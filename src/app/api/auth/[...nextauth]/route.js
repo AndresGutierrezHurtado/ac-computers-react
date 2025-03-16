@@ -1,11 +1,41 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
+import CredentialsProvider from "next-auth/providers/credentials";
 import SequelizeAdapter from "@auth/sequelize-adapter";
+import bcrypt from "bcrypt";
 import * as models from "@/database/models";
 
 const handler = NextAuth({
     providers: [
+        CredentialsProvider({
+            name: "Credentials",
+            credentials: {
+                user_email: {
+                    label: "Correo electrónico",
+                    type: "email",
+                    placeholder: "ejemplo@gmail.com",
+                },
+                user_password: { label: "Contraseña", type: "password", placeholder: "*******" },
+            },
+            async authorize(credentials) {
+                const { user_email, user_password } = credentials;
+                const user = await models.User.findOne({ where: { user_email } });
+
+                if (!user) {
+                    throw new Error("El usuario no existe.");
+                }
+
+                const isPasswordValid = await bcrypt.compare(user_password, user.user_password);
+
+                if (!isPasswordValid) {
+                    throw new Error("La contraseña es incorrecta.");
+                }
+
+                const result = user.toJSON();
+                return result;
+            },
+        }),
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -18,11 +48,10 @@ const handler = NextAuth({
     adapter: SequelizeAdapter(models.connection),
     secret: process.env.SESSION_SECRET,
     session: {
-        strategy: "database",
+        strategy: "jwt",
         maxAge: 30 * 24 * 60 * 60,
         updateAge: 24 * 60 * 60,
     },
-    useSecureCookies: false,
     cookies: {
         sessionToken: {
             name: "next-auth.session-token",
@@ -37,6 +66,7 @@ const handler = NextAuth({
     callbacks: {
         async signIn({ user, account, profile }) {
             if (account.provider === "google") {
+
                 if (!profile.email) {
                     throw new Error("La cuenta de Google no tiene email asociado.");
                 }
@@ -70,7 +100,7 @@ const handler = NextAuth({
         },
         async session({ session, user }) {
             session.user = await models.User.findOne({
-                where: { user_email: user.email },
+                where: { user_email: user.user_email },
                 attributes: {
                     exclude: ["user_password"],
                 },
@@ -78,6 +108,19 @@ const handler = NextAuth({
             });
 
             return session;
+        },
+        async jwt({ token, user }) {
+            if (user) {
+                token.user = await models.User.findOne({
+                    where: { user_email: user.user_email },
+                    attributes: {
+                        exclude: ["user_password"],
+                    },
+                    include: ["role"],
+                }).then((user) => user.toJSON());
+                token.email = user.user_email;
+            }
+            return token;
         },
         async redirect({ url, baseUrl }) {
             return baseUrl;

@@ -70,11 +70,11 @@ export default function Header() {
                             </label>
                         </div>
 
-                        <Link
-                            href="/"
-                            className="navbar-start"
-                        >
-                            <div className="tooltip tooltip-neutral tooltip-bottom" data-tip="Ir al inicio">
+                        <Link href="/" className="navbar-start">
+                            <div
+                                className="tooltip tooltip-neutral tooltip-bottom"
+                                data-tip="Ir al inicio"
+                            >
                                 <h2 className="text-nowrap text-start text-lg sm:text-2xl md:text-[27px] text-primary uppercase font-extrabold tracking-tight">
                                     AC COMPUTERS
                                 </h2>
@@ -195,8 +195,7 @@ export default function Header() {
                             <Link
                                 href="/computers"
                                 className={`${
-                                    router.pathname === "/computers" &&
-                                    "text-primary font-semibold"
+                                    router.pathname === "/computers" && "text-primary font-semibold"
                                 }`}
                             >
                                 <ComputerIcon />
