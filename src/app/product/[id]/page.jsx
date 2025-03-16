@@ -1,6 +1,9 @@
-import { BackIcon } from "@/components/icons";
-import Link from "next/link";
 import React from "react";
+import Link from "next/link";
+
+// Components
+import { BackIcon } from "@/components/icons";
+import SwiperThumbnails from "@/components/swiperThumbnails";
 
 export const dynamic = "force-dynamic";
 
@@ -19,10 +22,10 @@ export default async function Page({ params }) {
             url: product.product_image_url,
             alt: product.product_name,
         },
-        ...product.multimedias.map((multimedia) => ({
+        ...product.multimedias.map((multimedia, index) => ({
             id: multimedia.media_id,
             url: multimedia.media_url,
-            alt: multimedia.media_name,
+            alt: product.product_name + " " + index,
         })),
     ];
 
@@ -31,12 +34,12 @@ export default async function Page({ params }) {
             <section className="w-full px-3">
                 <div className="w-full max-w-[1200px] mx-auto mt-[100px]">
                     <div className="flex flex-col md:flex-row gap-10">
-                        <div className="w-[400px] flex-none border aspect-square">
-                            {/* <SwiperThumbnails
+                        <div className="flex-none">
+                            <SwiperThumbnails
                                 images={images}
                                 size={450}
                                 product_id={product.product_id}
-                            /> */}
+                            />
                         </div>
                         <div className="grow flex flex-col gap-2">
                             <p className="leading-none text-primary font-bold">

@@ -75,20 +75,20 @@ export default function Header() {
                             className="navbar-start"
                         >
                             <div className="tooltip tooltip-neutral tooltip-bottom" data-tip="Ir al inicio">
-                                <h2 className="text-nowrap text-start text-lg sm:text-2xl md:text-[27px] text-[#4e99d3] uppercase font-extrabold tracking-tight">
+                                <h2 className="text-nowrap text-start text-lg sm:text-2xl md:text-[27px] text-primary uppercase font-extrabold tracking-tight">
                                     AC COMPUTERS
                                 </h2>
                             </div>
                         </Link>
                         <div className="hidden flex-none lg:block navbar-center">
-                            <ul className="menu menu-horizontal text-lg [&>li>a:hover]:text-[#4e99d3] [&>li>a:hover]:scale-105 [&>li>a:hover]:duration-300 [&>li>a:hover]:bg-transparent [&>li>a:focus]:bg-transparent [&>li>a:focus]:text-[#4e99d3]">
+                            <ul className="menu menu-horizontal text-lg [&>li>a:hover]:text-primary [&>li>a:hover]:scale-105 [&>li>a:hover]:duration-300 [&>li>a:hover]:bg-transparent [&>li>a:focus]:bg-transparent [&>li>a:focus]:text-primary">
                                 {/* Navbar menu content here */}
                                 <li>
                                     <Link
                                         href="/computers"
                                         className={`${
                                             router.pathname === "/computers" &&
-                                            "text-[#4e99d3] font-semibold"
+                                            "text-primary font-semibold"
                                         }`}
                                     >
                                         Computadores
@@ -99,7 +99,7 @@ export default function Header() {
                                         href="/components"
                                         className={`${
                                             router.pathname === "/components" &&
-                                            "text-[#4e99d3] font-semibold"
+                                            "text-primary font-semibold"
                                         }`}
                                     >
                                         Componentes
@@ -110,7 +110,7 @@ export default function Header() {
                                         href="/contact"
                                         className={`${
                                             router.pathname === "/contact" &&
-                                            "text-[#4e99d3] font-semibold"
+                                            "text-primary font-semibold"
                                         }`}
                                     >
                                         Contáctanos
@@ -184,7 +184,7 @@ export default function Header() {
                             <Link
                                 href="/"
                                 className={`${
-                                    router.pathname === "/" && "text-[#4e99d3] font-semibold"
+                                    router.pathname === "/" && "text-primary font-semibold"
                                 }`}
                             >
                                 <HomeIcon />
@@ -196,7 +196,7 @@ export default function Header() {
                                 href="/computers"
                                 className={`${
                                     router.pathname === "/computers" &&
-                                    "text-[#4e99d3] font-semibold"
+                                    "text-primary font-semibold"
                                 }`}
                             >
                                 <ComputerIcon />
@@ -208,7 +208,7 @@ export default function Header() {
                                 href="/components"
                                 className={`${
                                     router.pathname === "/components" &&
-                                    "text-[#4e99d3] font-semibold"
+                                    "text-primary font-semibold"
                                 }`}
                             >
                                 <ComponentIcon />
@@ -219,7 +219,7 @@ export default function Header() {
                             <Link
                                 href="/contact"
                                 className={`${
-                                    router.pathname === "/contact" && "text-[#4e99d3] font-semibold"
+                                    router.pathname === "/contact" && "text-primary font-semibold"
                                 }`}
                             >
                                 <PhoneIcon />

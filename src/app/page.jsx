@@ -92,27 +92,27 @@ export default function Home() {
                         ref={(el) => (sectionRefs.current[0] = el)}
                         className="w-full lg:w-1/2 flex flex-col gap-2"
                     >
-                        <div className="badge bg-[#4e99d3]/20 text text-[#4e99d3] font-medium border border-[#4e99d3]/50 mb-1">
+                        <div className="badge bg-primary/20 text text-primary font-medium border border-primary/50 mb-1">
                             <GearIcon size={12} /> Lo mejor de la tecnologia
                         </div>
 
                         <h1 className="text-5xl md:text-6xl font-extrabold">
-                            AC <span className="text-[#4e99d3] italic">COMPUTERS</span>
+                            AC <span className="text-primary italic">COMPUTERS</span>
                         </h1>
                         <p className="text-xl mb-6">
-                            Donde la <span className="text-[#4e99d3]">tecnologia</span> te acompaña.
+                            Donde la <span className="text-primary">tecnologia</span> te acompaña.
                         </p>
                         <p className="text-pretty w-full text-gray-300 text-lg mb-8">
                             Creemos que la tecnologia es el futuro y no tiene porque costar una
                             fortuna. Descubre nuestra collecion de computadoras y componentes a
                             precios que se adaptan a tu estilo de vida.
                         </p>
-                        <button className="btn bg-[#4e99d3] hover:bg-[#4e99d3]/80 w-fit text-black rounded-lg mb-3 font-medium">
+                        <button className="btn bg-primary hover:bg-primary/80 w-fit text-black rounded-lg mb-3 font-medium">
                             <DownloadIcon size={18} />
                             Descargar Catalogo
                         </button>
                         <p className="flex items-center gap-1 font-medium text-gray-300">
-                            <span className="text-[#4e99d3] flex items-center">
+                            <span className="text-primary flex items-center">
                                 + <UsersIcon size={20} className="mr-2" /> 100
                             </span>{" "}
                             clientes satisfechos
@@ -131,17 +131,17 @@ export default function Home() {
                     >
                         <div className="w-full flex justify-between items-center">
                             <div>
-                                <p className="text-[#4e99d3] font-bold tracking-tight uppercase">
+                                <p className="text-primary font-bold tracking-tight uppercase">
                                     Los mejores
                                 </p>
                                 <h1 className="text-5xl font-extrabold text-balance">
                                     Componentes{" "}
-                                    <span className="text-[#4e99d3] italic">para tu PC</span>
+                                    <span className="text-primary italic">para tu PC</span>
                                 </h1>
                             </div>
                             <Link
                                 href="/components"
-                                className="group text-[#4e99d3] font-medium text-sm flex items-center gap-2 text-nowrap"
+                                className="group text-primary font-medium text-sm flex items-center gap-2 text-nowrap"
                             >
                                 <p>Ver Todos</p>
                                 <span className="text-lg">»</span>
@@ -154,12 +154,12 @@ export default function Home() {
                         </p>
                         <div className="flex gap-4">
                             <Link href="/components">
-                                <button className="btn btn-outline border-[#4e99d3] text-[#4e99d3] hover:bg-[#4e99d3]/10 w-fit rounded-lg font-medium">
+                                <button className="btn btn-outline border-primary text-primary hover:bg-primary/10 w-fit rounded-lg font-medium">
                                     Ver lista de componentes
                                 </button>
                             </Link>
                             <Link href="/components">
-                                <button className="btn bg-[#4e99d3] hover:bg-[#4e99d3]/80 w-fit text-black rounded-lg font-medium">
+                                <button className="btn bg-primary hover:bg-primary/80 w-fit text-black rounded-lg font-medium">
                                     <DownloadIcon size={18} />
                                     Descargar Catalogo Componentes
                                 </button>
@@ -178,14 +178,14 @@ export default function Home() {
                     >
                         <div className="w-full flex justify-between items-center">
                             <div>
-                                <p className="text-[#4e99d3] font-bold tracking-tight uppercase">
+                                <p className="text-primary font-bold tracking-tight uppercase">
                                     Los mejores
                                 </p>
                                 <h1 className="text-5xl font-extrabold">Computadores</h1>
                             </div>
                             <Link
                                 href="/computers"
-                                className="group text-[#4e99d3] font-medium text-sm flex items-center gap-2 text-nowrap"
+                                className="group text-primary font-medium text-sm flex items-center gap-2 text-nowrap"
                             >
                                 <p>Ver Todos</p>
                                 <span className="text-lg">»</span>
@@ -198,12 +198,12 @@ export default function Home() {
                         </p>
                         <div className="flex gap-4">
                             <Link href="/computers">
-                                <button className="btn btn-outline border-[#4e99d3] text-[#4e99d3] hover:bg-[#4e99d3]/10 w-fit rounded-lg font-medium">
+                                <button className="btn btn-outline border-primary text-primary hover:bg-primary/10 w-fit rounded-lg font-medium">
                                     Ver lista de computadores
                                 </button>
                             </Link>
                             <Link href="/computers">
-                                <button className="btn bg-[#4e99d3] hover:bg-[#4e99d3]/80 w-fit text-black rounded-lg font-medium">
+                                <button className="btn bg-primary hover:bg-primary/80 w-fit text-black rounded-lg font-medium">
                                     <DownloadIcon size={18} />
                                     Descargar Catalogo Computadores
                                 </button>
@@ -222,7 +222,7 @@ export default function Home() {
                         className="w-full lg:max-w-3/5 flex flex-col gap-5"
                     >
                         <div>
-                            <p className="text-[#4e99d3] font-bold tracking-tight uppercase">
+                            <p className="text-primary font-bold tracking-tight uppercase">
                                 Sobre nosotros
                             </p>
                             <h1 className="text-5xl font-extrabold">Conocenos más</h1>
@@ -253,9 +253,9 @@ export default function Home() {
                             ].map((item, index) => (
                                 <div
                                     key={index}
-                                    className="flex flex-col items-start gap-2 text-center border-t-2 border-[#4e99d3] py-2 w-full max-w-[300px] mx-auto"
+                                    className="flex flex-col items-start gap-2 text-center border-t-2 border-primary py-2 w-full max-w-[300px] mx-auto"
                                 >
-                                    <h3 className="text-2xl font-bold uppercase text-[#4e99d3] w-full">
+                                    <h3 className="text-2xl font-bold uppercase text-primary w-full">
                                         {item.title}
                                     </h3>
                                     <p className="font-medium text-sm text-gray-300 w-full">{item.text}</p>

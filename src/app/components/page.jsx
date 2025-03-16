@@ -5,7 +5,7 @@ import { DownloadIcon, PriceTagsIcon, SearchIcon } from "@/components/icons";
 
 export const metadata = {
     title: "Componentes | AC Computers",
-}
+};
 
 export default async function Page({ searchParams }) {
     const { page = 1, search = "" } = await searchParams;
@@ -13,7 +13,7 @@ export default async function Page({ searchParams }) {
     const response = await fetch(
         `${process.env.APP_DOMAIN}/api/products?type=2&limit=8&page=${page}&search=${search}`
     );
-    const { data: computers, limit, count } = await response.json();
+    const { data: components, limit, count } = await response.json();
 
     return (
         <main className="w-full">
@@ -55,8 +55,19 @@ export default async function Page({ searchParams }) {
                         </Link>
                     </div>
 
+                    {components.length === 0 && (
+                        <section className="flex items-center justify-center flex-col gap-2 text-center">
+                            <h1 className="text-7xl tracking-tight font-extrabold lg:text-9xl text-primary">
+                                404
+                            </h1>
+                            <p className="mb-4 text-3xl tracking-tight font-bold text-white">
+                                No se encuentran productos
+                            </p>
+                        </section>
+                    )}
+
                     <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-14">
-                        {computers.map((product) => (
+                        {components.map((product) => (
                             <div
                                 className="card rounded-none [&_p]:grow-0"
                                 key={product.product_id}
