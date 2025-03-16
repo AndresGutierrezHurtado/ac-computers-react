@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 import { Product, Category, Spec, Multimedia } from "@/database/models";
 
 export async function GET(request, { params }) {
-    const product = await Product.findByPk(params.id, {
+    const { id } = await params;
+    const product = await Product.findByPk(id, {
         include: ["category", "specs", "multimedias"],
     });
 

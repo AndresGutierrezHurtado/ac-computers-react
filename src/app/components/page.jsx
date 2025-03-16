@@ -3,6 +3,10 @@ import Link from "next/link";
 import Pagination from "../../components/pagination";
 import { DownloadIcon, PriceTagsIcon, SearchIcon } from "@/components/icons";
 
+export const metadata = {
+    title: "Componentes | AC Computers",
+}
+
 export default async function Page({ searchParams }) {
     const { page = 1, search = "" } = await searchParams;
 
