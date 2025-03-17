@@ -1,9 +1,10 @@
+import bcrypt from "bcrypt";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 import SequelizeAdapter from "@auth/sequelize-adapter";
-import bcrypt from "bcrypt";
+
 import * as models from "@/database/models";
 
 const handler = NextAuth({
@@ -16,7 +17,11 @@ const handler = NextAuth({
                     type: "email",
                     placeholder: "ejemplo@gmail.com",
                 },
-                user_password: { label: "Contraseña", type: "password", placeholder: "*******" },
+                user_password: {
+                    label: "Contraseña",
+                    type: "password",
+                    laceholder: "*******",
+                },
             },
             async authorize(credentials) {
                 const { user_email, user_password } = credentials;
@@ -48,7 +53,7 @@ const handler = NextAuth({
     adapter: SequelizeAdapter(models.connection),
     secret: process.env.SESSION_SECRET,
     session: {
-        strategy: "database",
+        strategy: "jwt",
         maxAge: 30 * 24 * 60 * 60,
         updateAge: 24 * 60 * 60,
     },
@@ -66,7 +71,6 @@ const handler = NextAuth({
     callbacks: {
         async signIn({ user, account, profile }) {
             if (account.provider === "google") {
-
                 if (!profile.email) {
                     throw new Error("La cuenta de Google no tiene email asociado.");
                 }
@@ -98,9 +102,16 @@ const handler = NextAuth({
             }
             return true;
         },
-        async session({ session, user }) {
+        async jwt({ token, user }) {
+            if (user && user.user_email) {
+                token.email = user.user_email;
+            }
+
+            return token;
+        },
+        async session({ session, token }) {
             session.user = await models.User.findOne({
-                where: { user_email: user.user_email },
+                where: { user_email: token.email },
                 attributes: {
                     exclude: ["user_password"],
                 },
