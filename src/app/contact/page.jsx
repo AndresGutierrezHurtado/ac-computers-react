@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import Link from "next/link";
+import Swal from "sweetalert2";
 
 // Hooks
 import { useValidateform } from "@/hooks/useValidateForm";
@@ -56,17 +57,27 @@ export default function Page() {
         const data = Object.fromEntries(new FormData(e.target));
         const validation = useValidateform(data, "contact-form");
 
-        // if (validation.success) {
-        //     const response = await usePostData("/user/feedback", data);
+        if (validation.success) {
+            const response = await fetch("/api/users/feedback", {
+                headers: {
+                    "content-type": "application/json",
+                    accept: "application/json",
+                },
+                method: "POST",
+                body: JSON.stringify(data),
+            });
 
-        //      Swal.fire({
-        //         icon: response.success ? "success" : "error",
-        //         title: response.message,
-        //     });
-        //     if (response.success) {
-        //         e.target.reset();
-        //     }
-        // }
+            const json = await response.json();
+
+            Swal.fire({
+                icon: json.success ? "success" : "error",
+                title: json.message,
+            });
+
+            if (json.success) {
+                e.target.reset();
+            }
+        }
     };
 
     return (
