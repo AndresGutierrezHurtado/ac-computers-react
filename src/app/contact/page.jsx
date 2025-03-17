@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 import { useValidateform } from "@/hooks/useValidateForm";
 
 // Components
-import { StoreMap } from "@/components/map";
 import {
     AtIcon,
     FacebookIcon,
@@ -17,6 +16,9 @@ import {
     UploadIcon,
     WhatsappIcon,
 } from "@/components/icons";
+
+import dynamic from "next/dynamic";
+const StoreMap = dynamic(() => import("@/components/map"), { ssr: false });
 
 export default function Page() {
     const socialMedias = [

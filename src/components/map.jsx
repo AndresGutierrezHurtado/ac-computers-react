@@ -21,7 +21,7 @@ function MyComponent() {
     return null;
 }
 
-export const StoreMap = () => {
+export default () => {
     const position = [4.6642, -74.0589];
 
     return (
