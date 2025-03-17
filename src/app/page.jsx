@@ -107,10 +107,12 @@ export default function Home() {
                             fortuna. Descubre nuestra collecion de computadoras y componentes a
                             precios que se adaptan a tu estilo de vida.
                         </p>
-                        <button className="btn bg-primary hover:bg-primary/80 w-fit text-black rounded-lg mb-3 font-medium">
-                            <DownloadIcon size={18} />
-                            Descargar Catalogo
-                        </button>
+                        <Link href="/api/products/pdf" target="_blank">
+                            <button className="btn bg-primary hover:bg-primary/80 w-fit text-black rounded-lg mb-3 font-medium">
+                                <DownloadIcon size={18} />
+                                Descargar Catalogo
+                            </button>
+                        </Link>
                         <p className="flex items-center gap-1 font-medium text-gray-300">
                             <span className="text-primary flex items-center">
                                 + <UsersIcon size={20} className="mr-2" /> 100
@@ -158,7 +160,7 @@ export default function Home() {
                                     Ver lista de componentes
                                 </button>
                             </Link>
-                            <Link href="/components">
+                            <Link href="/api/products/pdf?type=2" target="_blank">
                                 <button className="btn bg-primary hover:bg-primary/80 w-fit text-black rounded-lg font-medium">
                                     <DownloadIcon size={18} />
                                     Descargar Catalogo Componentes
@@ -202,7 +204,7 @@ export default function Home() {
                                     Ver lista de computadores
                                 </button>
                             </Link>
-                            <Link href="/computers">
+                            <Link href="/api/products/pdf?type=1" target="_blank">
                                 <button className="btn bg-primary hover:bg-primary/80 w-fit text-black rounded-lg font-medium">
                                     <DownloadIcon size={18} />
                                     Descargar Catalogo Computadores
@@ -258,7 +260,9 @@ export default function Home() {
                                     <h3 className="text-2xl font-bold uppercase text-primary w-full">
                                         {item.title}
                                     </h3>
-                                    <p className="font-medium text-sm text-gray-300 w-full">{item.text}</p>
+                                    <p className="font-medium text-sm text-gray-300 w-full">
+                                        {item.text}
+                                    </p>
                                 </div>
                             ))}
                         </div>

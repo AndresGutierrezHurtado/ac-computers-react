@@ -42,14 +42,16 @@ export default async function Page({ searchParams }) {
                     </div>
                     <div className="flex justify-center gap-4 flex-wrap">
                         <Link
-                            href={`${process.env.APP_DOMAIN}/pdf/list?type=1`}
+                            href={`${process.env.APP_DOMAIN}/api/products/pdf?type=2`}
+                            target="_blank"
                             className="btn btn-primary w-fit px-5 btn-outline btn-sm py-2 h-auto flex-nowrap"
                         >
                             <DownloadIcon className="text-xl" />
                             Descargar lista PDF de componentes
                         </Link>
                         <Link
-                            href={`${process.env.APP_DOMAIN}/pdf/list`}
+                            href={`${process.env.APP_DOMAIN}/api/products/pdf`}
+                            target="_blank"
                             className="btn btn-primary w-fit px-5 btn-sm py-2 h-auto flex-nowrap"
                         >
                             <PriceTagsIcon className="text-xl" />
