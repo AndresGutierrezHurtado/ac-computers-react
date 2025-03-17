@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
     const ellipse2 = useRef();
 
     const pathname = usePathname();
-    const noLayoutRoutes = ["/login", "/register", "/admin"];
+    const noLayoutRoutes = ["/login", "/register", "/admin", "/api/auth/error"];
 
     useEffect(() => {
         if (noLayoutRoutes.includes(pathname)) return;
