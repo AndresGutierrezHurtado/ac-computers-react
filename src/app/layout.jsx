@@ -9,6 +9,7 @@ import { ScrollTrigger } from "gsap/all";
 import { usePathname } from "next/navigation";
 
 import "./globals.css";
+import { ToastContainer } from "react-toastify";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -45,6 +46,7 @@ export default function RootLayout({ children }) {
                             <main className="flex-1">{children}</main>
                         </div>
                     </SessionProvider>
+                    <ToastContainer position="bottom-right" />
                 </body>
             </html>
         );
@@ -72,6 +74,8 @@ export default function RootLayout({ children }) {
                         <Footer />
                     </div>
                 </SessionProvider>
+
+                <ToastContainer />
             </body>
         </html>
     );

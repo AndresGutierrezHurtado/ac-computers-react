@@ -24,11 +24,14 @@ export async function GET(request) {
             data: users,
         });
     } catch (error) {
-        return NextResponse.json({
-            success: false,
-            message: `Error al crear usuario: ${error.message}`,
-            data: error,
-        }, { status: 500 });
+        return NextResponse.json(
+            {
+                success: false,
+                message: `Error al crear usuario: ${error.message}`,
+                data: error,
+            },
+            { status: 500 }
+        );
     }
 }
 
@@ -44,11 +47,24 @@ export async function POST(request) {
             data: user,
         });
     } catch (error) {
-        return NextResponse.json({
-            success: false,
-            message: `Error al crear usuario: ${error.message}`,
-            data: error,
-        }, { status: 500 });
+        if (error.name === "SequelizeUniqueConstraintError") {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "El correo electrónico ya está en uso",
+                    data: error,
+                },
+                { status: 400 }
+            );
+        }
+
+        return NextResponse.json(
+            {
+                success: false,
+                message: `Error al crear usuario: ${error.message}`,
+                data: error,
+            },
+            { status: 500 }
+        );
     }
 }
-

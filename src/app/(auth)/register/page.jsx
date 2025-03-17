@@ -1,8 +1,10 @@
 "use client";
 
+import { useValidateform } from "@/hooks/useValidateForm";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
+import Swal from "sweetalert2";
 
 export default function Register() {
     const router = useRouter();
@@ -11,22 +13,29 @@ export default function Register() {
         e.preventDefault();
 
         const user = Object.fromEntries(new FormData(e.target));
+        const validation = useValidateform(user, "register-form");
 
-        const result = await fetch("/api/users", {
-            headers: {
-                "content-type": "application/json",
-                accept: "application/json",
-            },
-            method: "POST",
-            body: JSON.stringify({ user }),
-        });
+        if (validation.success) {
+            const result = await fetch("/api/users", {
+                headers: {
+                    "content-type": "application/json",
+                    accept: "application/json",
+                },
+                method: "POST",
+                body: JSON.stringify({ user }),
+            });
 
-        const response = await result.json();
+            const response = await result.json();
 
-        alert(response.message);
-        if (response.success) {
-            e.target.reset();
-            router.push("/login");
+            Swal.fire({
+                icon: response.success ? "success" : "error",
+                title: response.message,
+            });
+
+            if (response.success) {
+                e.target.reset();
+                router.push("/login");
+            }
         }
     };
 
