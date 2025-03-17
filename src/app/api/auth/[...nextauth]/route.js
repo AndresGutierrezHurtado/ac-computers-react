@@ -48,7 +48,7 @@ const handler = NextAuth({
     adapter: SequelizeAdapter(models.connection),
     secret: process.env.SESSION_SECRET,
     session: {
-        strategy: "jwt",
+        strategy: "database",
         maxAge: 30 * 24 * 60 * 60,
         updateAge: 24 * 60 * 60,
     },
@@ -108,19 +108,6 @@ const handler = NextAuth({
             });
 
             return session;
-        },
-        async jwt({ token, user }) {
-            if (user) {
-                token.user = await models.User.findOne({
-                    where: { user_email: user.user_email },
-                    attributes: {
-                        exclude: ["user_password"],
-                    },
-                    include: ["role"],
-                }).then((user) => user.toJSON());
-                token.email = user.user_email;
-            }
-            return token;
         },
         async redirect({ url, baseUrl }) {
             return baseUrl;

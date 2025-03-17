@@ -17,12 +17,14 @@ module.exports = {
             },
             user_email: {
                 type: Sequelize.STRING,
+                unique: true,
             },
             user_phone: {
                 type: Sequelize.DECIMAL,
             },
             role_id: {
                 type: Sequelize.INTEGER,
+                defaultValue: 1,
             },
             user_password: {
                 type: Sequelize.TEXT,

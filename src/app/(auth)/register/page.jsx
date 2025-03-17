@@ -1,7 +1,35 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export default function Register() {
+    const router = useRouter();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const user = Object.fromEntries(new FormData(e.target));
+
+        const result = await fetch("/api/users", {
+            headers: {
+                "content-type": "application/json",
+                accept: "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify({ user }),
+        });
+
+        const response = await result.json();
+
+        alert(response.message);
+        if (response.success) {
+            e.target.reset();
+            router.push("/login");
+        }
+    };
+
     return (
         <>
             <div className="hero bg-base-200 min-h-screen bg-[url('https://img.freepik.com/fotos-premium/computadora-teclado-teclado_866548-481.jpg')]">
@@ -29,59 +57,66 @@ export default function Register() {
                                 </h1>
                                 <p className="text-center text-2xl font-medium">Regístrate</p>
                             </div>
-                            <fieldset className="fieldset gap-4">
-                                <div className="fieldset">
-                                    <label className="fieldset-label font-medium text-base">
-                                        Nombre:
-                                    </label>
-                                    <input
-                                        className="input w-full focus:outline-0 focus:border-primary"
-                                        placeholder="Ingresa tu nombre"
-                                    />
-                                </div>
-                                <div className="fieldset">
-                                    <label className="fieldset-label font-medium text-base">
-                                        Apellidos:
-                                    </label>
-                                    <input
-                                        className="input w-full focus:outline-0 focus:border-primary"
-                                        placeholder="Ingresa tus apellidos"
-                                    />
-                                </div>
-                                <div className="fieldset">
-                                    <label className="fieldset-label font-medium text-base">
-                                        Correo electrónico:
-                                    </label>
-                                    <input
-                                        type="email"
-                                        className="input w-full focus:outline-0 focus:border-primary"
-                                        placeholder="Ingresa tu correo electrónico"
-                                    />
-                                </div>
-                                <div className="fieldset">
-                                    <label className="fieldset-label font-medium text-base">
-                                        Telefono:
-                                    </label>
-                                    <input
-                                        type="number"
-                                        className="input w-full focus:outline-0 focus:border-primary"
-                                        placeholder="Ingresa tu telefono"
-                                    />
-                                </div>
-                                <div className="fieldset">
-                                    <label className="fieldset-label font-medium text-base">
-                                        Contraseña:
-                                    </label>
-                                    <input
-                                        type="password"
-                                        className="input w-full focus:outline-0 focus:border-primary"
-                                        placeholder="Ingresa tu contraseña"
-                                    />
-                                </div>
-                                <button className="btn btn-primary font-medium mt-4">
-                                    Crear cuenta
-                                </button>
-                            </fieldset>
+                            <form onSubmit={handleSubmit}>
+                                <fieldset className="fieldset gap-4">
+                                    <div className="fieldset">
+                                        <label className="fieldset-label font-medium text-base">
+                                            Nombre:
+                                        </label>
+                                        <input
+                                            className="input w-full focus:outline-0 focus:border-primary"
+                                            placeholder="Ingresa tu nombre"
+                                            name="user_name"
+                                        />
+                                    </div>
+                                    <div className="fieldset">
+                                        <label className="fieldset-label font-medium text-base">
+                                            Apellidos:
+                                        </label>
+                                        <input
+                                            className="input w-full focus:outline-0 focus:border-primary"
+                                            placeholder="Ingresa tus apellidos"
+                                            name="user_lastname"
+                                        />
+                                    </div>
+                                    <div className="fieldset">
+                                        <label className="fieldset-label font-medium text-base">
+                                            Correo electrónico:
+                                        </label>
+                                        <input
+                                            type="email"
+                                            className="input w-full focus:outline-0 focus:border-primary"
+                                            placeholder="Ingresa tu correo electrónico"
+                                            name="user_email"
+                                        />
+                                    </div>
+                                    <div className="fieldset">
+                                        <label className="fieldset-label font-medium text-base">
+                                            Telefono:
+                                        </label>
+                                        <input
+                                            type="number"
+                                            className="input w-full focus:outline-0 focus:border-primary"
+                                            placeholder="Ingresa tu telefono"
+                                            name="user_phone"
+                                        />
+                                    </div>
+                                    <div className="fieldset">
+                                        <label className="fieldset-label font-medium text-base">
+                                            Contraseña:
+                                        </label>
+                                        <input
+                                            type="password"
+                                            className="input w-full focus:outline-0 focus:border-primary"
+                                            placeholder="Ingresa tu contraseña"
+                                            name="user_password"
+                                        />
+                                    </div>
+                                    <button className="btn btn-primary font-medium mt-4">
+                                        Crear cuenta
+                                    </button>
+                                </fieldset>
+                            </form>
                         </div>
                     </div>
                 </div>
