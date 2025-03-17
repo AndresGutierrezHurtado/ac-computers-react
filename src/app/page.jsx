@@ -16,6 +16,8 @@ export default function Home() {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
+        document.title = "Inicio | AC Computers";
+
         gsap.set(sectionRefs.current[1], { x: "150%", opacity: "-3.5" });
         gsap.set(sectionRefs.current[2], { x: "-150%", opacity: "-3.5" });
         gsap.set(sectionRefs.current[3], { x: "150%", opacity: "-3.5" });

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 
@@ -11,6 +11,10 @@ import { useValidateform } from "@/hooks/useValidateForm";
 import { FacebookIcon, GoogleIcon } from "@/components/icons";
 
 export default function Login() {
+    useEffect(() => {
+        document.title = "Inicio sesión | AC Computers";
+    }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.target));

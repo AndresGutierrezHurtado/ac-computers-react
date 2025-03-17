@@ -1,5 +1,13 @@
 "use client";
 
+import React, { useEffect } from "react";
+import Link from "next/link";
+
+// Hooks
+import { useValidateform } from "@/hooks/useValidateForm";
+
+// Components
+import { StoreMap } from "@/components/map";
 import {
     AtIcon,
     FacebookIcon,
@@ -8,9 +16,6 @@ import {
     UploadIcon,
     WhatsappIcon,
 } from "@/components/icons";
-import { StoreMap } from "@/components/map";
-import Link from "next/link";
-import React from "react";
 
 export default function Page() {
     const socialMedias = [
@@ -41,15 +46,23 @@ export default function Page() {
         },
     ];
 
-    const handleContactFormSubmit = async (e) => {
+    useEffect(() => {
+        document.title = "Contactanos | AC Computers";
+    }, []);
+
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
 
         const data = Object.fromEntries(new FormData(e.target));
-        // const validation = useValidateform(data, "contact-form");
+        const validation = useValidateform(data, "contact-form");
 
         // if (validation.success) {
         //     const response = await usePostData("/user/feedback", data);
 
+        //      Swal.fire({
+        //         icon: response.success ? "success" : "error",
+        //         title: response.message,
+        //     });
         //     if (response.success) {
         //         e.target.reset();
         //     }
@@ -94,9 +107,9 @@ export default function Page() {
                             </ol>
                         </div>
                         <div className="card bg-black/20 h-fit w-full md:w-1/2">
-                            <div className="card-body [&_p]:grow-0">
-                                <form onSubmit={handleContactFormSubmit} className="space-y-2">
-                                    <div>
+                            <div className="card-body [&_p]:grow-0 px-8 py-10">
+                                <form onSubmit={handleFormSubmit} className="space-y-2">
+                                    <div className="flex flex-col gap-2">
                                         <h2 className="text-3xl font-extrabold">
                                             ¡Queremos escucharte!
                                         </h2>
@@ -105,42 +118,38 @@ export default function Page() {
                                         </p>
                                     </div>
 
-                                    <div className="form-control flex flex-col gap-1 w-full">
-                                        <label className="label">
-                                            <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-1">
-                                                Correo electrónico:
-                                            </span>
+                                    <fieldset className="fieldset">
+                                        <label className="fieldset-label font-medium text-base">
+                                            Correo electrónico:
                                         </label>
                                         <input
-                                            placeholder="ejemplo@gmail.com"
-                                            className="input input-bordered focus:input-primary focus:outline-0 w-full bg-transparent"
+                                            className="input w-full focus:outline-0 focus:border-primary bg-transparent"
+                                            placeholder="Ingresa tu correo electrónico"
                                             name="user_email"
                                         />
-                                    </div>
-                                    <div className="form-control flex flex-col gap-1 w-full">
-                                        <label className="label">
-                                            <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-1">
-                                                Asunto:
-                                            </span>
+                                    </fieldset>
+
+                                    <fieldset className="fieldset">
+                                        <label className="fieldset-label font-medium text-base">
+                                            Asunto:
                                         </label>
                                         <input
-                                            placeholder="¿De que se trata el mensaje?"
-                                            className="input input-bordered focus:input-primary focus:outline-0 w-full bg-transparent"
+                                            className="input w-full focus:outline-0 focus:border-primary bg-transparent"
+                                            placeholder="Ingresa tu nombre"
                                             name="email_subject"
                                         />
-                                    </div>
-                                    <div className="form-control flex flex-col gap-1 w-full">
-                                        <label className="label">
-                                            <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-1">
-                                                Mensaje:
-                                            </span>
+                                    </fieldset>
+
+                                    <fieldset className="fieldset">
+                                        <label className="fieldset-label font-medium text-base">
+                                            Mensaje:
                                         </label>
                                         <textarea
-                                            className="textarea textarea-bordered resize-none h-32 focus:textarea-primary focus:outline-0 w-full bg-transparent"
+                                            className="textarea w-full focus:outline-0 focus:border-primary bg-transparent resize-none h-32"
                                             placeholder="Ingresa tu mensaje"
                                             name="email_message"
                                         ></textarea>
-                                    </div>
+                                    </fieldset>
 
                                     <div className="form-control flex flex-col gap-1 w-full pt-5">
                                         <button className="btn w-full btn-primary">
