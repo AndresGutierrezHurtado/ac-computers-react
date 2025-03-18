@@ -1,7 +1,16 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer";
 
 import { Product } from "@/database/models";
+
+let puppeteer;
+let chromium;
+
+if (process.env.NODE_ENV === "development") {
+    puppeteer = require("puppeteer");
+} else {
+    puppeteer = require("puppeteer-core");
+    chromium = require("chrome-aws-lambda");
+}
 
 export async function GET(request) {
     const { searchParams } = new URL(request.url);
@@ -42,8 +51,14 @@ export async function GET(request) {
                                     .map(
                                         (p) => `
                                 <tr>
-                                    <td><a href="${process.env.APP_DOMAIN}/product/${p.product_id}">${p.product_id.split("-")[1]} - ${p.product_name}</a></td>
-                                    <td>COP ${parseInt(p.product_price * (1 - p.product_discount / 100)).toLocaleString("es-CO")}</td>
+                                    <td><a href="${process.env.APP_DOMAIN}/product/${
+                                            p.product_id
+                                        }">${p.product_id.split("-")[1]} - ${
+                                            p.product_name
+                                        }</a></td>
+                                    <td>COP ${parseInt(
+                                        p.product_price * (1 - p.product_discount / 100)
+                                    ).toLocaleString("es-CO")}</td>
                                 </tr>`
                                     )
                                     .join("")}
@@ -62,24 +77,41 @@ export async function GET(request) {
                                     .map(
                                         (p) => `
                                 <tr>
-                                    <td><a href="${process.env.APP_DOMAIN}/product/${p.product_id}">${p.product_id.split("-")[1]} - ${p.product_name}</a></td>
-                                    <td>COP ${parseInt(p.product_price * (1 - p.product_discount / 100)).toLocaleString("es-CO")}</td>
+                                    <td><a href="${process.env.APP_DOMAIN}/product/${
+                                            p.product_id
+                                        }">${p.product_id.split("-")[1]} - ${
+                                            p.product_name
+                                        }</a></td>
+                                    <td>COP ${parseInt(
+                                        p.product_price * (1 - p.product_discount / 100)
+                                    ).toLocaleString("es-CO")}</td>
                                 </tr>`
                                     )
                                     .join("")}
                             </table>`
                         : ""
-                    }
+                }
                 </body>
                 </html>
                 `;
 
         // Inicializar Puppeteer y generar el PDF
-        const browser = await puppeteer.launch();
+        let browser;
+
+        if (process.env.NODE_ENV === "development") {
+            browser = await puppeteer.launch();
+        } else {
+            browser = await puppeteer.launch({
+                args: chromium.args,
+                executablePath: await chromium.executablePath || "/usr/bin/chromium-browser",
+                headless: chromium.headless,
+            });
+        }
+
         const page = await browser.newPage();
 
         await page.setContent(htmlContent, { waitUntil: "networkidle0" });
-        const pdfBuffer = await page.pdf({ format: "A4" });
+        const pdfBuffer = await page.pdf({ format: "A4", quality: 80 });
 
         await browser.close();
 
@@ -87,7 +119,9 @@ export async function GET(request) {
             status: 200,
             headers: {
                 "Content-Type": "application/pdf",
-                "Content-Disposition": `attachment; filename="AC COMPUTERS LISTA PRECIOS ${type === 1 ? " COMPUTADORES" : type === 2 ? " COMPONENTES" : ""}.pdf"`,
+                "Content-Disposition": `attachment; filename="AC COMPUTERS LISTA PRECIOS ${
+                    type === 1 ? " COMPUTADORES" : type === 2 ? " COMPONENTES" : ""
+                }.pdf"`,
             },
         });
     } catch (error) {
