@@ -1,18 +1,22 @@
 const { DataTypes, Sequelize } = require("sequelize");
-const config = require("../config.cjs");
+const { [process.env.NODE_ENV]: config } = require("../config.cjs");
 
-const sequelize = new Sequelize(
-    config.development.database,
-    config.development.username,
-    config.development.password,
-    {
-        host: config.development.host,
-        dialect: config.development.dialect,
-        dialectModule: require("pg"),
-        port: config.development.port,
-        logging: false,
+const sequelize = new Sequelize(config.database, config.username, config.password, {
+    host: config.host,
+    dialect: config.dialect,
+    dialectModule: require("pg"),
+    port: config.port,
+    logging: false,
+});
+
+(async () => {
+    try {
+        await sequelize.authenticate();
+        console.log("Connection has been established successfully.");
+    } catch (error) {
+        console.error("Unable to connect to the database:", error);
     }
-);
+})();
 
 const UserModel = require("./user");
 const CategoryModel = require("./category");

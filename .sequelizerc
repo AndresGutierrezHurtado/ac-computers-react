@@ -1,6 +1,7 @@
 const path = require("path");
 
 module.exports = {
+    env: path.join(__dirname, ".env"),
     config: path.join(__dirname, "src", "database", "config.cjs"),
     "models-path": path.join(__dirname, "src", "database", "models"),
     "seeders-path": path.join(__dirname, "src", "database", "seeders"),
