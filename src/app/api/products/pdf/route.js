@@ -1,16 +1,8 @@
 import { NextResponse } from "next/server";
+import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 
 import { Product } from "@/database/models";
-
-let puppeteer;
-let chromium;
-
-if (process.env.NODE_ENV === "development") {
-    puppeteer = require("puppeteer");
-} else {
-    puppeteer = require("puppeteer-core");
-    chromium = require("chrome-aws-lambda");
-}
 
 export async function GET(request) {
     const { searchParams } = new URL(request.url);
@@ -95,18 +87,11 @@ export async function GET(request) {
                 </html>
                 `;
 
-        // Inicializar Puppeteer y generar el PDF
-        let browser;
-
-        if (process.env.NODE_ENV === "development") {
-            browser = await puppeteer.launch();
-        } else {
-            browser = await puppeteer.launch({
-                args: chromium.args,
-                executablePath: await chromium.executablePath || "/usr/bin/chromium-browser",
-                headless: chromium.headless,
-            });
-        }
+        const browser = await puppeteer.launch({
+            args: chromium.args,
+            executablePath: (await chromium.executablePath()) || "/usr/bin/chromium-browser",
+            headless: chromium.headless,
+        });
 
         const page = await browser.newPage();
 
