@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { User } from "@/database/models";
+import { Op, Sequelize } from "sequelize";
 
 export async function GET(request) {
     try {
@@ -8,11 +9,22 @@ export async function GET(request) {
 
         const page = parseInt(searchParams.get("page")) || 1;
         const limit = parseInt(searchParams.get("limit")) || 10;
+        const sortQuery = searchParams.get("sort") || "user_id:asc";
+        const sort = sortQuery.split(":");
+        const search = searchParams.get("search") || "";
         const offset = (page - 1) * limit;
 
         const { rows: users, count } = await User.findAndCountAll({
             limit,
             offset,
+            include: ["role"],
+            sort: [sort],
+            where: {
+                [Op.or]: [
+                    { user_name: { [Op.iLike]: `%${search}%` } },
+                    { user_email: { [Op.iLike]: `%${search}%` } },
+                ],
+            },
         });
 
         return NextResponse.json({
@@ -24,6 +36,7 @@ export async function GET(request) {
             data: users,
         });
     } catch (error) {
+        console.error(error);
         return NextResponse.json(
             {
                 success: false,
