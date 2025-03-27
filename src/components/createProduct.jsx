@@ -74,12 +74,13 @@ export default function CreateProduct({ reloadProducts }) {
             denyButtonColor: "#d33",
         }).then(async (result) => {
             if (result.isConfirmed) {
-                // const response = await usePostData("/products", data);
-                // if (response.success) {
-                //     e.target.closest("dialog").close();
-                //     e.target.reset();
-                //     reloadProducts();
-                // }
+                const response = await usePostData("/products", data);
+
+                if (response.success) {
+                    e.target.closest("dialog").close();
+                    e.target.reset();
+                    reloadProducts();
+                }
             }
         });
     };

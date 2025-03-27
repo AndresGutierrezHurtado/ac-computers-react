@@ -1,7 +1,12 @@
 import { NextResponse } from "next/server";
+import crypto from "crypto";
 
-import { Product, Category } from "@/database/models";
+// Database
+import { Product, Category, Spec, Multimedia } from "@/database/models";
 import { Op } from "sequelize";
+
+// Hooks
+import { uploadFile } from "@/hooks/useUploadImage";
 
 export async function GET(resquest) {
     const { searchParams } = new URL(resquest.url);
@@ -45,13 +50,57 @@ export async function GET(resquest) {
 }
 
 export async function POST(request) {
-    const { product: productJSON } = await request.json();
+    const t = await Product.sequelize.transaction();
 
-    const product = await Product.create(productJSON);
+    try {
+        const { product, product_image, specs, multimedias } = await request.json();
+        product.product_id = crypto.randomUUID();
 
-    return NextResponse.json({
-        success: true,
-        message: "Producto creado correctamente",
-        data: product,
-    });
+        if (product_image) {
+            const { data: url } = await uploadFile(product_image, product.product_id, "/");
+
+            product.product_image_url = url;
+        }
+
+        const productResult = await Product.create(product, { transaction: t });
+
+        const specsResult = await Spec.bulkCreate(
+            specs.map((spec) => ({
+                ...spec,
+                product_id: product.product_id,
+            })),
+            { transaction: t }
+        );
+
+        if (multimedias) {
+            const multimediaData = await Promise.all(
+                multimedias.map(async (file) => {
+                    const id = crypto.randomUUID();
+                    const { data: url } = await uploadFile(file, id, "/medias");
+
+                    return {
+                        media_id: id,
+                        media_url: url,
+                        product_id: product.product_id,
+                    };
+                })
+            );
+
+            await Multimedia.bulkCreate(multimediaData);
+        }
+
+        await t.commit();
+        return NextResponse.json({
+            success: true,
+            message: "Producto creado correctamente",
+            data: { productResult, specsResult },
+        });
+    } catch (error) {
+        await t.rollback();
+        return NextResponse.json({
+            success: false,
+            message: `Error al crear producto: ${error.message}`,
+            data: error,
+        });
+    }
 }
