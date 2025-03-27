@@ -1,13 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import Swal from "sweetalert2";
 
 // Hooks
 import { useDeleteData, useGetData, usePaginateData } from "@/hooks/useGetClientData";
 
 // Components
 import { EditIcon, SearchIcon, TrashIcon } from "@/components/icons";
-import Swal from "sweetalert2";
+import EditUser from "@/components/editUser.jsx";
 
 export default function Page() {
     const [sort, setSort] = useState("user_id:asc");
@@ -58,7 +59,7 @@ export default function Page() {
                         <div className="flex justify-between items-center w-full">
                             <h1 className="text-3xl font-bold mb-4">Administrar usuarios</h1>
                         </div>
-                        <div className="card bg-[#20202b] rounded [&_p]:grow-0">
+                        <div className="card bg-zinc-950/30 rounded [&_p]:grow-0">
                             <div className="card-body p-4">
                                 <div className="flex flex-col sm:flex-row gap-4 justify-between items-center w-full">
                                     <h2 className="text-3xl font-bold">Usuarios</h2>
@@ -80,7 +81,7 @@ export default function Page() {
                             </div>
                             <div className="w-full overflow-x-auto">
                                 <table className="w-full table rounded">
-                                    <thead className="transparent bg-[#242430]">
+                                    <thead className="transparent bg-zinc-950/40">
                                         <tr className="text-[15px] [&>*]:py-3 [&>*]:cursor-pointer [&>*:hover]:text-white">
                                             <th onClick={() => setSort("user_id:asc")}>ID</th>
                                             <th onClick={() => setSort("user_name:asc")}>
@@ -144,7 +145,7 @@ export default function Page() {
                                                 </td>
                                             </tr>
                                         ))}
-                                        <tr className="[&>*]:py-4 bg-[#242430]">
+                                        <tr className="[&>*]:py-4">
                                             <td colSpan={7}></td>
                                         </tr>
                                     </tbody>
@@ -168,9 +169,7 @@ export default function Page() {
                                         </button>
                                         <button
                                             onClick={() => setPage((prev) => prev + 1)}
-                                            disabled={
-                                                usersPage * usersLimit >= usersCount / usersLimit
-                                            }
+                                            disabled={usersCount / usersLimit <= usersPage}
                                             className="btn p-0 h-auto min-h-[auto_!important] disabled:opacity-30"
                                         >
                                             <kbd className="kbd">Siguiente</kbd>
@@ -182,6 +181,9 @@ export default function Page() {
                     </div>
                 </div>
             </section>
+            {users.map((user) => (
+                <EditUser key={user.user_id} user={user} userSession={userSession} reloadUsers={reloadUsers} />
+            ))}
         </>
     );
 }
