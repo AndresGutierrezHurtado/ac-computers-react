@@ -1,13 +1,14 @@
+"use client";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 
 // Components
-import { UploadIcon } from "../icons";
+import { UploadIcon } from "@/components/icons.jsx";
 
 // Hooks
-import { useBase64 } from "../../hooks/useBase64.js";
-import { usePostData } from "../../hooks/useFetchApi";
-import { useValidateform } from "../../hooks/useValidateForm.js";
+import { usePostData } from "@/hooks/useGetClientData";
+import { useValidateform } from "@/hooks/useValidateForm";
+import { useBase64 } from "@/hooks/uesBase64";
 
 export default function CreateProduct({ reloadProducts }) {
     const [specs, setSpecs] = useState([{ name: "", value: "" }]);
@@ -18,10 +19,14 @@ export default function CreateProduct({ reloadProducts }) {
         const formData = new FormData(e.target);
         const json = Object.fromEntries(formData);
 
-        const specsArray = specs.map((_, i) => ({
+        let specsArray = specs.map((_, i) => ({
             spec_key: formData.get(`specs[${i}].name`),
             spec_value: formData.get(`specs[${i}].value`),
         }));
+
+        specsArray = specsArray.filter(
+            (spec) => spec.spec_key.length > 0 && spec.spec_value.length > 0
+        );
 
         const multimediasdata = await Promise.all(
             formData
@@ -46,6 +51,16 @@ export default function CreateProduct({ reloadProducts }) {
 
         const validation = useValidateform(data.product, "create-product-form");
 
+        if (specsArray.length == 0) {
+            validation.success = false;
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Debes ingresar al menos una especificación",
+                timer: 8000,
+            });
+        }
+
         if (!validation.success) return;
 
         Swal.fire({
@@ -59,13 +74,12 @@ export default function CreateProduct({ reloadProducts }) {
             denyButtonColor: "#d33",
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const response = await usePostData("/products", data);
-
-                if (response.success) {
-                    e.target.closest("dialog").close();
-                    e.target.reset();
-                    reloadProducts();
-                }
+                // const response = await usePostData("/products", data);
+                // if (response.success) {
+                //     e.target.closest("dialog").close();
+                //     e.target.reset();
+                //     reloadProducts();
+                // }
             }
         });
     };
@@ -86,7 +100,7 @@ export default function CreateProduct({ reloadProducts }) {
                     </p>
                     <form onSubmit={handleFormSubmit} className="space-y-2">
                         {/* Campos del producto */}
-                        <div className="form-control">
+                        <fieldset className="fieldset">
                             <label className="label">
                                 <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-0.5">
                                     Nombre:
@@ -97,8 +111,8 @@ export default function CreateProduct({ reloadProducts }) {
                                 placeholder="Ingresa el nombre"
                                 className="input input-sm input-bordered focus:input-primary focus:outline-0 w-full"
                             />
-                        </div>
-                        <div className="form-control">
+                        </fieldset>
+                        <fieldset className="fieldset">
                             <label className="label">
                                 <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-0.5">
                                     Descripción:
@@ -109,8 +123,8 @@ export default function CreateProduct({ reloadProducts }) {
                                 placeholder="Ingresa una descripción"
                                 className="textarea textarea-sm textarea-bordered focus:textarea-primary focus:outline-0 w-full h-32 resize-none leading-[1.3]"
                             ></textarea>
-                        </div>
-                        <div className="form-control">
+                        </fieldset>
+                        <fieldset className="fieldset">
                             <label className="label">
                                 <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-0.5">
                                     Precio:
@@ -121,8 +135,8 @@ export default function CreateProduct({ reloadProducts }) {
                                 placeholder="Ingresa el precio del producto"
                                 className="input input-sm input-bordered focus:input-primary focus:outline-0 w-full"
                             />
-                        </div>
-                        <div className="form-control">
+                        </fieldset>
+                        <fieldset className="fieldset">
                             <label className="label">
                                 <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-0.5">
                                     Descuento:
@@ -133,8 +147,8 @@ export default function CreateProduct({ reloadProducts }) {
                                 placeholder="Ingresa un porcentaje de descuento 0-100%"
                                 className="input input-sm input-bordered focus:input-primary focus:outline-0 w-full"
                             />
-                        </div>
-                        <div className="form-control">
+                        </fieldset>
+                        <fieldset className="fieldset">
                             <label className="label">
                                 <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-0.5">
                                     Categoría:
@@ -147,8 +161,8 @@ export default function CreateProduct({ reloadProducts }) {
                                 <option value="1">Computador</option>
                                 <option value="2">Componente</option>
                             </select>
-                        </div>
-                        <div className="form-control">
+                        </fieldset>
+                        <fieldset className="fieldset">
                             <label className="label">
                                 <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-0.5">
                                     Imagen principal:
@@ -160,8 +174,8 @@ export default function CreateProduct({ reloadProducts }) {
                                 className="file-input file-input-primary file-input-sm file-input-bordered w-full"
                                 accept="image/*"
                             />
-                        </div>
-                        <div className="form-control">
+                        </fieldset>
+                        <fieldset className="fieldset">
                             <label className="label">
                                 <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-0.5">
                                     Multimedias:
@@ -176,8 +190,8 @@ export default function CreateProduct({ reloadProducts }) {
                                 max={8}
                                 maxLength={8}
                             />
-                        </div>
-                        <div className="form-control">
+                        </fieldset>
+                        <fieldset className="fieldset">
                             <label className="label">
                                 <span className="label-text font-semibold">Especificaciones:</span>
                             </label>
@@ -188,18 +202,36 @@ export default function CreateProduct({ reloadProducts }) {
                                             name={`specs[${i}].name`}
                                             placeholder={`Nombre ${i + 1}`}
                                             className="input input-sm input-bordered focus:input-primary focus:outline-0 w-1/2"
+                                            value={specs[i].name}
+                                            onChange={(e) => {
+                                                const newSpecs = [...specs];
+                                                newSpecs[i].name = e.target.value;
+                                                setSpecs(newSpecs);
+                                            }}
                                         />
                                         <input
                                             name={`specs[${i}].value`}
                                             placeholder={`Valor ${i + 1}`}
                                             className="input input-sm input-bordered focus:input-primary focus:outline-0 w-1/2"
+                                            value={specs[i].value}
+                                            onChange={(e) => {
+                                                const newSpecs = [...specs];
+                                                newSpecs[i].value = e.target.value;
+                                                setSpecs(newSpecs);
+                                            }}
                                         />
                                         <button
                                             type="button"
                                             className="btn btn-sm btn-error"
                                             onClick={() => {
-                                                if (specs.length === 1) return;
-                                                setSpecs(specs.filter((_, j) => j !== i));
+                                                if (specs.length === 1)
+                                                    return setSpecs([{ name: "", value: "" }]);
+
+                                                const newSpecs = [
+                                                    ...specs.filter((spec) => spec !== specs[i]),
+                                                ];
+
+                                                setSpecs(newSpecs);
                                             }}
                                         >
                                             Eliminar
@@ -208,20 +240,20 @@ export default function CreateProduct({ reloadProducts }) {
                                 ))}
                                 <button
                                     type="button"
-                                    className="btn btn-sm btn-secondary mt-2"
+                                    className="btn btn-sm btn-outline btn-primary mt-2"
                                     onClick={() => setSpecs([...specs, { name: "", value: "" }])}
                                 >
                                     Agregar Especificación
                                 </button>
                             </div>
-                        </div>
+                        </fieldset>
 
-                        <div className="form-control pt-5">
+                        <fieldset className="fieldset pt-5">
                             <button type="submit" className="btn btn-primary btn-sm w-full">
                                 <UploadIcon size={20} />
                                 Subir
                             </button>
-                        </div>
+                        </fieldset>
                     </form>
                 </div>
                 <form method="dialog" className="modal-backdrop bg-black/80 backdrop-blur-[1px]">

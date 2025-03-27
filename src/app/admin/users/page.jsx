@@ -147,8 +147,10 @@ export default function Page() {
                                                 </td>
                                             </tr>
                                         ))}
-                                        <tr className="[&>*]:py-4">
-                                            <td colSpan={7}></td>
+                                        <tr className="[&>*]:py-4 text-center text-xl">
+                                            <td colSpan={7}>
+                                                {users.length === 0 && "No hay usuarios..."}
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -184,7 +186,12 @@ export default function Page() {
                 </div>
             </section>
             {users.map((user) => (
-                <EditUser key={user.user_id} user={user} userSession={userSession} reloadUsers={reloadUsers} />
+                <EditUser
+                    key={user.user_id}
+                    user={user}
+                    userSession={userSession}
+                    reloadUsers={reloadUsers}
+                />
             ))}
         </>
     );
