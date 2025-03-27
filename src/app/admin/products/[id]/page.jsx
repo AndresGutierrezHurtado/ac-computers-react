@@ -4,10 +4,15 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import Swal from "sweetalert2";
 
+// Components
 import { TrashIcon } from "@/components/icons";
+
+// Hooks
 import { useDeleteData, useGetData, usePutData } from "@/hooks/useGetClientData";
 import { useValidateform } from "@/hooks/useValidateForm";
 import { useBase64 } from "@/hooks/uesBase64";
+
+export const dynamic = "force-dynamic";
 
 export default function Product() {
     const { id } = useParams();
