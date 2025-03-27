@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import Swal from "sweetalert2";
 
@@ -9,6 +9,8 @@ import { useDeleteData, useGetData, usePaginateData } from "@/hooks/useGetClient
 // Components
 import { EditIcon, SearchIcon, TrashIcon } from "@/components/icons";
 import EditUser from "@/components/editUser.jsx";
+
+export const dynamic = "force-dynamic";
 
 export default function Page() {
     const [sort, setSort] = useState("user_id:asc");
@@ -111,7 +113,7 @@ export default function Page() {
                                                                     .getElementById(
                                                                         `edit-user-${user.user_id}`
                                                                     )
-                                                                    .show()
+                                                                    .showModal()
                                                             }
                                                             className="btn btn-primary btn-outline btn-sm"
                                                         >

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 // Hooks
@@ -12,7 +13,7 @@ export default function EditUser({ user, userSession, reloadUsers }) {
         e.preventDefault();
 
         const data = Object.fromEntries(new FormData(e.target));
-        const validation = useValidateform(data, "update-user-form");
+        const validation = useValidateform({role_id: user.role_id.toString(), ...data}, "update-user-form");
 
         if (validation.success) {
             const response = await usePutData(`/users/${user.user_id}`, { user: data });
@@ -28,21 +29,23 @@ export default function EditUser({ user, userSession, reloadUsers }) {
         <>
             <dialog id={`edit-user-${user.user_id}`} className="modal pr-0 mr-0">
                 <div className="modal-box">
-                    <form method="dialog">
-                        <button
-                            id={`close-button-${user.user_id}`}
-                            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-                        >
-                            ✕
-                        </button>
-                    </form>
+                    <div className="modal-dialog">
+                        <form method="dialog">
+                            <button
+                                id={`close-button-${user.user_id}`}
+                                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                            >
+                                ✕
+                            </button>
+                        </form>
+                    </div>
                     <h3 className="font-extrabold text-2xl tracking-tight">Edita tu usuario:</h3>
                     <p className="py-4">
                         Para cerrar presiona <kbd className="kbd kbd-sm">Esc</kbd> o haz click fuera
                         de la ventana modal.
                     </p>
                     <form onSubmit={handleFormSubmit} className="space-y-2">
-                        <div className="form-control">
+                        <fieldset className="fieldset">
                             <label className="label">
                                 <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-0.5">
                                     Nombre:
@@ -54,8 +57,8 @@ export default function EditUser({ user, userSession, reloadUsers }) {
                                 defaultValue={user.user_name}
                                 className="input input-sm input-bordered focus:input-primary focus:outline-0 w-full"
                             />
-                        </div>
-                        <div className="form-control">
+                        </fieldset>
+                        <fieldset className="fieldset">
                             <label className="label">
                                 <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-0.5">
                                     Apellidos:
@@ -67,8 +70,8 @@ export default function EditUser({ user, userSession, reloadUsers }) {
                                 defaultValue={user.user_lastname}
                                 className="input input-sm input-bordered focus:input-primary focus:outline-0 w-full"
                             />
-                        </div>
-                        <div className="form-control">
+                        </fieldset>
+                        <fieldset className="fieldset">
                             <label className="label">
                                 <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-0.5">
                                     Correo Electrónico:
@@ -80,8 +83,8 @@ export default function EditUser({ user, userSession, reloadUsers }) {
                                 className="input input-sm input-bordered focus:input-primary focus:outline-0 w-full"
                                 disabled
                             />
-                        </div>
-                        <div className="form-control">
+                        </fieldset>
+                        <fieldset className="fieldset">
                             <label className="label">
                                 <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-0.5">
                                     Teléfono:
@@ -93,24 +96,25 @@ export default function EditUser({ user, userSession, reloadUsers }) {
                                 defaultValue={user.user_phone}
                                 className="input input-sm input-bordered focus:input-primary focus:outline-0 w-full"
                             />
-                        </div>
-                        {userSession.user_id !== user.user_id && (
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-0.5">
-                                        Rol:
-                                    </span>
-                                </label>
-                                <select
-                                    name="role_id"
-                                    defaultValue={user.role_id}
-                                    className="select select-sm select-bordered focus:select-primary focus:outline-0 w-full"
-                                >
-                                    <option value="1">Usuario</option>
-                                    <option value="2">Administrador</option>
-                                </select>
-                            </div>
-                        )}
+                        </fieldset>
+                        <fieldset
+                            className="fieldset"
+                            disabled={userSession.user_id === user.user_id}
+                        >
+                            <label className="label">
+                                <span className="label-text font-semibold after:content-['*'] after:text-red-500 after:ml-0.5">
+                                    Rol:
+                                </span>
+                            </label>
+                            <select
+                                name="role_id"
+                                defaultValue={user.role_id}
+                                className="select select-sm select-bordered focus:select-primary focus:outline-0 w-full"
+                            >
+                                <option value="1">Usuario</option>
+                                <option value="2">Administrador</option>
+                            </select>
+                        </fieldset>
                         <div className="form-control pt-5">
                             <button className="btn btn-primary btn-sm w-full">
                                 <UploadIcon size={20} />

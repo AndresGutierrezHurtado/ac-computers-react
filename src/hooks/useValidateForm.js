@@ -153,7 +153,10 @@ export const useValidateform = (data = {}, form = "") => {
                     user_phone: pipe(
                         nonEmpty("Teléfono requerido"),
                         string("Teléfono requerido"),
-                        regex(/^[0-9]+$/, "El teléfono debe ser un número")
+                        regex(
+                            /^[0-9]+$/,
+                            "El teléfono debe ser un número de 10 digitos sin espacios"
+                        )
                     ),
                     role_id: pipe(
                         nonEmpty("Rol requerido"),
@@ -202,15 +205,12 @@ export const useValidateform = (data = {}, form = "") => {
     } catch (error) {
         let fieldErrors = [];
 
-        console.log("error", error);
-
         error.issues.forEach((issue) => {
             fieldErrors.push({
                 field: issue.path[0].key,
                 message: issue.message,
             });
 
-            console.log(toast.error(issue.message, { theme: "colored" }));
             toast.error(issue.message, {
                 theme: "colored",
                 position: "bottom-right",
