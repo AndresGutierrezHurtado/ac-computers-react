@@ -38,7 +38,10 @@ const handler = NextAuth({
                 }
 
                 const result = user.toJSON();
-                return result;
+                return {
+                    ...result,
+                    role: result.role_id,
+                };
             },
         }),
         GoogleProvider({
@@ -105,6 +108,7 @@ const handler = NextAuth({
         async jwt({ token, user }) {
             if (user && user.user_email) {
                 token.email = user.user_email;
+                token.role = user.role;
             }
 
             return token;

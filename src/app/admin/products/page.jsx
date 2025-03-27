@@ -49,6 +49,10 @@ export default function Page() {
         });
     };
 
+    useEffect(() => {
+        document.title = "Administrar productos | AC Computers";
+    }, []);
+
     if (loadingProducts) return <h1>loading... </h1>;
     return (
         <>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import Swal from "sweetalert2";
 
@@ -51,6 +51,10 @@ export default function Page() {
             }
         });
     };
+
+    useEffect(() => {
+        document.title = "Administrar usuarios | AC Computers";
+    }, []);
 
     if (loadingUsers || status === "loading") return <h1>Loading...</h1>;
     return (

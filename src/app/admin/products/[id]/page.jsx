@@ -109,6 +109,10 @@ export default function Product() {
         });
     };
 
+    useEffect(() => {
+        document.title = "Editar producto | AC Computers";
+    }, []);
+
     if (loadingProduct) return <div>Loading</div>;
     return (
         <section className="w-full px-3">
