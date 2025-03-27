@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 
 const API_URL = process.env.NEXT_PUBLIC_APP_DOMAIN;
 
-export const useFetchData = async (endpoint, options) => {
+export const FetchData = async (endpoint, options) => {
     const request = await fetch(`${API_URL}/api${endpoint}`, {
         headers: {
             "content-type": "application/json",
@@ -25,7 +25,7 @@ export const useGetData = (endpoint) => {
 
     useEffect(() => {
         const getData = async () => {
-            const response = await useFetchData(endpoint);
+            const response = await FetchData(endpoint);
             setLoading(false);
             setData(response.data);
         };
@@ -46,7 +46,7 @@ export const usePaginateData = (endpoint) => {
 
     useEffect(() => {
         const getData = async () => {
-            const response = await useFetchData(endpoint);
+            const response = await FetchData(endpoint);
             setLoading(false);
             setData({
                 data: response.data,
@@ -69,7 +69,7 @@ export const usePaginateData = (endpoint) => {
 };
 
 export const usePostData = async (endpoint, body = {}) => {
-    const response = await useFetchData(endpoint, {
+    const response = await FetchData(endpoint, {
         method: "POST",
         body: JSON.stringify(body),
     });
@@ -94,7 +94,7 @@ export const usePostData = async (endpoint, body = {}) => {
 };
 
 export const usePutData = async (endpoint, body = {}) => {
-    const response = await useFetchData(endpoint, {
+    const response = await FetchData(endpoint, {
         method: "PUT",
         body: JSON.stringify(body),
     });
@@ -119,7 +119,7 @@ export const usePutData = async (endpoint, body = {}) => {
 };
 
 export const useDeleteData = async (endpoint, body = {}) => {
-    const response = await useFetchData(endpoint, {
+    const response = await FetchData(endpoint, {
         method: "DELETE",
         body: JSON.stringify(body),
     });
